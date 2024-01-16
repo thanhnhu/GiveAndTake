@@ -1,0 +1,118 @@
+<div>
+  <b-row>
+    <b-col cols="12" sm="3" class="mb-2">
+      <b-form-input size="sm" list="cityList" placeholder="Thành phố" @change="cityChange" @keyup.delete="cityChange">
+      </b-form-input>
+      <b-form-datalist id="cityList">
+        <option :key="city.id" :value="city.name" v-for="city in cities" />
+      </b-form-datalist>
+    </b-col>
+    <b-col>
+      <div v-if="fetchingData">Đang tải...</div>
+    </b-col>
+    <b-col cols="6" sm="4" class="mb-2 d-flex justify-content-end" v-if="user">
+      <giver-info />
+      <b-button size="sm" class="ml-2" v-bind:variant="filter.isMine ? 'secondary' : 'outline-primary'"
+        :disabled="fetchingData" @click="isMineChange">Của tôi</b-button>
+    </b-col>
+  </b-row>
+
+  <div v-if="isWeb">
+    <table class="table table-sm table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col" class="column-number">
+            <b-form-input type="number" size="sm" v-model="filter.number" min="0" placeholder="#"
+              @input="filterChange" />
+          </th>
+          <th scope="col" class="column-name">
+            <b-form-input type="text" size="sm" v-model="filter.name" placeholder="Họ Tên" @input="filterChange" />
+          </th>
+          <th scope="col" class="column-phone">
+            <b-form-input type="text" size="sm" v-model="filter.phone" placeholder="Điện thoại" @input="filterChange" />
+          </th>
+          <th scope="col" class="text-left">Địa chỉ</th>
+          <th scope="col" class="column-city">Thành phố</th>
+          <th scope="col">Chi tiết</th>
+          <th scope="col" class="column-images">Hình ảnh</th>
+          <th scope="col" class="column-action" v-if="givers.some(r=>r.can_edit)">Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(giver, index) in givers" :key="index">
+          <td scope="row">{{ giver.number }}</td>
+          <td class="text-left">{{ giver.name }}</td>
+          <td class="text-left">{{ giver.phone }}</td>
+          <td class="text-left">{{ giver.address }}</td>
+          <td>{{ cityNameById(giver.city) }}</td>
+          <td>
+            <b-icon icon="card-text" scale="1.5" v-if="giver.description && giver.description.length > 20"
+              v-b-popover.click.blur="giver.description" v-b-popover.hover.top="giver.description" title="" />
+            <span v-else>{{ giver.description }}</span>
+          </td>
+          <td>
+            <div v-if="giver.images && giver.images.length>0" @click="openImages(giver.images)">
+              <b-icon icon="eye" scale="1.5" title="Xem hình ảnh" />
+            </div>
+          </td>
+          <td class="column-action" v-if="givers.some(r=>r.can_edit)">
+            <div class="row justify-content-md-center">
+              <div class="mx-2" v-if="giver.can_edit">
+                <file-uploader :id="giver.id" :is-giver="true" />
+              </div>
+              <div class="mx-1" v-if="giver.can_edit" @click="setActive(giver.id)">
+                <div v-if="giver.active">
+                  <b-icon icon="stop-circle" scale="1.2" title="Tạm ngừng" />
+                </div>
+                <div v-else>
+                  <b-icon icon="play-circle" scale="1.2" title="Mở lại" />
+                </div>
+              </div>
+              <div class="mx-1" v-if="giver.can_delete">
+                <b-icon icon="x-circle" scale="1.2" variant="danger" title="Xóa" @click="handleDelete(giver.id)" />
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div v-else>
+    <div v-for="(giver, index) in givers" :key="index">
+      <b-card border-variant="info" img-left class="mb-1" :img-src="firstImage(giver)">
+        <b-container fluid>
+          <b-row align-v="start">
+            #{{ giver.number }}, {{ giver.name }}, {{ giver.address }}
+          </b-row>
+          <b-row>
+            <b-icon icon="telephone" scale="1.1" class="mr-3" v-b-popover.click.blur="giver.phone"
+              v-b-popover.hover.top="giver.phone" title="" />
+            <b-icon icon="card-text" scale="1.5" class="mr-3" v-if="giver.description && giver.description.length > 20"
+              v-b-popover.click.blur="giver.description" v-b-popover.hover.top="giver.description" title="" />
+            <div v-if="giver.images && giver.images.length > 0" @click="openImages(giver.images)">
+              <b-icon icon="eye" scale="1.5" title="Xem hình ảnh" />
+            </div>
+          </b-row>
+          <b-row v-if="givers.some(r=>r.can_edit)">
+            <div class="mr-3" v-if="giver.can_edit">
+              <file-uploader :id="giver.id" :is-giver="true" />
+            </div>
+            <div v-if="giver.can_edit" @click="setActive(giver.id)">
+              <div v-if="giver.active">
+                <b-icon icon="stop-circle" scale="1.2" title="Tạm ngừng" />
+              </div>
+              <div v-else>
+                <b-icon icon="play-circle" scale="1.2" title="Mở lại" />
+              </div>
+            </div>
+          </b-row>
+        </b-container>
+      </b-card>
+    </div>
+  </div>
+  <b-pagination v-if="total > paging.page_size" class="mt-2" align="center" @change="pagingChange" :total-rows="total"
+    :per-page="paging.page_size" v-model="paging.page" first-number last-number>
+  </b-pagination>
+
+  <modal-slider :show="showGiverImages" @close="showGiverImages = false" :images="giverImages" />
+</div>

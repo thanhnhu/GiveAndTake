@@ -1,0 +1,144 @@
+<div>
+  <b-row>
+    <b-col cols="12" sm="3" class="mb-2">
+      <b-form-input size="sm" list="cityList" placeholder="Thành phố" @change="cityChange" @keyup.delete="cityChange">
+      </b-form-input>
+      <b-form-datalist id="cityList">
+        <option :key="city.id" :value="city.name" v-for="city in cities" />
+      </b-form-datalist>
+    </b-col>
+    <b-col>
+      <div v-if="fetchingData">Đang tải...</div>
+    </b-col>
+    <b-col cols="6" sm="4" class="mb-2 d-flex justify-content-end" v-if="user">
+      <taker-info />
+      <b-button size="sm" class="ml-2" v-bind:variant="filter.isMine ? 'secondary' : 'outline-primary'"
+        :disabled="fetchingData" @click="isMineChange">Của tôi</b-button>
+    </b-col>
+  </b-row>
+
+  <div v-if="isWeb">
+    <table class="table table-sm table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col" class="column-number">
+            <b-form-input type="number" size="sm" v-model="filter.number" min="0" placeholder="#"
+              @input="filterChange" />
+          </th>
+          <th scope="col" class="column-name">
+            <b-form-input type="text" size="sm" v-model="filter.name" placeholder="Họ Tên" @input="filterChange" />
+          </th>
+          <th scope="col" class="column-phone">
+            <b-form-input type="text" size="sm" v-model="filter.phone" placeholder="Điện thoại" @input="filterChange" />
+          </th>
+          <th scope="col" class="text-left">Địa chỉ</th>
+          <th scope="col" class="column-city">Thành phố</th>
+          <th scope="col">Chi tiết</th>
+          <th scope="col" class="column-images">Hình ảnh</th>
+          <th scope="col">Hỗ trợ</th>
+          <th scope="col" class="column-action">Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(taker, index) in takers" :key="index">
+          <td scope="row">{{ taker.number }}</td>
+          <td class="text-left">{{ taker.name }}</td>
+          <td class="text-left">{{ taker.phone }}</td>
+          <td class="text-left">{{ taker.address }}</td>
+          <td>{{ cityNameById(taker.city) }}</td>
+          <td>
+            <b-icon icon="card-text" scale="1.5" v-if="taker.description && taker.description.length > 20"
+              v-b-popover.click.blur="taker.description" v-b-popover.hover.top="taker.description" title="" />
+            <span v-else>{{ taker.description }}</span>
+          </td>
+          <td>
+            <div v-if="taker.images && taker.images.length > 0" @click="openImages(taker.images)">
+              <b-icon icon="eye" scale="1.5" title="Xem hình ảnh" />
+            </div>
+          </td>
+          <td>
+            <div class="float-right">{{ Number(totalDonate(taker)).toLocaleString() }} vnđ
+              <b-link v-if="taker.donates && taker.donates.length > 0"
+                :to="{ name: 'donates', params: { takerId: taker.id } }">
+                <b-icon icon="layout-text-sidebar" scale="1.1" title="Xem chi tiết" />
+              </b-link>
+            </div>
+          </td>
+          <td class="column-action">
+            <div class="row justify-content-md-center">
+              <div class="mx-2" v-if="!taker.stop_donate">
+                <div v-if="user">
+                  <donate-info :taker-id="taker.id" :is-new-inline="true" />
+                </div>
+                <div v-else>
+                  <b-icon icon="gift" scale="1.2" title="Bạn muốn chia sẻ? Vui lòng đăng ký hoặc đăng nhập!" />
+                </div>
+              </div>
+              <div class="mx-1" v-if="taker.can_edit">
+                <file-uploader :id="taker.id" :is-taker="true" />
+              </div>
+              <div class="mx-2" v-if="taker.can_edit" @click="stopDonate(taker.id)">
+                <div v-if="taker.stop_donate">
+                  <b-icon icon="play-circle" scale="1.2" title="Cần chia sẻ" />
+                </div>
+                <div v-else>
+                  <b-icon icon="stop-circle" scale="1.2" title="Ngừng chia sẻ" />
+                </div>
+              </div>
+              <div class="mr-2" v-if="taker.can_delete">
+                <b-icon icon="x-circle" scale="1.2" variant="danger" title="Xóa" @click="handleDelete(taker.id)" />
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div v-else>
+    <div v-for="(taker, index) in takers" :key="index">
+      <b-card border-variant="info" img-left class="mb-1" :img-src="firstImage(taker)">
+        <b-container fluid>
+          <b-row align-v="start">
+            #{{ taker.number }}, {{ taker.name }}, {{ taker.address }}
+          </b-row>
+          <b-row>
+            <b-icon icon="telephone" scale="1.1" class="mr-3 mb-1" v-b-popover.click.blur="taker.phone"
+              v-b-popover.hover.top="taker.phone" title="" />
+            <b-icon icon="card-text" scale="1.5" class="mr-3" v-if="taker.description && taker.description.length > 20"
+              v-b-popover.click.blur="taker.description" v-b-popover.hover.top="taker.description" title="" />
+            <div v-if="taker.images && taker.images.length > 0" @click="openImages(taker.images)">
+              <b-icon icon="eye" scale="1.5" title="Xem hình ảnh" />
+            </div>
+          </b-row>
+          <b-row align-v="start" v-if="!taker.stop_donate">
+            <div v-if="user">
+              <donate-info :taker-id="taker.id" :is-new-inline="true" />
+            </div>
+            <div v-else>
+              <b-icon icon="gift" scale="1.2" title="Bạn muốn chia sẻ? Vui lòng đăng ký hoặc đăng nhập!" />
+            </div>
+            <div class="ml-2">{{ totalDonate(taker) }} vnđ</div>
+          </b-row>
+          <b-row>
+            <div class="mr-3" v-if="taker.can_edit">
+              <file-uploader :id="taker.id" :is-taker="true" />
+            </div>
+            <div class="mr-3" v-if="taker.can_edit" @click="stopDonate(taker.id)">
+              <div v-if="taker.stop_donate">
+                <b-icon icon="play-circle" scale="1.2" title="Cần chia sẻ" />
+              </div>
+              <div v-else>
+                <b-icon icon="stop-circle" scale="1.2" title="Ngừng chia sẻ" />
+              </div>
+            </div>
+          </b-row>
+        </b-container>
+      </b-card>
+    </div>
+  </div>
+  <b-pagination v-if="total > paging.page_size" class="mt-2" align="center" @change="pagingChange" :total-rows="total"
+    :per-page="paging.page_size" v-model="paging.page" first-number last-number>
+  </b-pagination>
+
+  <modal-slider :show="showTakerImages" @close="showTakerImages = false" :images="takerImages" />
+</div>

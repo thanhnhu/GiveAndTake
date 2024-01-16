@@ -1,0 +1,31 @@
+{
+  "lang": {
+    "select_lang": "Language",
+    "en": "English",
+    "vn": "Vietnamese"
+  },
+  "common": {
+    "giveandforget": "Give and forget!!!",
+    "taker": "Taker",
+    "giver": "Giver",
+    "introduce": "Introduce",
+    "cancel": "Cancel"
+  },
+  "user": {
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "hello": "Hello",
+    "userExist": "User is existing!",
+    "buttons": {
+      "login": "Login"
+    },
+    "input_text": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "messages": {
+      "none_account": "Sign up!"
+    }
+  }
+}

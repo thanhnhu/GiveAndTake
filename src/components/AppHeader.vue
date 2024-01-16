@@ -1,0 +1,65 @@
+<script>
+import { mapActions } from "vuex";
+
+export default {
+  name: "app-header",
+  props: {
+    user: Object,
+  },
+  methods: {
+    ...mapActions("users", ["logout"]),
+  },
+};
+</script>
+
+<template>
+  <div class="mb-2">
+    <b-navbar toggleable="sm" type="light" variant="info">
+      <b-navbar-brand href="#">
+        <img src="/static/fire.png" />
+        <em>{{ $t('common.giveandforget') }}</em>
+      </b-navbar-brand>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav fill>
+          <b-nav-item to="/">{{ $t('common.taker') }}</b-nav-item>
+          <b-nav-item to="/givers">{{ $t('common.giver') }}</b-nav-item>
+          <b-nav-item to="/intro">{{ $t('common.introduce') }}</b-nav-item>
+        </b-navbar-nav>
+
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <!--
+          <b-nav-item-dropdown v-bind:text="$t('lang.select_lang')" right>
+            <b-dropdown-item @click="$i18n.locale = 'en'">{{ $t('lang.en') }}</b-dropdown-item>
+            <b-dropdown-item @click="$i18n.locale = 'vn'">{{ $t('lang.vn') }}</b-dropdown-item>
+          </b-nav-item-dropdown>
+          -->
+
+          <b-nav-item-dropdown right>
+            <div v-if="user" class="mx-2">
+              <em>{{ $t('user.hello') }}, {{ user.username }}</em>
+              <b-dropdown-item @click="logout()">{{ $t('user.logout') }}</b-dropdown-item>
+            </div>
+            <div v-else class="mx-2">
+              <b-nav-item to="/login">{{ $t('user.login') }}</b-nav-item>
+              <b-nav-item to="/register">{{ $t('user.register') }}</b-nav-item>
+            </div>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.navbar {
+  padding: 0 0.5rem;
+}
+.navbar-brand {
+  padding-top: 0.5rem;
+  img {
+    padding-bottom: 0.5rem;
+  }
+}
+</style>

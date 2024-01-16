@@ -1,0 +1,66 @@
+<div>
+  <b-button v-if="user" type="button" size="sm" variant="outline-primary" @click="showAddGiver = true">Thêm mới
+  </b-button>
+
+  <ValidationObserver ref="observerGiver" v-slot="{ handleSubmit }">
+    <modal-dialog :show="showAddGiver" @close="showAddGiver = false">
+      <template v-slot:header>Tạo người cho mới</template>
+      <template v-slot:body>
+        <ValidationProvider name="Họ Tên" rules="required" v-slot="{ errors }">
+          <div class="mb-3">
+            <div class="input-group">
+              <input type="text" class="form-control" v-model="newGiver.name" placeholder="Họ Tên" aria-label="Họ Tên"
+                :class="{ 'is-invalid': errors.length > 0 }" />
+            </div>
+            <div class="error-messages">{{ errors[0] }}</div>
+          </div>
+        </ValidationProvider>
+
+        <ValidationProvider name="Điện thoại" rules="required" v-slot="{ errors }">
+          <div class="mb-3">
+            <div class="input-group">
+              <input type="text" class="form-control" v-model="newGiver.phone" placeholder="Điện thoại"
+                aria-label="Điện thoại" :class="{ 'is-invalid': errors.length > 0 }" />
+            </div>
+            <div class="error-messages">{{ errors[0] }}</div>
+          </div>
+        </ValidationProvider>
+
+        <ValidationProvider name="Địa chỉ" rules="required" v-slot="{ errors }">
+          <div class="mb-3">
+            <div class="input-group">
+              <input type="text" class="form-control" v-model="newGiver.address" aria-label="Địa chỉ" maxlength="50"
+                placeholder="Địa chỉ" :class="{ 'is-invalid': errors.length > 0 }" />
+            </div>
+            <div class="error-messages">{{ errors[0] }}</div>
+          </div>
+        </ValidationProvider>
+
+        <ValidationProvider name="Thành phố" rules="required" v-slot="{ errors }">
+          <div class="mb-3">
+            <div class="input-group">
+              <b-form-select v-model="newGiver.city" :options="optionCities" value-field="id" text-field="name"
+                :class="{ 'is-invalid': errors.length > 0 }">
+              </b-form-select>
+            </div>
+            <div class="error-messages">{{ errors[0] }}</div>
+          </div>
+        </ValidationProvider>
+
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Chi tiết</span>
+          </div>
+          <textarea class="form-control" aria-label="Chi tiết" v-model="newGiver.description"></textarea>
+        </div>
+      </template>
+      <template v-slot:footer>
+        <b-button size="sm" variant="outline-primary" :disabled="fetchingData"
+          @click="handleSubmit(handleSaveGiver); showAddGiver = false">Lưu và tắt</b-button>
+        <b-button size="sm" variant="outline-primary" @click="handleSubmit(handleSaveGiver)" :disabled="fetchingData">
+          Lưu lại
+        </b-button>
+      </template>
+    </modal-dialog>
+  </ValidationObserver>
+</div>

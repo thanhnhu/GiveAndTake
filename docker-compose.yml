@@ -1,0 +1,27 @@
+version: "3.7.1"
+
+services:
+
+  #database:
+  #image: postgres
+  #restart: always
+  #volumes:
+  #- ./data:/var/lib/postgresql/data
+
+  backend:
+    build: ./server
+    container_name: server
+    restart: always
+    volumes: [ './server/:/app' ]
+    ports: [ '8090:8090' ]
+
+  frontend:
+    build: ./client
+    container_name: client
+    restart: always
+    volumes:
+      - ./client:/app
+      - ./client:/node_modules
+    ports: [ '8091:8091' ]
+    links:
+      - "backend"

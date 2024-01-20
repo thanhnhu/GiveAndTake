@@ -71,23 +71,38 @@ $ cd django-vue-template
 
 Setup
 ```
-$ yarn install
-$ pip install -r requirements.txt
-$ pipenv install --dev 
+# check node@14 version support node-sass@5.0.0:
+# https://www.npmjs.com/package/node-sass
+# https://www.npmjs.com/package/all-node-versions
+# or replace node-sass@5.0.0 with sass@1.22.10
+```
+
+```
+$ cd server
+# pip install pipenv
+## add PATH C:\Users\win\.pyenv\pyenv-win\versions\3.7.1\Scripts\
+### virtualenv venv
+$ pipenv install --dev
 $ pipenv shell
+$ pip install -r requirements.txt
 $ python manage.py migrate
 $ python manage.py loaddata cities
+
+$ cd client
+$ yarn install
 ```
 
 ## Running Development Servers
 
 ```
+$ cd server
 $ python manage.py runserver
 ```
 
 From another tab in the same directory:
 
 ```
+$ cd client
 $ yarn serve
 ```
 
@@ -107,6 +122,13 @@ and the page will not reload on changes.
 $ yarn build
 $ python manage.py runserver
 ```
+
+```
+For docker running both backend and frontend
+
+$ docker-compose up
+```
+
 ## Pycharm additional configuration
 
 Follow this guide to ensure you have pipenv setup

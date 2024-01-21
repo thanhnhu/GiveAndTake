@@ -6,10 +6,11 @@
 # or replace node-sass@5.0.0 with sass@1.22.10
 
 # build stage
-#FROM node:16.13.0-alpine as build-fe-stage
-#RUN apk --no-cache --virtual build-dependencies add python2 make g++
-FROM node:16.13.0 as build-fe-stage
+# use alpine to reduce the image size
+#FROM node:16.13.0 as builder
 #RUN apt-get update || : && apt-get install python -y
+FROM node:16.13.0-alpine as builder
+#RUN apk --no-cache --virtual build-dependencies add python3 make g++
 RUN mkdir /app
 COPY . /app
 #COPY package*.json /app
@@ -18,21 +19,28 @@ WORKDIR /app
 #ENV NODE_ENV=development
 #ENV NODE_OPTIONS=--openssl-legacy-provider
 
-#RUN npm install
+# to reduce image size: combine command + install --no-cache
+#RUN npm install cache clean --force
 #RUN yarn
 #RUN yarn global add node-gyp@10.0.1
 #RUN npm install --global node-gyp@10.0.1
 #RUN npm rebuild node-sass
 #RUN npm uninstall node-sass
 #RUN npm install sass -S -D
-RUN yarn install
-COPY . .
+RUN yarn install && yarn cache clean
+#COPY . .
 #RUN yarn run build
 
 # list all files/dirs & modules in Docker Desktop
-RUN ls -la
-RUN ls -la node_modules
+#RUN ls -la && ls -la node_modules
 
+# dev stage
+# multiple FROM reduce image size
+#FROM node:16.13.0-alpine as dev-stage
+#COPY --from=builder /app .
+FROM builder as dev-stage
+COPY . .
+#RUN ls -la
 #CMD ["yarn",  "serve", "0.0.0.0:8091"]
 CMD ["yarn",  "serve"]
 
@@ -48,8 +56,8 @@ CMD ["yarn",  "serve"]
 # COPY . .
 # RUN yarn run build
 
-# Production stage
+# production stage
 #FROM nginx:1.16.1-alpine as production-stage
-#COPY --from=build-stage /vue-app/dist /usr/share/nginx/html
+#COPY --from=builder /vue-app/dist /usr/share/nginx/html
 #EXPOSE 80
 #CMD [ "nginx", "-g", "daemon off;"]

@@ -10,9 +10,12 @@ https://docs.djangoproject.com/en/2.1/howto/deployment/wsgi/
 import os
 
 from django.core.wsgi import get_wsgi_application
+# from whitenoise.django import DjangoWhiteNoise
+# from whitenoise import WhiteNoise
 
 # This will set production as default, but we must still set it with an
 # ENV on heroku to ensure that the migrate command runs agains the correct DB
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings.prod')
 
 application = get_wsgi_application()
+# application = WhiteNoise(application)

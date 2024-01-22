@@ -1,3 +1,8 @@
+# Introduce
+
+A project to make friend with python.
+You give out your unneeded things, and can take from the others.
+
 # Django Vue Template ✌️ 🐍
 
 ![Vue Logo](/src/assets/logo-vue.png "Vue Logo")
@@ -124,9 +129,13 @@ $ python manage.py runserver
 ```
 
 ```
-For docker running both backend and frontend
+For docker running both backend/frontend and dev/prod env
 
-$ docker-compose up
+# docker-compose build
+# docker-compose up
+# docker-compose up/down
+$ docker-compose -f docker-compose.yml up --build
+$ docker-compose -f docker-compose.prod.yml up --build
 ```
 
 ## Pycharm additional configuration

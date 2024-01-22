@@ -1,0 +1,62 @@
+version: "3.7"
+
+services:
+
+  #database:
+  #image: postgres
+  #restart: always
+  #volumes:
+  #- ./data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./server
+      target: production
+    container_name: server
+    restart: always
+    volumes: [ './server/:/app' ]
+    ports: [ '8090:8090' ]
+
+  frontend:
+    build:
+      context: ./client
+      target: production
+    container_name: client
+    restart: always
+    ports: [ '8091:80' ]
+    links:
+      - "backend"
+
+### For docker running both backend/frontend and dev/prod env
+# docker-compose -f docker-compose.yml up --build
+# docker-compose -f docker-compose.prod.yml up --build
+###
+
+### This make for Azure App Service docker-compose configuration
+# Set the WEBSITES_CONTAINER_START_TIME_LIMIT App Setting:
+# Default Value = 230 Sec to Max Value= 1800 Sec
+###
+# docker login <registry-name>.azurecr.io --username <registry-username>
+# docker tag appsvc-tutorial-custom-image <registry-name>.azurecr.io/appsvc-tutorial-custom-image:latest
+# docker push <registry-name>.azurecr.io/appsvc-tutorial-custom-image:latest
+###
+# docker login giveandtake.azurecr.io --username giveandtake
+# docker tag giveandtake-backend giveandtake.azurecr.io/giveandtake-backend:latest
+# docker tag giveandtake-frontend giveandtake.azurecr.io/giveandtake-frontend:latest
+# docker push giveandtake.azurecr.io/giveandtake-backend:latest
+# docker push giveandtake.azurecr.io/giveandtake-frontend:latest
+###
+
+# version: "3.7"
+
+# services:
+
+#   backend:
+#     image: giveandtake.azurecr.io/giveandtake-backend:latest
+#     ports: [ '8090:8090' ]
+
+#   frontend:
+#     image: giveandtake.azurecr.io/giveandtake-frontend:latest
+#     ports: [ '8091:80' ]
+#     #ports:
+#      #- 8000:8000

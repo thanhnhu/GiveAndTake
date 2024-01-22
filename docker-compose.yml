@@ -1,4 +1,4 @@
-version: "3.7.1"
+version: "3.7"
 
 services:
 
@@ -9,14 +9,18 @@ services:
   #- ./data:/var/lib/postgresql/data
 
   backend:
-    build: ./server
+    build:
+      context: ./server
+      target: development
     container_name: server
     restart: always
     volumes: [ './server/:/app' ]
     ports: [ '8090:8090' ]
 
   frontend:
-    build: ./client
+    build:
+      context: ./client
+      target: development
     container_name: client
     restart: always
     volumes:
@@ -25,3 +29,7 @@ services:
     ports: [ '8091:8091' ]
     links:
       - "backend"
+
+## For docker running both backend/frontend and dev/prod env
+# docker-compose -f docker-compose.yml up --build
+# docker-compose -f docker-compose.prod.yml up --build

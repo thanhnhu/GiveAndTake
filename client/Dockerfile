@@ -28,36 +28,38 @@ WORKDIR /app
 #RUN npm uninstall node-sass
 #RUN npm install sass -S -D
 RUN yarn install && yarn cache clean
-#COPY . .
-#RUN yarn run build
+# copy source code and installed packages to docker image
+COPY . .
+# build into /app/dist
+RUN yarn build
 
 # list all files/dirs & modules in Docker Desktop
 #RUN ls -la && ls -la node_modules
 
-# dev stage
+# development stage
 # multiple FROM reduce image size
-#FROM node:16.13.0-alpine as dev-stage
+#FROM node:16.13.0-alpine as development
 #COPY --from=builder /app .
-FROM builder as dev-stage
-COPY . .
+FROM builder as development
+#COPY . .
 #RUN ls -la
 #CMD ["yarn",  "serve", "0.0.0.0:8091"]
 CMD ["yarn",  "serve"]
 
+# ENV NODE_ENV=production
+
+# production stage
+FROM nginx:1.16.1-alpine as production
+#COPY --from=builder /app/dist /etc/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/nginx.conf /etc/nginx/conf.d/
+#EXPOSE 8091
+CMD [ "nginx", "-g", "daemon off;"]
+
 #docker build -t client .
+#docker build -t client --target production .
 #docker ps
 #docker container ls
 #docker rm -f <container-name>
 #docker run -it -p 8091:8091 client
-
-# ENV NODE_ENV=production
-
-# RUN yarn install
-# COPY . .
-# RUN yarn run build
-
-# production stage
-#FROM nginx:1.16.1-alpine as production-stage
-#COPY --from=builder /vue-app/dist /usr/share/nginx/html
-#EXPOSE 80
-#CMD [ "nginx", "-g", "daemon off;"]

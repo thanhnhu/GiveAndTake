@@ -23,7 +23,9 @@ services:
       target: production
     container_name: client
     restart: always
-    ports: [ '8091:80' ]
+    ports:
+      - 8091:8091
+      - 80:80
     links:
       - "backend"
 

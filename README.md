@@ -1,12 +1,12 @@
 # Introduce
 
 A project to make friend with python.
+
 You give out your unneeded things, and can take from the others.
 
-# Django Vue Template ✌️ 🐍
+Demo: https://giveandtake.azurewebsites.net/
 
-![Vue Logo](/src/assets/logo-vue.png "Vue Logo")
-![Django Logo](/src/assets/logo-django.png "Django Logo")
+# Django Vue Template ✌️ 🐍
 
 This template is a minimal example for an application using Vue and Django.
 
@@ -19,15 +19,6 @@ data at `/api/`, and static files at `/static/`. Django admin panel is also avai
 
 The application templates from Vue CLI `create` and Django `createproject` are kept as close as possible to their
 original state, except where a different configuration is needed for better integration of the two frameworks.
-
-#### Alternatives
-
-If this setup is not what you are looking for, you might want look at other similar projects:
-
-* [ariera/django-vue-template](https://github.com/ariera/django-vue-template)
-* [vchaptsev/cookiecutter-django-vue](https://github.com/vchaptsev/cookiecutter-django-vue)
-
-Prefer Flask? Checkout my [gtalarico/flask-vuejs-template](https://github.com/gtalarico/flask-vuejs-template)
 
 ### Demo
 

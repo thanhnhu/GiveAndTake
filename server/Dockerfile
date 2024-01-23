@@ -34,7 +34,7 @@ CMD ["python",  "manage.py", "runserver", "0.0.0.0:8090"]
 # production stage
 FROM builder as production
 #EXPOSE 8090
-CMD gunicorn -b 0.0.0.0:8090 backend.wsgi:application --timeout 600
+CMD gunicorn -b 0.0.0.0:8090 backend.wsgi:application --timeout 600 --log-level=info --reload
 #CMD ["python",  "backend/wsgi.py", "runserver", "0.0.0.0:8090"]
 
 #docker build -t server .

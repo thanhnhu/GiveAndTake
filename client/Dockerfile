@@ -54,7 +54,12 @@ FROM nginx:1.16.1-alpine as production
 COPY --from=builder /app/dist /usr/share/nginx/html
 RUN rm /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/nginx.conf /etc/nginx/conf.d/
-#EXPOSE 8091
+
+#COPY certs/nginx-selfsigned.crt /etc/ssl/certs/
+#COPY certs/nginx-selfsigned.key /etc/ssl/private/
+#COPY default-ssl.conf /etc/nginx/conf.d/default-ssl.conf
+EXPOSE 8091
+EXPOSE 80
 CMD [ "nginx", "-g", "daemon off;"]
 
 #docker build -t client .

@@ -10,9 +10,9 @@ python manage.py loaddata cities
 
 echo "${0}: collecting statics."
 
-python manage.py collectstatic --noinput
+#python manage.py collectstatic --noinput
 
-cp -rv static/* static_shared/
+#cp -rv static/* static_shared/
 
 # gunicorn yourapp.wsgi:application \
 #     --env DJANGO_SETTINGS_MODULE=yourapp.production_settings \

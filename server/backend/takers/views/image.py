@@ -1,3 +1,4 @@
+import os
 from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.authentication import TokenAuthentication
@@ -25,7 +26,9 @@ class ImageViewSet(CreateModelMixin, RetrieveModelMixin, GenericViewSet):
             if file.size > 1024 * 1024 * 10:
                 return Response({"error": "101", "message": "File size > 10MB"}, status=status.HTTP_400_BAD_REQUEST)
 
-        host = request.scheme + "://" + request.get_host()
+        # get hostname from environment of docker compose
+        hostname = os.environ.get('HOST_NAME') if os.environ.get('HOST_NAME') is not None else request.get_host()
+        host = request.scheme + "://" + hostname
         id = request.data.get("id")
         isTaker = bool(request.data.get("isTaker"))
         isGiver = bool(request.data.get("isGiver"))

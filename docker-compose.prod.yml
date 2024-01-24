@@ -17,6 +17,8 @@ services:
     volumes: [ './server/:/app' ]
     ports:
       - 8090:8090
+    environment:
+      - HOST_NAME=localhost:8091 # frontend host name
 
   frontend:
     build:
@@ -59,6 +61,8 @@ services:
 #     image: giveandtake.azurecr.io/backend:latest
 #     ports:
 #       - 8090:8090
+#     environment:
+#       - HOST_NAME=giveandtake.azurewebsites.net # frontend host name
 
 #   frontend:
 #     image: giveandtake.azurecr.io/frontend:latest

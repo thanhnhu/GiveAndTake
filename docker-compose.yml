@@ -15,7 +15,10 @@ services:
     container_name: server
     restart: always
     volumes: [ './server/:/app' ]
-    ports: [ '8090:8090' ]
+    ports:
+      - 8090:8090
+    environment:
+      - HOST_NAME=localhost:8091 # frontend host name
 
   frontend:
     build:
@@ -26,7 +29,8 @@ services:
     volumes:
       - ./client:/app
       - ./client:/node_modules
-    ports: [ '8091:8091' ]
+    ports:
+      - 8091:8091
     links:
       - "backend"
 

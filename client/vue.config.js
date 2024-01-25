@@ -14,8 +14,8 @@ module.exports = {
     proxy: {
       '/api*': {
         // Forward frontend dev server request for /api to django dev server
-        //target: 'http://localhost:8090/',
-        target: "http://host.docker.internal:8090/" // for docker
+        target: 'http://localhost:8090/', // debug local
+        //target: "http://host.docker.internal:8090/" // debug docker
       }
     }
   }

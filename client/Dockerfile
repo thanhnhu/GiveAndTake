@@ -11,13 +11,13 @@
 #RUN apt-get update || : && apt-get install python -y
 FROM node:16.13.0-alpine as builder
 #RUN apk --no-cache --virtual build-dependencies add python3 make g++
+#ENV NODE_ENV=development
+#ENV NODE_OPTIONS=--openssl-legacy-provider
+
 RUN mkdir /app
 COPY . /app
 #COPY package*.json /app
 WORKDIR /app
-
-#ENV NODE_ENV=development
-#ENV NODE_OPTIONS=--openssl-legacy-provider
 
 # to reduce image size: combine command + install --no-cache
 #RUN npm install cache clean --force
@@ -42,13 +42,11 @@ RUN yarn build
 #COPY --from=builder /app .
 FROM builder as development
 #COPY . .
-#RUN ls -la
 #CMD ["yarn",  "serve", "0.0.0.0:8091"]
 CMD ["yarn",  "serve"]
 
-# ENV NODE_ENV=production
-
 # production stage
+# ENV NODE_ENV=production
 FROM nginx:1.16.1-alpine as production
 #COPY --from=builder /app/dist /etc/nginx/html
 COPY --from=builder /app/dist /usr/share/nginx/html

@@ -18,7 +18,7 @@ services:
     ports:
       - 8090:8090
     environment:
-      - HOST_NAME=localhost:8091 # frontend host name
+      - HOST_NAME=localhost:8090 # yarn-serve so not redirect, use backend host name
 
   frontend:
     build:

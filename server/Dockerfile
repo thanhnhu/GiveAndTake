@@ -1,9 +1,14 @@
 # syntax=docker/dockerfile:1
 
 # use alpine to reduce the image size
-FROM python:3.8-alpine as builder
-# use 3.8 instead of 3.7 to fix build Pillow
+FROM python:3.9-alpine as builder
+# use 3.9 instead of 3.7 to use Pillow and JSONField with sqlite3
 ENV PYTHONUNBUFFERED 1
+
+# Create the virtual environment.
+#RUN python -m venv /venv
+#ENV PATH=/venv/bin:$PATH
+
 RUN mkdir /app
 COPY . /app
 WORKDIR /app
@@ -21,14 +26,12 @@ RUN pip install --no-cache-dir pipenv && \
   chmod +x *.sh
 COPY . .
 
-# development stage
-FROM builder as development
-#COPY . .
 # list all files/dirs in Docker Desktop
 #RUN ls -la
 
+# development stage
+FROM builder as development
 #EXPOSE 8090
-#CMD ["python",  "manage.py", "runserver"]
 CMD python manage.py runserver 0.0.0.0:8090
 
 # production stage

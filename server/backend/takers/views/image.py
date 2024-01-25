@@ -9,6 +9,7 @@ from ..serializers.factories.image import ImageSerializerFactory
 from .base_permissions import PostOrReadOnly
 from ..models.taker import Taker
 from ..models.giver import Giver
+import mimetypes
 
 
 class ImageViewSet(CreateModelMixin, RetrieveModelMixin, GenericViewSet):
@@ -26,7 +27,7 @@ class ImageViewSet(CreateModelMixin, RetrieveModelMixin, GenericViewSet):
             if file.size > 1024 * 1024 * 10:
                 return Response({"error": "101", "message": "File size > 10MB"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # get hostname from environment of docker compose
+        # get hostname from environment in docker compose
         hostname = os.environ.get('HOST_NAME') if os.environ.get('HOST_NAME') is not None else request.get_host()
         host = request.scheme + "://" + hostname
         id = request.data.get("id")
@@ -61,4 +62,7 @@ class ImageViewSet(CreateModelMixin, RetrieveModelMixin, GenericViewSet):
         factory = self.get_serializer()
         serializer = factory.get_serializer(settings.STORAGE)
         result = serializer.load(pk, "abc")
+        #mime_type = mimetypes.guess_type(result)
+        #header = {'Content-Type': mime_type}
+        #return Response(result, headers=header)
         return Response(result)

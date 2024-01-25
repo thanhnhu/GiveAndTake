@@ -76,8 +76,7 @@ Setup
 ```
 $ cd server
 # pip install pipenv
-## add PATH C:\Users\win\.pyenv\pyenv-win\versions\3.7.1\Scripts\
-### virtualenv venv
+## add PATH C:\Users\win\.pyenv\pyenv-win\versions\3.9.1\Scripts\
 $ pipenv install --dev
 $ pipenv shell
 $ pip install -r requirements.txt

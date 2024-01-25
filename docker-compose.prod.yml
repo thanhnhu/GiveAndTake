@@ -18,7 +18,7 @@ services:
     ports:
       - 8090:8090
     environment:
-      - HOST_NAME=localhost:8091 # frontend host name
+      - HOST_NAME=localhost:8091 # nginx redirect from frontend host name
 
   frontend:
     build:

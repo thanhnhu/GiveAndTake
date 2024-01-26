@@ -1,12 +1,9 @@
 version: "3.7"
+### For docker running both backend/frontend and dev/prod env
+# docker-compose -f docker-compose.yml up --build
+# docker-compose -f docker-compose.prod.yml up --build
 
 services:
-
-  #database:
-  #image: postgres
-  #restart: always
-  #volumes:
-  #- ./data:/var/lib/postgresql/data
 
   backend:
     build:
@@ -14,11 +11,12 @@ services:
       target: development
     container_name: server
     restart: always
-    volumes: [ './server/:/app' ]
+    volumes:
+      - ./server/images:/app/images # mount images folder on dist
     ports:
       - 8090:8090
     environment:
-      - HOST_NAME=localhost:8090 # yarn-serve so not redirect, use backend host name
+      - HOST_NAME=localhost:8090 # due to yarn serve, use backend host name
 
   frontend:
     build:
@@ -27,13 +25,6 @@ services:
     container_name: client
     restart: always
     volumes:
-      - ./client:/app
-      - ./client:/node_modules
+      - ./client/node_modules:/app/node_modules # mount folder on dist to save image size
     ports:
       - 8091:8091
-    links:
-      - "backend"
-
-## For docker running both backend/frontend and dev/prod env
-# docker-compose -f docker-compose.yml up --build
-# docker-compose -f docker-compose.prod.yml up --build

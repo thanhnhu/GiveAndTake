@@ -43,7 +43,7 @@ RUN yarn build
 FROM builder as development
 #COPY . .
 #CMD ["yarn",  "serve", "0.0.0.0:8091"]
-CMD ["yarn",  "serve"]
+CMD yarn serve
 
 # production stage
 # ENV NODE_ENV=production

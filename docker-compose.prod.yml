@@ -1,12 +1,14 @@
-version: "3.7"
+# version: "3.7"
+# ### For docker running both backend/frontend and dev/prod env
+# # docker-compose -f docker-compose.yml up --build
+# # docker-compose -f docker-compose.prod.yml up --build
+
+volumes:
+  # share folder images between BE & FE (django not serve static files)
+  share_images:
+
 
 services:
-
-  #database:
-  #image: postgres
-  #restart: always
-  #volumes:
-  #- ./data:/var/lib/postgresql/data
 
   backend:
     build:
@@ -14,11 +16,12 @@ services:
       target: production
     container_name: server
     restart: always
-    volumes: [ './server/:/app' ]
+    volumes:
+      - share_images:/app/images
     ports:
       - 8090:8090
     environment:
-      - HOST_NAME=localhost:8091 # nginx redirect from frontend host name
+      - HOST_NAME=localhost:8091 # due to nginx proxy, use frontend host name
 
   frontend:
     build:
@@ -26,20 +29,16 @@ services:
       target: production
     container_name: client
     restart: always
+    volumes:
+      - share_images:/usr/share/nginx/html/images
     ports:
       - 8091:8091
       - 80:8091 # hostport:containerport
-    links:
-      - "backend"
 
-### For docker running both backend/frontend and dev/prod env
-# docker-compose -f docker-compose.yml up --build
-# docker-compose -f docker-compose.prod.yml up --build
-###
-
-### This make for Azure App Service docker-compose configuration
+### Below makes for Azure App Service docker-compose configuration
 # WEBSITES_CONTAINER_START_TIME_LIMIT = 1800
 # SCM_DO_BUILD_DURING_DEPLOYMENT = 1
+# WEBSITES_ENABLE_APP_SERVICE_STORAGE = true
 # WEBSITES_PORT = 8091
 ###
 # docker login <registry-name>.azurecr.io --username <registry-username>
@@ -52,19 +51,27 @@ services:
 # docker push giveandtake.azurecr.io/backend:latest
 # docker push giveandtake.azurecr.io/frontend:latest
 ###
+### Azure App Service (webapp) need to order frontend first (if not set WEBSITES_PORT)
 
 # version: "3.7"
 
+# volumes:
+#   share_images:
+
 # services:
+
+#   frontend:
+#     image: giveandtake.azurecr.io/frontend:latest
+#     volumes:
+#       - share_images:/app/images
+#     ports:
+#       - 80:8091 # hostport:containerport
 
 #   backend:
 #     image: giveandtake.azurecr.io/backend:latest
+#     volumes:
+#       - share_images:/usr/share/nginx/html/images
 #     ports:
 #       - 8090:8090
 #     environment:
 #       - HOST_NAME=giveandtake.azurewebsites.net # frontend host name
-
-#   frontend:
-#     image: giveandtake.azurecr.io/frontend:latest
-#     ports:
-#       - 80:8091 # hostport:containerport

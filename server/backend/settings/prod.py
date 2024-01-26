@@ -24,7 +24,7 @@ DATABASES = {
 
 # django not allow serve static files on Production
 # can use whitenoise or proxy to other server
-# DEBUG = bool(os.getenv('DJANGO_DEBUG', ''))
+DEBUG = bool(os.getenv('DJANGO_DEBUG', ''))
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', SECRET_KEY)
 

@@ -6,11 +6,7 @@ from .city import City
 
 class Taker(BaseModel):
     def auto_number():
-        latest = Taker.objects.latest('date_created')
-        if latest == None:
-            return 1
-        else:
-            return latest.number + 1
+        return Taker.objects.latest('date_created').number + 1 if Taker.objects.exists() else 1
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     number = models.IntegerField(unique=True, editable=False, default=auto_number)

@@ -1,4 +1,4 @@
-name: Push Give and Take to Azure Container Registry
+name: Build and push to Azure Container Registry
 on:
   push:
     branches:

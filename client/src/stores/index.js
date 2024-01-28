@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import createLogger from 'vuex/dist/logger'
 
+import langs from './langs/langs'
 import users from './users/'
 import messages from './messages/messages'
 import cities from './cities/cities'
@@ -22,6 +23,7 @@ export default new Vuex.Store({
   strict: debug,
   plugins: plugins,
   modules: {
+    langs,
     uploads,
     users,
     messages,

@@ -5,27 +5,47 @@
     "vn": "Vietnamese"
   },
   "common": {
+    "loading": "Loading...",
     "giveandforget": "Give and forget!!!",
     "taker": "Taker",
     "giver": "Giver",
     "introduce": "Introduce",
-    "cancel": "Cancel"
+    "select_city": "Select city",
+    "addnew": "Add New",
+    "mine": "Mine",
+    "city": "City",
+    "fullname": "Fullname",
+    "phone": "Phone",
+    "address": "Address",
+    "detail": "Detail",
+    "images": "Images",
+    "donate": "Donate",
+    "action": "Action",
+    "cancel": "Cancel",
+    "field_required": "{field} is required!",
+    "field_invalid": "{field} is invalid!"
   },
   "user": {
     "login": "Login",
     "logout": "Logout",
     "register": "Register",
     "hello": "Hello",
-    "userExist": "User is existing!",
+    "userExist": "Account is existing!",
     "buttons": {
       "login": "Login"
     },
     "input_text": {
       "email": "Email",
-      "password": "Password"
+      "username": "Username",
+      "password": "Password",
+      "firstname": "Firstname",
+      "lastname": "Lastname"
     },
     "messages": {
-      "none_account": "Sign up!"
+      "none_account": "Sign up!",
+      "wrong_username_password": "Wrong username or password!",
+      "username_required": "Username is required!",
+      "password_required": "Password is required!"
     }
   }
 }

@@ -21,7 +21,8 @@ services:
     ports:
       - 8090:8090
     environment:
-      - HOST_NAME=localhost:8091 # due to nginx proxy, use frontend host name
+      # due to nginx proxy, use frontend host name
+      - HOST_NAME=localhost:8091
 
   frontend:
     build:
@@ -32,8 +33,8 @@ services:
     volumes:
       - share_images:/usr/share/nginx/html/images
     ports:
+      # - 80:8091 # hostport:containerport
       - 8091:8091
-      - 80:8091 # hostport:containerport
 
 ### Below makes for Azure App Service docker-compose configuration
 # WEBSITES_CONTAINER_START_TIME_LIMIT = 1800

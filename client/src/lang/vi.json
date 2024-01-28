@@ -1,0 +1,51 @@
+{
+  "lang": {
+    "select_lang": "Ngôn ngữ",
+    "en": "Tiếng Anh",
+    "vn": "Tiếng Việt"
+  },
+  "common": {
+    "loading": "Đang tải...",
+    "giveandforget": "Cho và quên đi!!!",
+    "taker": "Người nhận",
+    "giver": "Người cho",
+    "introduce": "Giới thiệu",
+    "select_city": "Chọn thành phố",
+    "addnew": "Thêm mới",
+    "mine": "Của tôi",
+    "city": "Thành phố",
+    "fullname": "Họ Tên",
+    "phone": "Điện thoại",
+    "address": "Địa chỉ",
+    "detail": "Chi tiết",
+    "images": "Hình ảnh",
+    "donate": "Hỗ trợ",
+    "action": "Hành động",
+    "cancel": "Bỏ qua",
+    "field_required": "{field} không để trống!",
+    "field_invalid": "{field} không hợp lệ!"
+  },
+  "user": {
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "register": "Đăng ký",
+    "hello": "Xin chào",
+    "userExist": "Tài khoản đã tồn tại!",
+    "buttons": {
+      "login": "Đăng nhập"
+    },
+    "input_text": {
+      "email": "Email",
+      "username": "Tên đăng nhập",
+      "password": "Mật khẩu",
+      "firstname": "Họ",
+      "lastname": "Tên"
+    },
+    "messages": {
+      "none_account": "Tạo tài khoản mới",
+      "wrong_username_password": "Tên đăng nhập hoặc mật khẩu không đúng!",
+      "username_required": "Tên đăng nhập không để trống!",
+      "password_required": "Mật khẩu không để trống!"
+    }
+  }
+}

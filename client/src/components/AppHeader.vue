@@ -1,13 +1,38 @@
 <script>
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "app-header",
+
   props: {
     user: Object,
   },
+
+  data: () => ({
+    optionLangs: {
+      'en': 'English',
+      'vi': 'Tiếng Việt'
+    }
+  }),
+
+  computed: {
+    ...mapGetters("langs", ["getLang"]),
+    langsFiltered() {
+      return Object.keys(this.optionLangs)
+        .filter(key => key !== this.getLang)
+        .reduce((obj, key) => {
+          obj[key] = this.optionLangs[key];
+          return obj;
+        }, {});
+    }
+  },
+
   methods: {
+    ...mapActions("langs", ["setLang"]),
     ...mapActions("users", ["logout"]),
+    callSetLangActions(event) {
+      this.setLang(event.target.getAttribute('value'));
+    }
   },
 };
 </script>
@@ -29,17 +54,13 @@ export default {
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <!--
-          <b-nav-item-dropdown v-bind:text="$t('lang.select_lang')" right>
-            <b-dropdown-item @click="$i18n.locale = 'en'">{{ $t('lang.en') }}</b-dropdown-item>
-            <b-dropdown-item @click="$i18n.locale = 'vn'">{{ $t('lang.vn') }}</b-dropdown-item>
-          </b-nav-item-dropdown>
-          -->
 
-          <b-nav-item-dropdown right>
+          <b-nav-item-dropdown :text="optionLangs[getLang]" right>
+            <b-dropdown-item v-for="(value, key) in langsFiltered" :key="key" :value="key"
+              @click.prevent="callSetLangActions">{{ value }}</b-dropdown-item>
             <div v-if="user" class="mx-2">
               <em>{{ $t('user.hello') }}, {{ user.username }}</em>
-              <b-dropdown-item @click="logout()">{{ $t('user.logout') }}</b-dropdown-item>
+              <b-dropdown-item @click="logout">{{ $t('user.logout') }}</b-dropdown-item>
             </div>
             <div v-else class="mx-2">
               <b-nav-item to="/login">{{ $t('user.login') }}</b-nav-item>
@@ -56,8 +77,10 @@ export default {
 .navbar {
   padding: 0 0.5rem;
 }
+
 .navbar-brand {
   padding-top: 0.5rem;
+
   img {
     padding-bottom: 0.5rem;
   }

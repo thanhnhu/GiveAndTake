@@ -1,19 +1,20 @@
 <div>
   <b-row>
     <b-col cols="12" sm="3" class="mb-2">
-      <b-form-input size="sm" list="cityList" placeholder="Thành phố" @change="cityChange" @keyup.delete="cityChange">
+      <b-form-input size="sm" list="cityList" :placeholder="$t('common.city')" @change="cityChange"
+        @keyup.delete="cityChange">
       </b-form-input>
       <b-form-datalist id="cityList">
         <option :key="city.id" :value="city.name" v-for="city in cities" />
       </b-form-datalist>
     </b-col>
     <b-col>
-      <div v-if="fetchingData">Đang tải...</div>
+      <div v-if="fetchingData">{{ $t('common.loading') }}</div>
     </b-col>
     <b-col cols="6" sm="4" class="mb-2 d-flex justify-content-end" v-if="user">
       <giver-info />
       <b-button size="sm" class="ml-2" v-bind:variant="filter.isMine ? 'secondary' : 'outline-primary'"
-        :disabled="fetchingData" @click="isMineChange">Của tôi</b-button>
+        :disabled="fetchingData" @click="isMineChange">{{ $t('common.mine') }}</b-button>
     </b-col>
   </b-row>
 
@@ -26,16 +27,18 @@
               @input="filterChange" />
           </th>
           <th scope="col" class="column-name">
-            <b-form-input type="text" size="sm" v-model="filter.name" placeholder="Họ Tên" @input="filterChange" />
+            <b-form-input type="text" size="sm" v-model="filter.name" :placeholder="$t('common.fullname')"
+              @input="filterChange" />
           </th>
           <th scope="col" class="column-phone">
-            <b-form-input type="text" size="sm" v-model="filter.phone" placeholder="Điện thoại" @input="filterChange" />
+            <b-form-input type="text" size="sm" v-model="filter.phone" :placeholder="$t('common.phone')"
+              @input="filterChange" />
           </th>
-          <th scope="col" class="text-left">Địa chỉ</th>
-          <th scope="col" class="column-city">Thành phố</th>
-          <th scope="col">Chi tiết</th>
-          <th scope="col" class="column-images">Hình ảnh</th>
-          <th scope="col" class="column-action" v-if="givers.some(r=>r.can_edit)">Hành động</th>
+          <th scope="col" class="text-left">{{ $t('common.address') }}</th>
+          <th scope="col" class="column-city">{{ $t('common.city') }}</th>
+          <th scope="col">{{ $t('common.detail') }}</th>
+          <th scope="col" class="column-images">{{ $t('common.images') }}</th>
+          <th scope="col" class="column-action" v-if="givers.some(r=>r.can_edit)">{{ $t('common.action') }}</th>
         </tr>
       </thead>
       <tbody>

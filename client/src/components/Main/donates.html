@@ -1,7 +1,7 @@
 <div>
   <b-row class="mb-2">
     <b-col>
-      <div v-if="fetchingData">Đang tải...</div>
+      <div v-if="fetchingData">{{ $t('common.loading') }}</div>
     </b-col>
     <b-col cols="5" sm="4" class="d-flex justify-content-end" v-if="user">
       <donate-info :taker-id="takerId" :is-new="true" />

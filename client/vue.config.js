@@ -18,5 +18,8 @@ module.exports = {
         //target: "http://host.docker.internal:8090/" // debug docker
       }
     }
-  }
+  },
+  configureWebpack: {
+    devtool: 'source-map'
+  },
 }

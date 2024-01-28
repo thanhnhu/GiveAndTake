@@ -1,5 +1,6 @@
 <div>
-  <b-button v-if="user" type="button" size="sm" variant="outline-primary" @click="showAddGiver = true">Thêm mới
+  <b-button v-if="user" type="button" size="sm" variant="outline-primary" @click="showAddGiver = true">
+    {{$t('common.addnew') }}
   </b-button>
 
   <ValidationObserver ref="observerGiver" v-slot="{ handleSubmit }">
@@ -26,17 +27,17 @@
           </div>
         </ValidationProvider>
 
-        <ValidationProvider name="Địa chỉ" rules="required" v-slot="{ errors }">
+        <ValidationProvider name="Address" rules="required" v-slot="{ errors }">
           <div class="mb-3">
             <div class="input-group">
-              <input type="text" class="form-control" v-model="newGiver.address" aria-label="Địa chỉ" maxlength="50"
-                placeholder="Địa chỉ" :class="{ 'is-invalid': errors.length > 0 }" />
+              <input type="text" class="form-control" v-model="newGiver.address" aria-label="Address" maxlength="50"
+                :placeholder="$t('common.address')" :class="{ 'is-invalid': errors.length > 0 }" />
             </div>
             <div class="error-messages">{{ errors[0] }}</div>
           </div>
         </ValidationProvider>
 
-        <ValidationProvider name="Thành phố" rules="required" v-slot="{ errors }">
+        <ValidationProvider name="City" rules="required" v-slot="{ errors }">
           <div class="mb-3">
             <div class="input-group">
               <b-form-select v-model="newGiver.city" :options="optionCities" value-field="id" text-field="name"

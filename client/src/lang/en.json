@@ -4,11 +4,16 @@
     "en": "English",
     "vn": "Vietnamese"
   },
+  "intro": {
+    "intro1": "1. List all information about difficult situations of people and localities so that benefactors and charities can come and help",
+    "intro2": "2. List all information about benefactors and charity units so that people in difficult situations can contact and receive help",
+    "intro3": "3. Connecting philanthropists and charitable organizations to create a large community to share information about difficult cases and volunteer programs"
+  },
   "common": {
     "loading": "Loading...",
     "giveandforget": "Give and forget!!!",
-    "taker": "Taker",
-    "giver": "Giver",
+    "taker": "Pauper",
+    "giver": "Benefactor",
     "introduce": "Introduce",
     "select_city": "Select city",
     "addnew": "Add New",
@@ -33,7 +38,7 @@
     "field_required": "{field} is required!",
     "field_invalid": "{field} is invalid!",
     "wannadonate": "Do you want to donate? Please login/register!",
-    "needtodonate": "Need help",
+    "needtodonate": "Need donate",
     "stopdonate": "Stop donate"
   },
   "user": {
@@ -61,10 +66,10 @@
     }
   },
   "taker": {
-    "addnew": "Add new Taker"
+    "addnew": "Add new pauper"
   },
   "giver": {
-    "addnew": "Add new Giver"
+    "addnew": "Add new benefactor"
   },
   "donate": {
     "addnew": "Add new",

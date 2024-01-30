@@ -2,7 +2,7 @@
 
 A project to make friend with python.
 
-You give out your unneeded things, and can take from the others.
+To connect benefactors, charity units with difficult situations.
 
 Demo: https://giveandtake.azurewebsites.net/
 

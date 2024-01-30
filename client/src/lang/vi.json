@@ -4,11 +4,16 @@
     "en": "Tiếng Anh",
     "vn": "Tiếng Việt"
   },
+  "intro": {
+    "intro1": "1. Tổng hợp thông tin về những hoàn cảnh về người, địa phương khó khăn để các nhà hảo tâm, từ thiện có thể đến và giúp đỡ",
+    "intro2": "2. Tổng hợp thông tin về những nhà hảo tâm, đơn vị từ thiện để những hoàn cảnh khó khăn có thể liên hệ và được giúp đỡ",
+    "intro3": "3. Kết nối các nhà hảo tâm, tổ chức từ thiện để tạo ra cộng đồng lớn nhằm chia sẻ thông tin về các trường hợp khó khăn, các chương trình thiện nguyện"
+  },
   "common": {
     "loading": "Đang tải...",
     "giveandforget": "Cho và quên đi!!!",
-    "taker": "Người nhận",
-    "giver": "Người cho",
+    "taker": "Người khó khăn",
+    "giver": "Nhà hảo tâm",
     "introduce": "Giới thiệu",
     "select_city": "Chọn thành phố",
     "addnew": "Thêm mới",
@@ -32,9 +37,9 @@
     "confirmDelete": "Bạn có chắc chắn xóa?",
     "field_required": "{field} không để trống!",
     "field_invalid": "{field} không hợp lệ!",
-    "wannadonate": "Bạn muốn chia sẻ? Vui lòng đăng ký hoặc đăng nhập!",
-    "needtodonate": "Cần chia sẻ",
-    "stopdonate": "Ngừng chia sẻ"
+    "wannadonate": "Bạn muốn giúp đỡ? Vui lòng đăng ký hoặc đăng nhập!",
+    "needtodonate": "Cần giúp đỡ",
+    "stopdonate": "Ngừng giúp đỡ"
   },
   "user": {
     "login": "Đăng nhập",
@@ -62,14 +67,14 @@
     }
   },
   "taker": {
-    "addnew": "Tạo người nhận mới"
+    "addnew": "Thêm người khó khăn mới"
   },
   "giver": {
-    "addnew": "Tạo người cho mới"
+    "addnew": "Thêm nhà hảo tâm mới"
   },
   "donate": {
     "addnew": "Add new",
-    "haveDonate": "Bạn chỉ cần nhập số tiền đã chia sẻ!!!",
+    "haveDonate": "Bạn chỉ cần nhập số tiền đã giúp đỡ!!!",
     "money": "Số tiền"
   },
   "upload": {

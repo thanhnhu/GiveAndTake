@@ -36,7 +36,7 @@
           </th>
           <th scope="col" class="text-left">{{ $t('common.address') }}</th>
           <th scope="col" class="column-city">{{ $t('common.city') }}</th>
-          <th scope="col">{{ $t('common.detail') }}</th>
+          <th scope="col">{{ $t('common.description') }}</th>
           <th scope="col" class="column-images">{{ $t('common.images') }}</th>
           <th scope="col">{{ $t('common.donate') }}</th>
           <th scope="col" class="column-action">{{ $t('common.action') }}</th>
@@ -56,14 +56,14 @@
           </td>
           <td>
             <div v-if="taker.images && taker.images.length > 0" @click="openImages(taker.images)">
-              <b-icon icon="eye" scale="1.5" title="Xem hình ảnh" />
+              <b-icon icon="eye" scale="1.5" :title="$t('common.viewimages')" />
             </div>
           </td>
           <td>
             <div class="float-right">{{ Number(totalDonate(taker)).toLocaleString() }} vnđ
               <b-link v-if="taker.donates && taker.donates.length > 0"
                 :to="{ name: 'donates', params: { takerId: taker.id } }">
-                <b-icon icon="layout-text-sidebar" scale="1.1" title="Xem chi tiết" />
+                <b-icon icon="layout-text-sidebar" scale="1.1" :title="$t('common.viewdescription')" />
               </b-link>
             </div>
           </td>
@@ -74,7 +74,7 @@
                   <donate-info :taker-id="taker.id" :is-new-inline="true" />
                 </div>
                 <div v-else>
-                  <b-icon icon="gift" scale="1.2" title="Bạn muốn chia sẻ? Vui lòng đăng ký hoặc đăng nhập!" />
+                  <b-icon icon="gift" scale="1.2" :title="$t('common.wannadonate')" />
                 </div>
               </div>
               <div class="mx-1" v-if="taker.can_edit">
@@ -82,14 +82,15 @@
               </div>
               <div class="mx-2" v-if="taker.can_edit" @click="stopDonate(taker.id)">
                 <div v-if="taker.stop_donate">
-                  <b-icon icon="play-circle" scale="1.2" title="Cần chia sẻ" />
+                  <b-icon icon="play-circle" scale="1.2" :title="$t('common.needtodonate')" />
                 </div>
                 <div v-else>
-                  <b-icon icon="stop-circle" scale="1.2" title="Ngừng chia sẻ" />
+                  <b-icon icon="stop-circle" scale="1.2" :title="$t('common.stopdonate')" />
                 </div>
               </div>
               <div class="mr-2" v-if="taker.can_delete">
-                <b-icon icon="x-circle" scale="1.2" variant="danger" title="Xóa" @click="handleDelete(taker.id)" />
+                <b-icon icon="x-circle" scale="1.2" variant="danger" :title="$t('common.delete')"
+                  @click="handleDelete(taker.id)" />
               </div>
             </div>
           </td>
@@ -110,7 +111,7 @@
             <b-icon icon="card-text" scale="1.5" class="mr-3" v-if="taker.description && taker.description.length > 20"
               v-b-popover.click.blur="taker.description" v-b-popover.hover.top="taker.description" title="" />
             <div v-if="taker.images && taker.images.length > 0" @click="openImages(taker.images)">
-              <b-icon icon="eye" scale="1.5" title="Xem hình ảnh" />
+              <b-icon icon="eye" scale="1.5" :title="$t('common.viewimages')" />
             </div>
           </b-row>
           <b-row align-v="start" v-if="!taker.stop_donate">
@@ -118,7 +119,7 @@
               <donate-info :taker-id="taker.id" :is-new-inline="true" />
             </div>
             <div v-else>
-              <b-icon icon="gift" scale="1.2" title="Bạn muốn chia sẻ? Vui lòng đăng ký hoặc đăng nhập!" />
+              <b-icon icon="gift" scale="1.2" :title="$t('common.needtodonate')" />
             </div>
             <div class="ml-2">{{ totalDonate(taker) }} vnđ</div>
           </b-row>
@@ -128,10 +129,10 @@
             </div>
             <div class="mr-3" v-if="taker.can_edit" @click="stopDonate(taker.id)">
               <div v-if="taker.stop_donate">
-                <b-icon icon="play-circle" scale="1.2" title="Cần chia sẻ" />
+                <b-icon icon="play-circle" scale="1.2" :title="$t('common.needtodonate')" />
               </div>
               <div v-else>
-                <b-icon icon="stop-circle" scale="1.2" title="Ngừng chia sẻ" />
+                <b-icon icon="stop-circle" scale="1.2" :title="$t('common.stopdonate')" />
               </div>
             </div>
           </b-row>

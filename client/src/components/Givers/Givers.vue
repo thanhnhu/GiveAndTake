@@ -1,6 +1,7 @@
 <template src="./givers.html"></template>
 
 <script>
+import { vue } from '@/main';
 import { mapState, mapActions } from "vuex";
 import GiverInfo from "@/components/Givers/GiverInfo";
 import ModalDialog from "@/components/ModalDialog";
@@ -58,7 +59,7 @@ export default {
     },
 
     handleDelete(giverId) {
-      let res = confirm("Bạn có chắc chắn xóa?");
+      let res = confirm(vue.$i18n.t('common.confirmDelete'));
       if (res) {
         this.removeGiver(giverId);
       }

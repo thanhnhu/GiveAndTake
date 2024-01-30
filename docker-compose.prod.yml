@@ -1,5 +1,6 @@
 version: "3.7"
 ### For docker running both backend/frontend and dev/prod env
+# docker-compose -f docker-compose.yml watch 
 # docker-compose -f docker-compose.yml up --build
 # docker-compose -f docker-compose.prod.yml up --build
 

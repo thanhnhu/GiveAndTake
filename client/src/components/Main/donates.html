@@ -12,10 +12,10 @@
     <table class="table table-sm table-bordered table-striped table-hover">
       <thead>
         <tr>
-          <th scope="col" class="column-date">Ngày tạo</th>
-          <th scope="col" class="column-donate">Hỗ trợ</th>
-          <th scope="col" class="column-desc">Chi tiết</th>
-          <th scope="col" v-if="taker.can_edit" class="column-action">Hành động</th>
+          <th scope="col" class="column-date">{{ $t('common.createddate') }}</th>
+          <th scope="col" class="column-donate">{{ $t('common.donate') }}</th>
+          <th scope="col" class="column-desc">{{ $t('common.description') }}</th>
+          <th scope="col" v-if="taker.can_edit" class="column-action">{{ $t('common.action') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -32,7 +32,8 @@
                   <donate-info :taker-id="taker.id" :is-edit="true" :edit-object="donate" />
                 </div>
                 <div class="mr-2" v-if="taker.can_delete">
-                  <b-icon icon="x-circle" scale="1.2" variant="danger" title="Xóa" @click="handleDelete(donate.id)" />
+                  <b-icon icon="x-circle" scale="1.2" variant="danger" :title="$t('common.delete')"
+                    @click="handleDelete(donate.id)" />
                 </div>
               </div>
             </td>

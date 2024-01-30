@@ -17,13 +17,24 @@
     "fullname": "Họ Tên",
     "phone": "Điện thoại",
     "address": "Địa chỉ",
-    "detail": "Chi tiết",
+    "description": "Chi tiết",
     "images": "Hình ảnh",
     "donate": "Hỗ trợ",
+    "createddate": "Ngày tạo",
+    "viewimages": "Xem hình ảnh",
+    "viewdescription": "Xem chi tiết",
     "action": "Hành động",
+    "saveandclose": "Lưu và tắt",
+    "save": "Lưu lại",
+    "edit": "Chỉnh sửa",
+    "delete": "Xóa",
     "cancel": "Bỏ qua",
+    "confirmDelete": "Bạn có chắc chắn xóa?",
     "field_required": "{field} không để trống!",
-    "field_invalid": "{field} không hợp lệ!"
+    "field_invalid": "{field} không hợp lệ!",
+    "wannadonate": "Bạn muốn chia sẻ? Vui lòng đăng ký hoặc đăng nhập!",
+    "needtodonate": "Cần chia sẻ",
+    "stopdonate": "Ngừng chia sẻ"
   },
   "user": {
     "login": "Đăng nhập",
@@ -45,7 +56,28 @@
       "none_account": "Tạo tài khoản mới",
       "wrong_username_password": "Tên đăng nhập hoặc mật khẩu không đúng!",
       "username_required": "Tên đăng nhập không để trống!",
-      "password_required": "Mật khẩu không để trống!"
+      "password_required": "Mật khẩu không để trống!",
+      "login_success": "Đăng nhập thành công!",
+      "register_success": "Đăng ký thành công!"
     }
+  },
+  "taker": {
+    "addnew": "Tạo người nhận mới"
+  },
+  "giver": {
+    "addnew": "Tạo người cho mới"
+  },
+  "donate": {
+    "addnew": "Add new",
+    "haveDonate": "Bạn chỉ cần nhập số tiền đã chia sẻ!!!",
+    "money": "Số tiền"
+  },
+  "upload": {
+    "addnew": "Thêm hình ảnh",
+    "popup_header": "Thêm hình ảnh (hình không quá 10MB)",
+    "popup_success": "Tải hình lên thành công!",
+    "popup_failed": "Có lỗi khi tải hình!",
+    "popup_addmore": "Thêm hình",
+    "popup_upload": "Tải lên"
   }
 }

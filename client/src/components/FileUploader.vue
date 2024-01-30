@@ -79,18 +79,18 @@ export default {
 <template>
   <div class="">
     <div v-if="user" @click="showUpload = true">
-      <b-icon icon="camera" scale="1.5" title="Thêm hình ảnh" />
+      <b-icon icon="camera" scale="1.5" :title="$t('upload.addnew')" />
     </div>
 
     <modal-dialog :show="showUpload" @close="showUpload = false">
-      <template v-slot:header>Thêm hình ảnh (hình không quá 10MB)</template>
+      <template v-slot:header>{{ $t('upload.popup_header') }}</template>
       <template v-slot:body>
         <div>
           <b-alert variant="info" dismissible fade :show="showSuccess" @dismissed="showSuccess = 0">
-            Tải hình lên thành công!
+            {{ $t('upload.popup_success') }}
           </b-alert>
           <b-alert variant="warning" dismissible fade :show="showError" @dismissed="showError = 0">
-            Có lỗi khi tải hình!
+            {{ $t('upload.popup_failed') }}
           </b-alert>
         </div>
         <b-overlay :show="fetchingData" variant="transparent" @hidden="onOverlayHidden">
@@ -100,20 +100,21 @@ export default {
           </div>
           <b-row v-for="(file, index) in files" :key="index" class="align-middle file-listing">
             <div class="ml-3 mr-2">
-              <b-icon icon="x-circle" scale="1.2" variant="danger" title="Xóa" @click="removeFile(index)" />
+              <b-icon icon="x-circle" scale="1.2" variant="danger" :title="$t('common.delete')"
+                @click="removeFile(index)" />
             </div>
             <div class="mr-2" :class="{ 'file-error': file.size > 1024 * 1024 * 10 }">
               {{ file.name }}
             </div>
           </b-row>
           <div class="mt-1">
-            <b-button size="sm" variant="outline-primary" @click="addFiles">Thêm hình</b-button>
+            <b-button size="sm" variant="outline-primary" @click="addFiles">{{ $t('upload.popup_addmore') }}</b-button>
           </div>
         </b-overlay>
       </template>
       <template v-slot:footer>
         <b-button size="sm" variant="outline-primary" @click="submitFiles"
-          :disabled="fetchingData || !files || files.length == 0">Tải lên</b-button>
+          :disabled="fetchingData || !files || files.length == 0">{{ $t('upload.popup_upload') }}</b-button>
       </template>
     </modal-dialog>
   </div>

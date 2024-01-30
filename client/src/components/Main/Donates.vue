@@ -1,6 +1,7 @@
 <template src="./donates.html"></template>
 
 <script>
+import { vue } from '@/main';
 import { mapState, mapActions } from "vuex";
 import DonateInfo from "@/components/Main/DonateInfo";
 import { isMobile } from "../../helpers";
@@ -45,7 +46,7 @@ export default {
     ...mapActions("takers", ["addDonate", "updateDonate", "removeDonate"]),
 
     handleDelete(donateId) {
-      let res = confirm("Bạn có chắc chắn xóa?");
+      let res = confirm(vue.$i18n.t('common.confirmDelete'));
       if (res) {
         this.removeDonate(donateId);
       }

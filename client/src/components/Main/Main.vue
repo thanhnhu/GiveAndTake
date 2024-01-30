@@ -1,6 +1,7 @@
 <template src="./main.html"></template>
 
 <script>
+import { vue } from '@/main';
 import { mapState, mapActions, mapGetters } from "vuex";
 import FileUploader from "@/components/FileUploader";
 import ModalSlider from "@/components/ModalSlider";
@@ -66,7 +67,7 @@ export default {
     },
 
     handleDelete(takerId) {
-      let res = confirm("Bạn có chắc chắn xóa?");
+      let res = confirm(vue.$i18n.t('common.confirmDelete'));
       if (res) {
         this.removeTaker(takerId);
       }

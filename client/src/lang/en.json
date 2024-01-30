@@ -17,13 +17,24 @@
     "fullname": "Fullname",
     "phone": "Phone",
     "address": "Address",
-    "detail": "Detail",
+    "description": "Description",
     "images": "Images",
     "donate": "Donate",
+    "createddate": "Created Date",
+    "viewimages": "View images",
+    "viewdescription": "View description",
     "action": "Action",
+    "saveandclose": "Save and Close",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
     "cancel": "Cancel",
+    "confirmDelete": "Are you sure to delete?",
     "field_required": "{field} is required!",
-    "field_invalid": "{field} is invalid!"
+    "field_invalid": "{field} is invalid!",
+    "wannadonate": "Do you want to donate? Please login/register!",
+    "needtodonate": "Need help",
+    "stopdonate": "Stop donate"
   },
   "user": {
     "login": "Login",
@@ -45,7 +56,27 @@
       "none_account": "Sign up!",
       "wrong_username_password": "Wrong username or password!",
       "username_required": "Username is required!",
-      "password_required": "Password is required!"
+      "login_success": "Login success!",
+      "register_success": "Register success!"
     }
+  },
+  "taker": {
+    "addnew": "Add new Taker"
+  },
+  "giver": {
+    "addnew": "Add new Giver"
+  },
+  "donate": {
+    "addnew": "Add new",
+    "haveDonate": "Input the money has donated!!!",
+    "money": "Money"
+  },
+  "upload": {
+    "addnew": "Upload images",
+    "popup_header": "Add images (size limit 10Mb)",
+    "popup_success": "Upload success!",
+    "popup_failed": "Upload failed!",
+    "popup_addmore": "Add more",
+    "popup_upload": "Upload"
   }
 }

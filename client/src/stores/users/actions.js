@@ -1,3 +1,4 @@
+import { vue } from '@/main';
 import router from '@/router'
 import { toastMessage } from '../../helpers'
 import userService from '../../services/userService'
@@ -11,7 +12,7 @@ export default {
       .then(response => {
         commit(types.LOGIN_SUCCESS, response.data)
         router.push('/')
-        toastMessage(`Đăng nhập thành công!`)
+        toastMessage(vue.$i18n.t('user.messages.login_success'))
       })
       .catch(error => {
         commit(types.LOGIN_FAILURE, { error })
@@ -30,7 +31,7 @@ export default {
       .then(user => {
         commit(types.REGISTER_SUCCESS, user)
         router.push('/login')
-        toastMessage(`Đăng ký thành công!`)
+        toastMessage(vue.$i18n.t('user.messages.register_success'))
       })
       .catch(error => {
         commit(types.REGISTER_FAILURE, error)

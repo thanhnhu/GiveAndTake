@@ -19,23 +19,11 @@ export default {
     <transition name="modal">
       <div class="modal-mask">
         <div class="modal-wrapper">
-          <div
-            class="modal-dialog"
-            role="document"
-            aria-labelledby="modalTitle"
-            aria-describedby="modalDescription"
-          >
+          <div class="modal-dialog" role="document" aria-labelledby="modalTitle" aria-describedby="modalDescription">
             <div class="modal-content">
               <header class="modal-header" id="modalTitle">
                 <slot name="header"> This is the default tile! </slot>
-                <button
-                  type="button"
-                  class="btn-close"
-                  @click="close"
-                  aria-label="Close modal"
-                >
-                  x
-                </button>
+                <button type="button" class="btn-close" @click="close" aria-label="Close modal">x</button>
               </header>
 
               <section class="modal-body" id="modalDescription">
@@ -44,9 +32,7 @@ export default {
 
               <footer class="modal-footer">
                 <slot name="footer"> This is the default footer! </slot>
-                <b-button size="sm" variant="outline-secondary" @click="close"
-                  >Bỏ qua</b-button
-                >
+                <b-button size="sm" variant="outline-secondary" @click="close">{{ $t('common.cancel') }}</b-button>
               </footer>
             </div>
           </div>

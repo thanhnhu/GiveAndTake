@@ -36,7 +36,7 @@
           </th>
           <th scope="col" class="text-left">{{ $t('common.address') }}</th>
           <th scope="col" class="column-city">{{ $t('common.city') }}</th>
-          <th scope="col">{{ $t('common.detail') }}</th>
+          <th scope="col">{{ $t('common.description') }}</th>
           <th scope="col" class="column-images">{{ $t('common.images') }}</th>
           <th scope="col" class="column-action" v-if="givers.some(r=>r.can_edit)">{{ $t('common.action') }}</th>
         </tr>
@@ -55,7 +55,7 @@
           </td>
           <td>
             <div v-if="giver.images && giver.images.length>0" @click="openImages(giver.images)">
-              <b-icon icon="eye" scale="1.5" title="Xem hình ảnh" />
+              <b-icon icon="eye" scale="1.5" :title="$t('common.viewimages')" />
             </div>
           </td>
           <td class="column-action" v-if="givers.some(r=>r.can_edit)">
@@ -65,14 +65,15 @@
               </div>
               <div class="mx-1" v-if="giver.can_edit" @click="setActive(giver.id)">
                 <div v-if="giver.active">
-                  <b-icon icon="stop-circle" scale="1.2" title="Tạm ngừng" />
+                  <b-icon icon="stop-circle" scale="1.2" :title="$t('common.stopdonate')" />
                 </div>
                 <div v-else>
-                  <b-icon icon="play-circle" scale="1.2" title="Mở lại" />
+                  <b-icon icon="play-circle" scale="1.2" :title="$t('common.needtodonate')" />
                 </div>
               </div>
               <div class="mx-1" v-if="giver.can_delete">
-                <b-icon icon="x-circle" scale="1.2" variant="danger" title="Xóa" @click="handleDelete(giver.id)" />
+                <b-icon icon="x-circle" scale="1.2" variant="danger" :title="$t('common.delete')"
+                  @click="handleDelete(giver.id)" />
               </div>
             </div>
           </td>
@@ -93,7 +94,7 @@
             <b-icon icon="card-text" scale="1.5" class="mr-3" v-if="giver.description && giver.description.length > 20"
               v-b-popover.click.blur="giver.description" v-b-popover.hover.top="giver.description" title="" />
             <div v-if="giver.images && giver.images.length > 0" @click="openImages(giver.images)">
-              <b-icon icon="eye" scale="1.5" title="Xem hình ảnh" />
+              <b-icon icon="eye" scale="1.5" :title="$t('common.viewimages')" />
             </div>
           </b-row>
           <b-row v-if="givers.some(r=>r.can_edit)">
@@ -102,10 +103,10 @@
             </div>
             <div v-if="giver.can_edit" @click="setActive(giver.id)">
               <div v-if="giver.active">
-                <b-icon icon="stop-circle" scale="1.2" title="Tạm ngừng" />
+                <b-icon icon="stop-circle" scale="1.2" :title="$t('common.stopdonate')" />
               </div>
               <div v-else>
-                <b-icon icon="play-circle" scale="1.2" title="Mở lại" />
+                <b-icon icon="play-circle" scale="1.2" :title="$t('common.needtodonate')" />
               </div>
             </div>
           </b-row>

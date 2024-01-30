@@ -1,22 +1,25 @@
 <div>
-  <b-button v-if="user && isNew" type="button" size="sm" variant="outline-primary" @click="showAddDonate = true">Thêm
-    mới
+  <b-button v-if="user && isNew" type="button" size="sm" variant="outline-primary" @click="showAddDonate = true">{{
+    $t('donate.addnew') }}
   </b-button>
-  <b-icon v-if="user && isEdit" icon="card-heading" scale="1.3" title="Chỉnh sửa" @click="showAddDonate = true" />
-  <b-icon v-if="user && isNewInline" icon="gift" scale="1.2" title="Chia sẻ" @click="showAddDonate = true" />
+  <b-icon v-if="user && isEdit" icon="card-heading" scale="1.3" :title="$t('common.edit')"
+    @click="showAddDonate = true" />
+  <b-icon v-if="user && isNewInline" icon="gift" scale="1.2" :title="$t('common.donate')"
+    @click="showAddDonate = true" />
 
   <ValidationObserver ref="observerDonate" v-slot="{ handleSubmit }">
     <modal-dialog :show="showAddDonate" @close="showAddDonate = false">
-      <template v-slot:header>Bạn chỉ cần nhập số tiền đã chia sẻ!!!</template>
+      <template v-slot:header>{{ $t('donate.haveDonate') }}</template>
       <template v-slot:body>
-        <ValidationProvider name="Số tiền" rules="required" v-slot="{ errors }">
+        <ValidationProvider :name="$t('donate.money')" rules="required" v-slot="{ errors }">
           <div class="mb-3">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">$</span>
               </div>
-              <input type="number" step="1" class="form-control" v-model="donate.donate" placeholder="Số tiền"
-                aria-label="Số tiền" min="0" :class="{ 'is-invalid': errors.length > 0 }" />
+              <input type="number" step="1" class="form-control" v-model="donate.donate"
+                :placeholder="$t('donate.money')" aria-label="money" min="0"
+                :class="{ 'is-invalid': errors.length > 0 }" />
             </div>
             <div class="error-messages">{{ errors[0] }}</div>
           </div>
@@ -24,16 +27,16 @@
 
         <div class="input-group">
           <div class="input-group-prepend">
-            <span class="input-group-text">Chi tiết</span>
+            <span class="input-group-text">{{ $t('common.description') }}</span>
           </div>
-          <textarea class="form-control" aria-label="Chi tiết" v-model="donate.description"></textarea>
+          <textarea class="form-control" aria-label="description" v-model="donate.description"></textarea>
         </div>
       </template>
       <template v-slot:footer>
         <b-button size="sm" variant="outline-primary" :disabled="fetchingData"
-          @click="handleSubmit(handleSaveDonate);showAddDonate = false">Lưu và tắt</b-button>
+          @click="handleSubmit(handleSaveDonate);showAddDonate = false">{{ $t('common.saveandclose') }}</b-button>
         <b-button size="sm" variant="outline-primary" :disabled="fetchingData" @click="handleSubmit(handleSaveDonate)">
-          Lưu lại</b-button>
+          {{ $t('common.save') }}</b-button>
       </template>
     </modal-dialog>
   </ValidationObserver>

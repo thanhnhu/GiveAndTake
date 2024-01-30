@@ -1,5 +1,5 @@
 import cityService from '../../services/cityService'
-import i18n from '@/lang/i18n.js'
+import { vue } from '@/main';
 
 const FETCH_CITIES_REQUEST = 'FETCH_CITIES_REQUEST'
 const FETCH_CITIES_SUCCESS = 'FETCH_CITIES_SUCCESS'
@@ -13,7 +13,7 @@ const state = {
 
 const getters = {
   optionCities: state => {
-    return [{ id: null, name: i18n.t('common.select_city') }, ...state.cities]
+    return [{ id: null, name: vue.$i18n.t('common.select_city') }, ...state.cities]
   }
 }
 

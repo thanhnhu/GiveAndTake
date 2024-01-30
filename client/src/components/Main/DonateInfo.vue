@@ -34,6 +34,7 @@ export default {
   methods: {
     ...mapActions("takers", ["addDonate", "updateDonate"]),
     handleSaveDonate() {
+      debugger;
       if (this.isEdit) {
         this.updateDonate(this.donate);
       } else {

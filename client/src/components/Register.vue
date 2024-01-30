@@ -43,7 +43,7 @@ export default {
         <b-overlay :show="fetchingData" variant="transparent" @hidden="onOverlayHidden">
           <b-form-row class="mb-2">
             <b-col>
-              <ValidationProvider name="Username" rules="required" v-slot="{ errors }">
+              <ValidationProvider :name="$t('user.input_text.username')" rules="required" v-slot="{ errors }">
                 <input type="text" class="form-control" :class="{ 'is-invalid': errors.length > 0 }"
                   :placeholder="$t('user.input_text.username')" v-model="user.username" />
                 <div class="error-messages">{{ errors[0] }}</div>
@@ -53,7 +53,7 @@ export default {
 
           <b-form-row class="mb-2">
             <b-col>
-              <ValidationProvider name="Password" rules="required" v-slot="{ errors }">
+              <ValidationProvider :name="$t('user.input_text.password')" rules="required" v-slot="{ errors }">
                 <input type="password" class="form-control" :class="{ 'is-invalid': errors.length > 0 }"
                   :placeholder="$t('user.input_text.password')" v-model="user.password" />
                 <div class="error-messages">{{ errors[0] }}</div>
@@ -63,7 +63,7 @@ export default {
 
           <b-form-row class="mb-2">
             <b-col>
-              <ValidationProvider name="Email" rules="required|email" v-slot="{ errors }">
+              <ValidationProvider :name="$t('user.input_text.email')" rules="required|email" v-slot="{ errors }">
                 <input type="email" v-model="user.email" class="form-control" placeholder="Email"
                   :class="{ 'is-invalid': errors.length > 0 }" />
                 <div class="error-messages">{{ errors[0] }}</div>
@@ -73,7 +73,7 @@ export default {
 
           <b-form-row class="mb-2">
             <b-col>
-              <ValidationProvider name="FirstName" rules="required" v-slot="{ errors }">
+              <ValidationProvider :name="$t('user.input_text.firstname')" rules="required" v-slot="{ errors }">
                 <input type="text" class="form-control" :class="{ 'is-invalid': errors.length > 0 }"
                   :placeholder="$t('user.input_text.firstname')" v-model="user.first_name" />
                 <div class="error-messages">{{ errors[0] }}</div>
@@ -83,7 +83,7 @@ export default {
 
           <b-form-row class="mb-4">
             <b-col>
-              <ValidationProvider name="LastName" rules="required" v-slot="{ errors }">
+              <ValidationProvider :name="$t('user.input_text.lastname')" rules="required" v-slot="{ errors }">
                 <input type="text" class="form-control" :class="{ 'is-invalid': errors.length > 0 }"
                   :placeholder="$t('user.input_text.lastname')" v-model="user.last_name" />
                 <div class="error-messages">{{ errors[0] }}</div>

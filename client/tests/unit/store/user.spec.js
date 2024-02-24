@@ -1,9 +1,9 @@
 import flushPromises from 'flush-promises';
 import { createLocalVue } from '@vue/test-utils';
-import cloneDeep from 'lodash.clonedeep';
+import cloneDeep from 'lodash/cloneDeep';
 import Vuex from 'vuex';
 import axios from 'axios';
-import userModule from '@/store/users';
+import userModule from '@/stores/users';
 
 jest.mock('axios');
 

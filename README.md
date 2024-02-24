@@ -71,6 +71,10 @@ Setup
 # https://www.npmjs.com/package/node-sass
 # https://www.npmjs.com/package/all-node-versions
 # or replace node-sass@5.0.0 with sass@1.22.10
+# -----------------------------------------------
+# below use to resolve some dependencies
+$ yarn add -D vue@latest
+$ yarn upgrade --force --latest
 ```
 
 ```
@@ -91,6 +95,7 @@ $ yarn install
 
 ```
 $ cd server
+$ pipenv shell
 $ python manage.py runserver
 ```
 
@@ -118,14 +123,24 @@ $ yarn build
 $ python manage.py runserver
 ```
 
-```
-For docker running both backend/frontend and dev/prod env
+## For docker running both backend/frontend and dev/prod env
 
-# docker-compose build
-# docker-compose up
-# docker-compose up/down
+```
+$ docker-compose build
+$ docker-compose up
+$ docker-compose up/down
+$ docker-compose -f docker-compose.yml watch 
 $ docker-compose -f docker-compose.yml up --build
 $ docker-compose -f docker-compose.prod.yml up --build
+```
+
+## Running Unit Test
+
+```
+$ cd server
+$ python manage.py test backend.takers
+$ cd client
+$ yarn test:unit
 ```
 
 ## Pycharm additional configuration

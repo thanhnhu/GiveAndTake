@@ -65,4 +65,5 @@ class ImageViewSet(CreateModelMixin, RetrieveModelMixin, GenericViewSet):
         #mime_type = mimetypes.guess_type(result)
         #header = {'Content-Type': mime_type}
         #return Response(result, headers=header)
+        #raise Exception('test')
         return Response(result)

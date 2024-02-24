@@ -58,6 +58,7 @@ REST_FRAMEWORK = {
         # 'rest_framework.permissions.IsAuthenticated',
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
+    'EXCEPTION_HANDLER': 'backend.exception_handler.global_exception_handler'
 }
 
 MIDDLEWARE = [
@@ -77,7 +78,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # Add dist to
-        #'DIRS': ['dist'],
+        # 'DIRS': ['dist'],
         'DIRS': ['public'],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -147,7 +148,7 @@ MIDDLEWARE_CLASSES = (
 
 STATIC_URL = '/static/'
 # Place static in the same location as webpack build files
-#STATIC_ROOT = os.path.join(BASE_DIR, 'dist', 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'dist', 'static')
 STATIC_ROOT = os.path.join(BASE_DIR, 'public', 'static')
 STATICFILES_DIRS = []
 

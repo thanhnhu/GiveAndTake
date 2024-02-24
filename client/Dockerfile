@@ -7,9 +7,9 @@
 
 # build stage
 # use alpine to reduce the image size
-#FROM node:16.13.0 as builder
+#FROM node:16.14.0 as builder
 #RUN apt-get update || : && apt-get install python -y
-FROM node:16.13.0-alpine as builder
+FROM node:16.14.0-alpine as builder
 #RUN apk --no-cache --virtual build-dependencies add python3 make g++
 #ENV NODE_ENV=development
 #ENV NODE_OPTIONS=--openssl-legacy-provider
@@ -28,7 +28,7 @@ WORKDIR /app
 #RUN npm uninstall node-sass
 #RUN npm install sass -S -D
 RUN yarn install && yarn cache clean
-# copy source code and installed packages to docker image
+# Copy files from local machine to virtual directory in docker image
 COPY . .
 # build into /app/dist
 RUN yarn build

@@ -212,3 +212,9 @@ and served directly by the CDN.
 This allows for an extremely simple setup without the need for a separate static server.
 
 [Cloudfront Setup Wiki](https://github.com/gtalarico/django-vue-template/wiki/Setup-CDN-on-Cloud-Front)
+
+### Infrastructure model
+![Infrastructure main model](.infragenie/infrastructure_main_model.svg)
+- [server component model](.infragenie/server_component_model.svg)
+
+---

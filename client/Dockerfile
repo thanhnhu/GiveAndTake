@@ -28,6 +28,7 @@ WORKDIR /app
 #RUN npm uninstall node-sass
 #RUN npm install sass -S -D
 RUN yarn install && yarn cache clean
+RUN npx update-browserslist-db@latest
 # Copy files from local machine to virtual directory in docker image
 COPY . .
 # build into /app/dist

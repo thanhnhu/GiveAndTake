@@ -38,7 +38,7 @@ CMD python manage.py runserver 0.0.0.0:8090
 # production stage
 FROM builder as production
 #EXPOSE 8090
-CMD gunicorn -b 0.0.0.0:${PORT} backend.wsgi:application --timeout 600 --reload --log-level=info
+CMD gunicorn -b 0.0.0.0:8090 backend.wsgi:application --timeout 600 --reload --log-level=info
 
 #docker build -t server .
 #docker ps

@@ -4,9 +4,9 @@ A project to make friend with python.
 
 To connect benefactors, charity units with difficult situations.
 
-Demo: https://giveandtake.azurewebsites.net/
+Live at: https://giveandtake.onrender.com
 
-# Django Vue Template ✌️ 🐍
+# With Django Vue Template
 
 This template is a minimal example for an application using Vue and Django.
 
@@ -20,10 +20,6 @@ data at `/api/`, and static files at `/static/`. Django admin panel is also avai
 The application templates from Vue CLI `create` and Django `createproject` are kept as close as possible to their
 original state, except where a different configuration is needed for better integration of the two frameworks.
 
-### Demo
-
-[Live Demo](https://django-vue-template-demo.herokuapp.com/)
-
 ### Includes
 
 * Django
@@ -33,7 +29,7 @@ original state, except where a different configuration is needed for better inte
 * Vue Router
 * Vuex
 * Gunicorn
-* Configuration for Heroku Deployment
+<!--* Configuration for Heroku Deployment-->
 
 
 ### Template Structure
@@ -167,6 +163,7 @@ Click Apply then Ok
 
 * Set `ALLOWED_HOSTS` on [`backend.settings.prod`](/backend/settings/prod.py)
 
+<!--
 ### Heroku Server
 
 ```
@@ -192,6 +189,7 @@ The [`Procfile`](/Procfile) will run Django migrations and then launch Django'S 
 ##### Heroku One Click Deploy
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/gtalarico/django-vue-template)
+-->
 
 ## Static Assets
 

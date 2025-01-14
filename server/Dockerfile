@@ -21,8 +21,8 @@ RUN pip install --no-cache-dir pipenv && \
   #pip install --no-cache-dir --upgrade pip
   pip install --no-cache-dir -r requirements.txt && \
   pip cache purge && \
-  python manage.py migrate && \
-  python manage.py loaddata cities && \
+  #python manage.py migrate && \
+  #python manage.py loaddata cities && \
   python manage.py collectstatic --noinput && \
   chmod +x *.sh
 COPY . .

@@ -5,6 +5,7 @@ A project to make friend with python.
 To connect benefactors, charity units with difficult situations.
 
 Live at: https://giveandtake.onrender.com
+You may have to click [here](https://giveandtake-api.onrender.com/docs) first to activate the API (because of the free hosting)
 
 # With Django Vue Template
 

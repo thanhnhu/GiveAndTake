@@ -11,7 +11,7 @@ ENV PYTHONUNBUFFERED 1
 
 RUN mkdir /app
 COPY . /app
-RUN --mount=type=secret,id=credentials,dst=/etc/secrets/credentials.json
+#RUN --mount=type=secret,id=credentials,dst=/etc/secrets/credentials.json
 WORKDIR /app
 
 # to reduce image size: combine command + pip i --no-cache-dir
@@ -25,6 +25,7 @@ RUN pip install --no-cache-dir pipenv && \
   #python manage.py migrate && \
   #python manage.py loaddata cities && \
   python manage.py collectstatic --noinput && \
+  chmod 600 credentials.json \
   chmod +x *.sh
 COPY . .
 

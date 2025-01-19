@@ -3,7 +3,7 @@ name: Keep Alive
 on:
   workflow_dispatch:       # allow manual run
   schedule:
-    - cron: '*/15 * * * *' # run random every 15m
+    - cron: '*/15 * * * *' # run every 15m
 
 
 concurrency:
@@ -17,37 +17,49 @@ jobs:
     container:
       image: alpine:latest
     steps:
+      - name: Install dependencies
+        run: |
+          apk add --no-cache bash curl
+
       - name: Ping Server with Random Delay
+        shell: bash
         run: |
           URLS=(
             "https://giveandtake-api.onrender.com/docs"
             "https://giveandtake.onrender.com"
           )
 
+          # Max retries for each ping
           MAX_RETRIES=3
 
+          # Loop through each URL
           for url in "${URLS[@]}"
           do
-            RANDOM_DELAY=$(( RANDOM % 241 + 480 )) # random delay from 8m to 12m
+            # Log the current URL
+            echo "Pinging $url..."
+
+            # Generate random delay (8 to 12 minutes)
+            RANDOM_DELAY=$(( RANDOM % 241 + 480 ))
             sleep $RANDOM_DELAY
+
             ATTEMPT=1
             SUCCESS=false
 
             while [ $ATTEMPT -le $MAX_RETRIES ]
             do
-              STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" $URL)
-              if [ "$STATUS_CODE" -eq 200 ]; then
+              STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$url")
+              if [ "$STATUS_CODE" -eq 200 ] || [ "$STATUS_CODE" -eq 301 ] || [ "$STATUS_CODE" -eq 302 ]; then
                 echo "Ping $url success!"
                 SUCCESS=true
                 break
               else
-                echo "Ping $url failed (timer $ATTEMPT)"
+                echo "Ping $url failed (attempt $ATTEMPT)"
                 ((ATTEMPT++))
                 sleep 10
               fi
             done
 
             if [ "$SUCCESS" = false ]; then
-              echo "❌ Ping failed $URL after $MAX_RETRIES times."
+              echo "Ping failed $url after $MAX_RETRIES attempts."
             fi
           done

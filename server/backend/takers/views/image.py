@@ -36,6 +36,9 @@ class ImageViewSet(CreateModelMixin, RetrieveModelMixin, GenericViewSet):
 
         factory = self.get_serializer()
         serializer = factory.get_serializer(settings.STORAGE)
+        print(f"settings.STORAGE {settings.STORAGE}")
+        print(f"settings.DRIVEFOLDERID {settings.DRIVEFOLDERID}")
+        print(f"settings.SERVICE_ACCOUNT_FILE {settings.SERVICE_ACCOUNT_FILE}")
         result = serializer.save(host, id, files, settings.DRIVEFOLDERID)
 
         # save to owner

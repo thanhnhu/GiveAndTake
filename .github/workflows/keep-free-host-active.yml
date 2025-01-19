@@ -3,7 +3,7 @@ name: Keep Alive
 on:
   workflow_dispatch:       # allow manual run
   schedule:
-    - cron: '*/15 * * * *' # run random every 15m
+    - cron: '*/45 * * * *' # run every 15m
 
 
 concurrency:
@@ -39,7 +39,7 @@ jobs:
             echo "Pinging $url..."
 
             # Generate random delay (8 to 12 minutes)
-            RANDOM_DELAY=$(( RANDOM % 241 + 480 ))
+            RANDOM_DELAY=1
             sleep $RANDOM_DELAY
 
             ATTEMPT=1
@@ -48,7 +48,7 @@ jobs:
             while [ $ATTEMPT -le $MAX_RETRIES ]
             do
               STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$url")
-              if [ "$STATUS_CODE" -eq 200 ]; then
+              if [ "$STATUS_CODE" -eq 200 ] || [ "$STATUS_CODE" -eq 301 ] || [ "$STATUS_CODE" -eq 302 ]; then
                 echo "Ping $url success!"
                 SUCCESS=true
                 break

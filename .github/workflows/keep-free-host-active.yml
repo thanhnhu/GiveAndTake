@@ -35,6 +35,9 @@ jobs:
           # Loop through each URL
           for url in "${URLS[@]}"
           do
+            # Log the current URL
+            echo "Pinging $url..."
+
             # Generate random delay (8 to 12 minutes)
             RANDOM_DELAY=$(( RANDOM % 241 + 480 ))
             sleep $RANDOM_DELAY
@@ -44,7 +47,7 @@ jobs:
 
             while [ $ATTEMPT -le $MAX_RETRIES ]
             do
-              STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" $URL)
+              STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$url")
               if [ "$STATUS_CODE" -eq 200 ]; then
                 echo "Ping $url success!"
                 SUCCESS=true

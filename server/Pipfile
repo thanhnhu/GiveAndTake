@@ -10,6 +10,10 @@ gunicorn = "*"
 whitenoise = "==5.3.0"
 dj-database-url = "*"
 psycopg2-binary = "*"
+google-api-python-client = "*"
+google-auth = "*"
+google-auth-oauthlib = "*"
+google-auth-httplib2 = "*"
 
 [dev-packages]
 

@@ -25,7 +25,7 @@ RUN pip install --no-cache-dir pipenv && \
   #python manage.py migrate && \
   #python manage.py loaddata cities && \
   python manage.py collectstatic --noinput && \
-  chmod 600 credentials.json \
+  #chmod 600 credentials.json \
   chmod +x *.sh
 COPY . .
 

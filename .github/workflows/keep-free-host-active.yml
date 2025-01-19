@@ -17,19 +17,28 @@ jobs:
     container:
       image: alpine:latest
     steps:
+      - name: Install dependencies
+        run: |
+          apk add --no-cache bash curl
+
       - name: Ping Server with Random Delay
+        shell: bash
         run: |
           URLS=(
             "https://giveandtake-api.onrender.com/docs"
             "https://giveandtake.onrender.com"
           )
 
+          # Max retries for each ping
           MAX_RETRIES=3
 
+          # Loop through each URL
           for url in "${URLS[@]}"
           do
-            RANDOM_DELAY=$(( RANDOM % 241 + 480 )) # random delay from 8m to 12m
+            # Generate random delay (8 to 12 minutes)
+            RANDOM_DELAY=$(( RANDOM % 241 + 480 ))
             sleep $RANDOM_DELAY
+
             ATTEMPT=1
             SUCCESS=false
 
@@ -41,13 +50,13 @@ jobs:
                 SUCCESS=true
                 break
               else
-                echo "Ping $url failed (timer $ATTEMPT)"
+                echo "Ping $url failed (attempt $ATTEMPT)"
                 ((ATTEMPT++))
                 sleep 10
               fi
             done
 
             if [ "$SUCCESS" = false ]; then
-              echo "❌ Ping failed $URL after $MAX_RETRIES times."
+              echo "Ping failed $url after $MAX_RETRIES attempts."
             fi
           done

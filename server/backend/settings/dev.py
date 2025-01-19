@@ -17,7 +17,13 @@ SETTINGS_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(SETTINGS_DIR)
 MEDIA_URL = 'images/'
 
-STORAGE = 'local'
+# Google Drive Authentication Setup to save images
+SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, 'credentials.json')
+SCOPES = ['https://www.googleapis.com/auth/drive']
+DRIVEFOLDERID = '1oFoOJg9fVsdtHkyfQS2Vph0asGDe1Sg2'
+
+#STORAGE = 'local'
+STORAGE = 'Google'
 
 
 # Quick-start development settings - unsuitable for production

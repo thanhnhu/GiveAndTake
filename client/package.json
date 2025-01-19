@@ -21,6 +21,7 @@
     "axios": "^0.21.1",
     "bootstrap": "4.5.3",
     "bootstrap-vue": "2.21.2",
+    "core-js": "3",
     "js-cookie": "^3.0.0",
     "moment": "^2.29.1",
     "sass": "^1.22.10",

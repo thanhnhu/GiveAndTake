@@ -4,6 +4,7 @@ dist
 venv
 images
 db.sqlite3
+credentials.json
 __pycache__
 
 # local env files

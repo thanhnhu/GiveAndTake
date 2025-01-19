@@ -19,6 +19,9 @@ class ImageViewSet(CreateModelMixin, RetrieveModelMixin, GenericViewSet):
 
     def create(self, request, *args, **kwargs):
         supported_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
+        print(f"settings.STORAGE {settings.STORAGE}")
+        print(f"settings.DRIVEFOLDERID {settings.DRIVEFOLDERID}")
+        print(f"settings.SERVICE_ACCOUNT_FILE {settings.SERVICE_ACCOUNT_FILE}")
         files = request.data.getlist("files")
         # validate files first
         for file in files:
@@ -36,9 +39,6 @@ class ImageViewSet(CreateModelMixin, RetrieveModelMixin, GenericViewSet):
 
         factory = self.get_serializer()
         serializer = factory.get_serializer(settings.STORAGE)
-        print(f"settings.STORAGE {settings.STORAGE}")
-        print(f"settings.DRIVEFOLDERID {settings.DRIVEFOLDERID}")
-        print(f"settings.SERVICE_ACCOUNT_FILE {settings.SERVICE_ACCOUNT_FILE}")
         result = serializer.save(host, id, files, settings.DRIVEFOLDERID)
 
         # save to owner

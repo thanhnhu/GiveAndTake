@@ -19,7 +19,6 @@ class ImageViewSet(CreateModelMixin, RetrieveModelMixin, GenericViewSet):
 
     def create(self, request, *args, **kwargs):
         supported_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
-        print(f"settings.SERVICE_ACCOUNT_FILE {settings.SERVICE_ACCOUNT_FILE}")
         files = request.data.getlist("files")
         # validate files first
         for file in files:

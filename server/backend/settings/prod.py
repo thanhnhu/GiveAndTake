@@ -29,7 +29,7 @@ DATABASES = {
 ############
 # SECURITY #
 ############
-# Google Drive Authentication Setup from server variables
+# Google Drive Authentication Setup from server Secret Files
 SERVICE_ACCOUNT_FILE = '/etc/secrets/credentials.json'
 
 # django not allow serve static files on Production

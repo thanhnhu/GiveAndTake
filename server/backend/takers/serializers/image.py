@@ -74,7 +74,6 @@ class ImageToLocalSerializer(ImageSerializer):
 
 class ImageToGoogleDriveSerializer(ImageSerializer):
     def __init__(self):
-        print(f"settings.SERVICE_ACCOUNT_FILE {settings.SERVICE_ACCOUNT_FILE}")
         self.credentials = Credentials.from_service_account_file(
             settings.SERVICE_ACCOUNT_FILE, scopes=settings.SCOPES
         )

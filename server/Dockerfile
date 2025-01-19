@@ -11,6 +11,7 @@ ENV PYTHONUNBUFFERED 1
 
 RUN mkdir /app
 COPY . /app
+RUN --mount=type=secret,id=credentials,dst=/etc/secrets/credentials.json
 WORKDIR /app
 
 # to reduce image size: combine command + pip i --no-cache-dir

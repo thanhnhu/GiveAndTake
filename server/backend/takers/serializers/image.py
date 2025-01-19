@@ -74,11 +74,10 @@ class ImageToLocalSerializer(ImageSerializer):
 
 class ImageToGoogleDriveSerializer(ImageSerializer):
     def __init__(self):
+        print(f"settings.SERVICE_ACCOUNT_FILE {settings.SERVICE_ACCOUNT_FILE}")
         self.credentials = Credentials.from_service_account_file(
             settings.SERVICE_ACCOUNT_FILE, scopes=settings.SCOPES
         )
-        print(f"settings.SERVICE_ACCOUNT_FILE {settings.SERVICE_ACCOUNT_FILE}")
-        print(f"settings.SCOPES {settings.SCOPES}")
         self.drive_service = build('drive', 'v3', credentials=self.credentials)
 
     def upload_to_drive(self, file_path, file_name, folder_id=None):

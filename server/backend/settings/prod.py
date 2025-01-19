@@ -30,7 +30,7 @@ DATABASES = {
 # SECURITY #
 ############
 # Google Drive Authentication Setup from server variables
-SERVICE_ACCOUNT_FILE = os.getenv('/etc/secrets/credentials.json')
+SERVICE_ACCOUNT_FILE = os.getenv('credentials.json')
 
 # django not allow serve static files on Production
 # can use whitenoise or proxy to other server

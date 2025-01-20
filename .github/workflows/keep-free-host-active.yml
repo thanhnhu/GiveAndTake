@@ -3,7 +3,7 @@ name: Keep Alive
 on:
   workflow_dispatch:       # allow manual run
   schedule:
-    - cron: '*/20 * * * *' # run every 20m
+    - cron: '*/15 * * * *' # run every 15m
 
 
 concurrency:

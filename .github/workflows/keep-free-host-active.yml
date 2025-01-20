@@ -3,7 +3,7 @@ name: Keep Alive
 on:
   workflow_dispatch:       # allow manual run
   schedule:
-    - cron: '*/15 * * * *' # run every 15m
+    - cron: '*/20 * * * *' # run every 20m
 
 
 concurrency:
@@ -38,8 +38,8 @@ jobs:
             # Log the current URL
             echo "Pinging $url..."
 
-            # Generate random delay (8 to 12 minutes)
-            RANDOM_DELAY=$(( RANDOM % 241 + 480 ))
+            # Generate random delay (1 to 5 minutes)
+            RANDOM_DELAY=$(( RANDOM % 301 + 60 ))
             sleep $RANDOM_DELAY
 
             ATTEMPT=1

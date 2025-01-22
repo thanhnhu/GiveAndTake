@@ -14,10 +14,8 @@ COPY . /app
 WORKDIR /app
 
 # below for mysqlclient library
-RUN apt update && apt install -y \
-  default-libmysqlclient-dev \
-  build-essential \
-  && rm -rf /var/lib/apt/lists/*
+RUN apk update && \
+  apk add --no-cache mysql-client build-base
 
 # to reduce image size: combine command + pip i --no-cache-dir
 RUN pip install --no-cache-dir pipenv && \

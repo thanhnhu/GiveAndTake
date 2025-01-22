@@ -19,9 +19,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': os.environ.get('DB_PORT', '3306'),
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'NAME': os.environ.get('DB_NAME', 'giveandtake'),
+        'USER': os.environ.get('DB_USER', 'giveandtake'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'giveandtake'),
         'OPTIONS': {
             'charset': 'utf8mb4',  # Use Unicode
         }
@@ -39,7 +39,7 @@ SERVICE_ACCOUNT_FILE = '/etc/secrets/credentials.json'
 # can use whitenoise or proxy to other server
 DEBUG = bool(os.getenv('DEBUG', ''))
 
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', SECRET_KEY)
+SECRET_KEY = os.getenv('SECRET_KEY', SECRET_KEY)
 
 # Set to your Domain here (eg. 'django-vue-template-demo.herokuapp.com')
 ALLOWED_HOSTS = ['*']

@@ -114,9 +114,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': config('DB_HOST', default='localhost'),
         'PORT': config('DB_PORT', default='3306'),
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
+        'NAME': config('DB_NAME', 'giveandtake'),
+        'USER': config('DB_USER', 'giveandtake'),
+        'PASSWORD': config('DB_PASSWORD', 'giveandtake'),
         'OPTIONS': {
             'charset': 'utf8mb4',  # Use Unicode
         }

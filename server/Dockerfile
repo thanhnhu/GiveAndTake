@@ -14,8 +14,7 @@ COPY . /app
 WORKDIR /app
 
 # below for mysqlclient library
-RUN apk add --no-cache --virtual build-deps gcc musl-dev libffi-dev2 pkgconf mariadb-dev && \
-  apk add --no-cache mariadb-connector-c-dev
+RUN apk add --no-cache mariadb-client mariadb-dev build-base
 
 # to reduce image size: combine command + pip i --no-cache-dir
 RUN pip install --no-cache-dir pipenv && \

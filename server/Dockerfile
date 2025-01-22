@@ -16,8 +16,7 @@ WORKDIR /app
 # to reduce image size: combine command + pip i --no-cache-dir
 RUN pip install --no-cache-dir pipenv && \
   #pipenv install --dev
-  #pipenv install --system --deploy --ignore-pipfile && \
-  pipenv install --system && \
+  pipenv install --system --deploy --ignore-pipfile && \
   #pipenv shell
   #pip install --no-cache-dir --upgrade pip
   pip install --no-cache-dir -r requirements.txt && \

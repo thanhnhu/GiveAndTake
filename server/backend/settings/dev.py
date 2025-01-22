@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 SETTINGS_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -110,12 +111,15 @@ DATABASES = {
     #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'giveandtake',
-        'USER': 'giveandtake_user',
-        'PASSWORD': 'oSnRpJWEu2M1AALqFOXsBEIbxzltbCgo',
-        'HOST': 'dpg-cu5i2aogph6c73bspbjg-a.singapore-postgres.render.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': config('DB_HOST', default='localhost'),
+        'PORT': config('DB_PORT', default='3306'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'OPTIONS': {
+            'charset': 'utf8mb4',  # Use Unicode
+        }
     }
 }
 

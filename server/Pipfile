@@ -10,8 +10,10 @@ gunicorn = "*"
 whitenoise = "==5.3.0"
 dj-database-url = "*"
 psycopg2-binary = "*"
+mysqlclient = "*"
 
 [dev-packages]
+python-decouple = "*"
 
 [requires]
 python_version = "3.9.1"

@@ -16,12 +16,15 @@ DATABASES = {
     #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'giveandtake',
-        'USER': 'giveandtake_user',
-        'PASSWORD': 'oSnRpJWEu2M1AALqFOXsBEIbxzltbCgo',
-        'HOST': 'dpg-cu5i2aogph6c73bspbjg-a',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'OPTIONS': {
+            'charset': 'utf8mb4',  # Use Unicode
+        }
     }
 }
 
@@ -34,7 +37,7 @@ SERVICE_ACCOUNT_FILE = '/etc/secrets/credentials.json'
 
 # django not allow serve static files on Production
 # can use whitenoise or proxy to other server
-DEBUG = True # bool(os.getenv('DJANGO_DEBUG', ''))
+DEBUG = bool(os.getenv('DEBUG', ''))
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', SECRET_KEY)
 

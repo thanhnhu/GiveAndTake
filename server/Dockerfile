@@ -13,6 +13,9 @@ RUN mkdir /app
 COPY . /app
 WORKDIR /app
 
+# below for mysqlclient library
+RUN apk add --no-cache mariadb-client mariadb-dev build-base
+
 # to reduce image size: combine command + pip i --no-cache-dir
 RUN pip install --no-cache-dir pipenv && \
   #pipenv install --dev
@@ -21,8 +24,9 @@ RUN pip install --no-cache-dir pipenv && \
   #pip install --no-cache-dir --upgrade pip
   pip install --no-cache-dir -r requirements.txt && \
   pip cache purge && \
-  #python manage.py migrate
-  #python manage.py loaddata cities
+  #python manage.py migrate && \
+  #python manage.py loaddata cities && \
+  python manage.py collectstatic --noinput && \
   chmod +x *.sh
 COPY . .
 

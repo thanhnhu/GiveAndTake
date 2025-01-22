@@ -10,14 +10,23 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
+from dotenv import load_dotenv
 import os
+
+load_dotenv()  # Load variables in .env file into environment
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 SETTINGS_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(SETTINGS_DIR)
 MEDIA_URL = 'images/'
 
-STORAGE = 'local'
+# Google Drive Authentication Setup to save images
+SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, 'credentials.json')
+SCOPES = ['https://www.googleapis.com/auth/drive']
+DRIVEFOLDERID = '1oFoOJg9fVsdtHkyfQS2Vph0asGDe1Sg2'
+
+#STORAGE = 'local'
+STORAGE = 'Google'
 
 
 # Quick-start development settings - unsuitable for production
@@ -99,9 +108,20 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '3306'),
+        'NAME': os.getenv('DB_NAME', 'giveandtake'),
+        'USER': os.getenv('DB_USER', 'giveandtake'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'giveandtake'),
+        'OPTIONS': {
+            'charset': 'utf8mb4',  # Use Unicode
+        }
     }
 }
 

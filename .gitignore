@@ -2,13 +2,13 @@
 node_modules
 dist
 venv
-.env
 images
 db.sqlite3
 credentials.json
 __pycache__
 
 # local env files
+.env
 .env.local
 .env.*.local
 

@@ -13,6 +13,12 @@ RUN mkdir /app
 COPY . /app
 WORKDIR /app
 
+# below for mysqlclient library
+RUN apt-get update && apt-get install -y \
+  default-libmysqlclient-dev \
+  build-essential \
+  && rm -rf /var/lib/apt/lists/*
+
 # to reduce image size: combine command + pip i --no-cache-dir
 RUN pip install --no-cache-dir pipenv && \
   #pipenv install --dev

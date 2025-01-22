@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
+from dotenv import load_dotenv
 import os
-from decouple import config
+
+load_dotenv()  # Load variables in .env file into environment
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 SETTINGS_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -112,11 +114,11 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', default='3306'),
-        'NAME': config('DB_NAME', 'giveandtake'),
-        'USER': config('DB_USER', 'giveandtake'),
-        'PASSWORD': config('DB_PASSWORD', 'giveandtake'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '3306'),
+        'NAME': os.getenv('DB_NAME', 'giveandtake'),
+        'USER': os.getenv('DB_USER', 'giveandtake'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'giveandtake'),
         'OPTIONS': {
             'charset': 'utf8mb4',  # Use Unicode
         }

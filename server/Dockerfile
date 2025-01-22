@@ -14,7 +14,7 @@ COPY . /app
 WORKDIR /app
 
 # below for mysqlclient library
-RUN apt-get update && apt-get install -y \
+RUN apt update && apt install -y \
   default-libmysqlclient-dev \
   build-essential \
   && rm -rf /var/lib/apt/lists/*

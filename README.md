@@ -70,17 +70,20 @@ Setup
 # https://www.npmjs.com/package/all-node-versions
 # or replace node-sass@5.0.0 with sass@1.22.10
 # -----------------------------------------------
-# below use to resolve some dependencies
+# below use to resolve/upgrade dependencies
+$ npx yarn-upgrade-all
 $ yarn add -D vue@latest
+$ yarn upgrade --latest
 $ yarn upgrade --force --latest
+$ yarn --ignore-engines
+$ yarn upgrade --ignore-engines --latest
 ```
 
 ```
 $ cd server
 # pip install pipenv
-## add PATH C:\Users\win\.pyenv\pyenv-win\versions\3.9.1\Scripts\
+## add PATH C:\Users\win\.pyenv\pyenv-win\versions\3.11.4\Scripts\
 $ pipenv install --dev
-$ pipenv shell
 $ pip install -r requirements.txt
 $ python manage.py migrate
 $ python manage.py loaddata cities
@@ -105,7 +108,7 @@ $ yarn serve
 ```
 
 The Vue application will be served from [`localhost:8091`](http://localhost:8091/) and the Django API
-and static files will be served from [`localhost:8090`](http://localhost:8090/).
+and static files will be served from [`localhost:8090`](http://localhost:8090/docs).
 
 The dual dev server setup allows you to take advantage of
 webpack's development server with hot module replacement.

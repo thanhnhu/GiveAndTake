@@ -70,9 +70,13 @@ Setup
 # https://www.npmjs.com/package/all-node-versions
 # or replace node-sass@5.0.0 with sass@1.22.10
 # -----------------------------------------------
-# below use to resolve some dependencies
+# below use to resolve/upgrade dependencies
+$ npx yarn-upgrade-all
 $ yarn add -D vue@latest
+$ yarn upgrade --latest
 $ yarn upgrade --force --latest
+$ yarn --ignore-engines
+$ yarn upgrade --ignore-engines --latest
 ```
 
 ```
@@ -105,7 +109,7 @@ $ yarn serve
 ```
 
 The Vue application will be served from [`localhost:8091`](http://localhost:8091/) and the Django API
-and static files will be served from [`localhost:8090`](http://localhost:8090/).
+and static files will be served from [`localhost:8090`](http://localhost:8090/docs).
 
 The dual dev server setup allows you to take advantage of
 webpack's development server with hot module replacement.

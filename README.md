@@ -82,9 +82,8 @@ $ yarn upgrade --ignore-engines --latest
 ```
 $ cd server
 # pip install pipenv
-## add PATH C:\Users\win\.pyenv\pyenv-win\versions\3.9.1\Scripts\
+## add PATH C:\Users\win\.pyenv\pyenv-win\versions\3.11.4\Scripts\
 $ pipenv install --dev
-$ pipenv shell
 $ pip install -r requirements.txt
 $ python manage.py migrate
 $ python manage.py loaddata cities

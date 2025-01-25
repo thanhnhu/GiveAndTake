@@ -89,6 +89,7 @@ $ python manage.py migrate
 $ python manage.py loaddata cities
 
 $ cd client
+# npm install -g yarn
 $ yarn install
 ```
 

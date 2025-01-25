@@ -7,9 +7,9 @@
 
 # build stage
 # use alpine to reduce the image size
-#FROM node:16.14.0 as builder
+#FROM node:16.20.2 as builder
 #RUN apt-get update || : && apt-get install python -y
-FROM node:16.14.0-alpine as builder
+FROM node:16.20.2-alpine as builder
 #RUN apk --no-cache --virtual build-dependencies add python3 make g++
 #ENV NODE_ENV=development
 #ENV NODE_OPTIONS=--openssl-legacy-provider

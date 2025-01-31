@@ -1,21 +1,22 @@
-import Vue from 'vue'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { createBootstrap } from 'bootstrap-vue-next';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import {
-  faHandHoldingHeart,
-  faEye,
-} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faHandHoldingHeart, faEye } from '@fortawesome/free-solid-svg-icons'
+import Toast from 'vue-toastification'
 
-// Importing the global css file
-import "@/assets/css/global.css"
-// Import Bootstrap an BootstrapVue CSS files (order is important)
+// Importing styles
 import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
+import 'vue-toastification/dist/index.css'
+import "@/assets/styles/global.css"
 
+export default function installBootstrap(app) {
+  // Setup Font Awesome
+  library.add(faHandHoldingHeart, faEye)
+  app.component('font-awesome-icon', FontAwesomeIcon)
+  
+  // Setup Bootstrap Vue Next
+  app.use(createBootstrap());
 
-library.add(faHandHoldingHeart, faEye)
-Vue.component('font-awesome-icon', FontAwesomeIcon)
-
-Vue.use(BootstrapVue)
-Vue.use(IconsPlugin)
+  app.use(Toast);
+}

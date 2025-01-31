@@ -1,73 +1,51 @@
 import api from '@/services/api'
-//import { authHeader } from '../_helpers';
+import { headers } from '@/services/headers'
 
-export default {
-  login(username, password) {
-    return api.post(`auth/`, { username, password }).then(response => response)
-  },
-  register(user) {
-    return api.post(`users/`, user).then(response => response);
-  },
-  //getAll,
-  //getById,
-  //update,
-  //delete: _delete
-};
-
-/*
-function getAll() {
-    const requestOptions = {
-        method: 'GET',
-        headers: authHeader()
-    };
-
-    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
-}
-
-function getById(id) {
-    const requestOptions = {
-        method: 'GET',
-        headers: authHeader()
-    };
-
-    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
-}
-
-function update(user) {
-    const requestOptions = {
-        method: 'PUT',
-        headers: { ...authHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
-    };
-
-    return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);
-}
-
-// prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
-    const requestOptions = {
-        method: 'DELETE',
-        headers: authHeader()
-    };
-
-    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
-}
-
-function handleResponse(response) {
-  return response.text().then(text => {
-    const data = text && JSON.parse(text);
-    if (!response.ok) {
-      if (response.status === 401) {
-        // auto logout if 401 response returned from api
-        //logout();
-        location.reload(true);
-      }
-
-      const error = (data && data.message) || response.statusText;
-      return Promise.reject(error);
+const userService = {
+  async login(username, password) {
+    try {
+      return await api.post('auth/', { username, password })
+    } catch (error) {
+      console.error('Error logging in:', error)
+      throw error
     }
+  },
 
-    return data;
-  });
+  async register(user) {
+    try {
+      return await api.post('users/', user)
+    } catch (error) {
+      console.error('Error registering user:', error)
+      throw error
+    }
+  },
+
+  async getUser(userId) {
+    try {
+      return await api.get(`users/${userId}`, headers())
+    } catch (error) {
+      console.error('Error getting user:', error)
+      throw error
+    }
+  },
+
+  async updateUser(user) {
+    try {
+      return await api.put(`users/${user.id}`, user, headers())
+    } catch (error) {
+      console.error('Error updating user:', error)
+      throw error
+    }
+  },
+
+  async deleteUser(userId) {
+    try {
+      return await api.delete(`users/${userId}`, headers())
+    } catch (error) {
+      console.error('Error deleting user:', error)
+      throw error
+    }
+  }
 }
-*/
+
+export default userService

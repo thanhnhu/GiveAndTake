@@ -17,7 +17,7 @@
     <hr/>
     <h3>Messages on Database</h3>
     <p v-if="messages.length === 0">No Messages</p>
-    <div class="msg" v-for="(msg, index) in messages" :key="index">
+    <div class="msg" v-for="(msg, index) in messages" :key="msg.pk">
         <p class="msg-index">[{{index}}]</p>
         <p class="msg-subject" v-html="msg.subject"></p>
         <p class="msg-body" v-html="msg.body"></p>
@@ -26,31 +26,30 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapActions } from 'vuex'
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import { messagesStoreObj } from '@/stores/messages'
 
-export default {
-  name: "Messages",
-  data() {
-    return {
-      subject: "",
-      msgBody: "",
-    };
-  },
-  computed: mapState({
-    messages: state => state.messages.messages
-  }),
-  methods: mapActions('messages', [
-    'addMessage',
-    'deleteMessage'
-  ]),
-  created() {
-    this.$store.dispatch('messages/getMessages')
-  }
-};
+const messagesStore = messagesStoreObj()
+const subject = ref("")
+const msgBody = ref("")
+
+const messages = computed(() => messagesStore.messages)
+
+const addMessage = (message) => {
+  messagesStore.addMessage(message)
+}
+
+const deleteMessage = (pk) => {
+  messagesStore.deleteMessage(pk)
+}
+
+// Load messages when component is created
+onMounted(() => {
+  messagesStore.getMessages()
+})
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 hr {
   max-width: 65%;

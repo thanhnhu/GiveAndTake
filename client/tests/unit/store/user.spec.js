@@ -1,93 +1,59 @@
-import flushPromises from 'flush-promises';
-import { createLocalVue } from '@vue/test-utils';
-import cloneDeep from 'lodash/cloneDeep';
-import Vuex from 'vuex';
-import axios from 'axios';
-import userModule from '@/stores/users';
+import { setActivePinia, createPinia } from 'pinia'
+import { userStoreObj } from '@/stores/users'
+import { userService } from '@/services/userService'
+import { flushPromises } from '@vue/test-utils'
 
-jest.mock('axios');
+jest.mock('@/services/userService')
 
-describe('testing vuex store as instance', () => {
-  // Mutations and actions are the inputs for a store
-  // The output of a store is the store state or result of getters
-  let userStore;
-
+describe('User Store', () => {
   beforeEach(() => {
-    const localVue = createLocalVue();
-    localVue.use(Vuex);
-    userStore = cloneDeep(userModule);
-  });
+    setActivePinia(createPinia())
+  })
 
-  it('updates name', async () => {
-    expect.assertions(4);
+  it('updates user profile', async () => {
+    const userStore = userStoreObj()
+    const mockUserService = userService()
 
-    axios.post.mockImplementation(() => Promise.resolve());
-    userStore.state.name = 'foo';
-    userStore.state.lastName = 'bar';
-    userStore.state.loading = false;
-    let store = new Vuex.Store({ modules: { user: userStore } });
-    expect(store.getters['user/fullName']).toBe('foo bar');
+    mockUserService.updateUser.mockResolvedValue({
+      id: 1,
+      name: 'abc',
+      lastName: 'bar'
+    })
 
-    store.dispatch('user/updateName', 'abc');
+    expect(userStore.fullName).toBe('')
+    
+    await userStore.updateProfile({
+      name: 'abc',
+      lastName: 'bar'
+    })
 
-    expect(store.state.user.loading).toBeTruthy();
-    await flushPromises();
-    expect(store.state.user.loading).toBeFalsy();
-    expect(store.getters['user/fullName']).toBe('abc bar');
-  });
-  it('init', async () => {
-    expect.assertions(2);
+    await flushPromises()
+    
+    expect(userStore.fullName).toBe('abc bar')
+    expect(userStore.error).toBeNull()
+  })
 
-    userStore.state.name = 'foo';
-    userStore.state.lastName = 'bar';
-    let store = new Vuex.Store({ modules: { user: userStore } });
+  it('handles login', async () => {
+    const userStore = userStoreObj()
+    const mockUserService = userService()
 
-    store.dispatch('user/init', { name: 'bar', lastName: 'baz' });
+    mockUserService.login.mockResolvedValue({
+      token: 'test-token',
+      user: {
+        id: 1,
+        username: 'testuser'
+      }
+    })
 
-    expect(store.state.user.name).toBe('bar');
-    expect(store.state.user.lastName).toBe('baz');
-  });
-});
+    await userStore.login({
+      username: 'testuser',
+      password: 'password'
+    })
 
-describe('testing vuex parts separately', () => {
-  it('fullName getter', () => {
-    let state = {
-      name: 'foo',
-      lastName: 'bar',
-    };
-
-    expect(userModule.getters.fullName(state)).toBe('foo bar');
-  });
-  it('Set name mutation', () => {
-    let state = {
-      name: 'foo',
-      lastName: 'bar',
-    };
-    userModule.mutations.SET_NAME(state, { name: 'bar', lastName: 'baz' });
-
-    expect(state.name).toBe('bar');
-    expect(state.lastName).toBe('baz');
-  });
-  it('updateName', async () => {
-    // extreme mocking is needed
-    expect.assertions(3);
-
-    const context = {
-      commit: jest.fn(),
-      state: {
-        name: 'foo',
-        lastName: 'bar',
-      },
-    };
-    axios.post.mockImplementation(() => Promise.resolve());
-    userModule.actions.updateName(context, 'baz');
-    await flushPromises();
-
-    expect(context.commit).toHaveBeenNthCalledWith(1, 'SET_LOADING', true);
-    expect(context.commit).toHaveBeenNthCalledWith(2, 'SET_NAME', {
-      name: 'baz',
-      lastName: 'bar',
-    });
-    expect(context.commit).toHaveBeenNthCalledWith(3, 'SET_LOADING', false);
-  });
-});
+    expect(userStore.user).toEqual({
+      id: 1,
+      username: 'testuser'
+    })
+    expect(userStore.token).toBe('test-token')
+  })
+})

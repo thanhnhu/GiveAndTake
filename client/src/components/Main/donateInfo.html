@@ -1,29 +1,26 @@
 <div>
-  <b-button v-if="user && isNew" type="button" size="sm" variant="outline-primary" @click="showAddDonate = true">{{
-    $t('donate.addnew') }}
-  </b-button>
-  <b-icon v-if="user && isEdit" icon="card-heading" scale="1.3" :title="$t('common.edit')"
-    @click="showAddDonate = true" />
-  <b-icon v-if="user && isNewInline" icon="gift" scale="1.2" :title="$t('common.donate')"
-    @click="showAddDonate = true" />
+  <button v-if="user && isNew" type="button" class="btn btn-sm btn-outline-primary" @click="showAddDonate = true">
+    {{ $t('donate.addnew') }}
+  </button>
+  <i v-if="user && isEdit" class="bi bi-card-heading fs-5" :title="$t('common.edit')" @click="showAddDonate = true"></i>
+  <i v-if="user && isNewInline" class="bi bi-gift fs-5" :title="$t('common.donate')" @click="showAddDonate = true"></i>
 
-  <ValidationObserver ref="observerDonate" v-slot="{ handleSubmit }">
+  <form @submit.prevent="handleSubmit" ref="observerDonate">
     <modal-dialog :show="showAddDonate" @close="showAddDonate = false">
-      <template v-slot:header>{{ $t('donate.haveDonate') }}</template>
-      <template v-slot:body>
-        <ValidationProvider :name="$t('donate.money')" rules="required" v-slot="{ errors }">
-          <div class="mb-3">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">$</span>
-              </div>
-              <input type="number" step="1" class="form-control" v-model="donate.donate"
-                :placeholder="$t('donate.money')" aria-label="money" min="0"
-                :class="{ 'is-invalid': errors.length > 0 }" />
+      <template #header>{{ $t('donate.haveDonate') }}</template>
+      <template #body>
+        <div class="mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
             </div>
-            <div class="error-messages">{{ errors[0] }}</div>
+            <input type="number" step="1" class="form-control" :class="{ 'is-invalid': v$.donate.donate.$error }"
+              v-model="donate.donate" :placeholder="$t('donate.money')" aria-label="money" min="0" />
           </div>
-        </ValidationProvider>
+          <div class="error-messages" v-if="v$.donate.donate.$error">
+            {{ v$.donate.donate.$errors[0].$message }}
+          </div>
+        </div>
 
         <div class="input-group">
           <div class="input-group-prepend">
@@ -32,12 +29,12 @@
           <textarea class="form-control" aria-label="description" v-model="donate.description"></textarea>
         </div>
       </template>
-      <template v-slot:footer>
-        <b-button size="sm" variant="outline-primary" :disabled="fetchingData"
-          @click="handleSubmit(handleSaveDonate);showAddDonate = false">{{ $t('common.saveandclose') }}</b-button>
-        <b-button size="sm" variant="outline-primary" :disabled="fetchingData" @click="handleSubmit(handleSaveDonate)">
-          {{ $t('common.save') }}</b-button>
+      <template #footer>
+        <button type="button" class="btn btn-sm btn-outline-primary" :disabled="fetchingData" 
+          @click="handleSaveAndClose">{{ $t('common.saveandclose') }}</button>
+        <button type="button" class="btn btn-sm btn-outline-primary" :disabled="fetchingData" @click="handleSave">
+          {{ $t('common.save') }}</button>
       </template>
     </modal-dialog>
-  </ValidationObserver>
+  </form>
 </div>

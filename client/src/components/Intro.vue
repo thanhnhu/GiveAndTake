@@ -11,15 +11,18 @@
 </template>
 
 <script>
+import { computed } from 'vue';
 import { isMobile } from "../helpers";
 
 export default {
   name: "intro",
-  computed: {
-    isWeb: () => {
-      return !isMobile();
-    },
-  },
+  setup() {
+    const isWeb = computed(() => !isMobile());
+
+    return {
+      isWeb
+    };
+  }
 };
 </script>
 

@@ -1,34 +1,43 @@
 import axios from 'axios'
 
-// export default axios.create({
-//   baseURL: '/api',
-//   timeout: 5000
-// })
-
 const instance = axios.create({
   baseURL: '/api',
-  timeout: 5000
-  // headers: {
-  //     Authorization: `Bearer ${token}`
-  // }
+  timeout: 5000,
+  headers: {
+    "Content-Type": "application/json"
+  }
 })
 
-instance.interceptors.request.use(config => {
-  //this.cover = true;
-  // if (token) {
-  //   config.headers.Authorization = `Bearer ${token}`;
-  // }
-  return config;
-}, error => Promise.reject(error));
+instance.interceptors.request.use(
+  config => {
+    // Add any auth headers or other request processing here
+    return config
+  },
+  error => {
+    return Promise.reject(error)
+  }
+)
 
-instance.interceptors.response.use(response => {
-  //this.cover = false;
-  return response
-}, error => {
-  //this.cover = false;
-  console.log('Exception: ', error)
-  //if (error) throw error
-  return Promise.reject(error)
-});
+instance.interceptors.response.use(
+  response => {
+    return response.data // Directly return the data for easier consumption
+  },
+  error => {
+    const errorMessage = error.response?.data?.message || error.message
+    console.error('API Error:', errorMessage)
+    
+    // You can handle specific error codes here
+    if (error.response?.status === 401) {
+      // Handle unauthorized - could dispatch to auth store
+      // Example: router.push('/login')
+    }
+    
+    return Promise.reject({
+      message: errorMessage,
+      status: error.response?.status,
+      originalError: error
+    })
+  }
+)
 
-export default instance;
+export default instance

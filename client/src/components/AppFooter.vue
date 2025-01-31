@@ -4,16 +4,11 @@
   </footer>
 </template>
 
-<script>
-import { isMobile } from "../helpers";
-export default {
-  name: "app-footer",
-  computed: {
-    isWeb: () => {
-      return !isMobile();
-    },
-  },
-};
+<script setup>
+import { computed } from 'vue'
+import { isMobile } from "@/helpers"
+
+const isWeb = computed(() => !isMobile())
 </script>
 
 <style lang="scss" scoped>

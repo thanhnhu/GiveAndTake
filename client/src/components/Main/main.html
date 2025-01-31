@@ -1,40 +1,39 @@
 <div>
-  <b-row>
-    <b-col cols="12" sm="3" class="mb-2">
-      <b-form-input size="sm" list="cityList" :placeholder="$t('common.city')" @change="cityChange"
+  <div class="row">
+    <div class="col-12 col-sm-3 mb-2">
+      <input class="form-control form-control-sm" list="cityList" :placeholder="$t('common.city')" @change="cityChange"
         @keyup.delete="cityChange">
-      </b-form-input>
-      <b-form-datalist id="cityList">
+      <datalist id="cityList">
         <option :key="city.id" :value="city.name" v-for="city in cities" />
-      </b-form-datalist>
-    </b-col>
-    <b-col>
+      </datalist>
+    </div>
+    <div class="col">
       <div v-if="fetchingData">{{ $t('common.loading') }}</div>
-    </b-col>
-    <b-col cols="6" sm="4" class="mb-2 d-flex justify-content-end" v-if="user">
+    </div>
+    <div class="col-6 col-sm-4 mb-2 d-flex justify-content-end" v-if="user">
       <taker-info />
-      <b-button size="sm" class="ml-2" v-bind:variant="filter.isMine ? 'secondary' : 'outline-primary'"
-        :disabled="fetchingData" @click="isMineChange">{{ $t('common.mine') }}</b-button>
-    </b-col>
-  </b-row>
+      <button class="btn btn-sm ms-2" :class="filter.isMine ? 'btn-secondary' : 'btn-outline-primary'"
+        :disabled="fetchingData" @click="isMineChange">{{ $t('common.mine') }}</button>
+    </div>
+  </div>
 
   <div v-if="isWeb">
     <table class="table table-sm table-bordered table-striped table-hover">
       <thead>
         <tr>
           <th scope="col" class="column-number">
-            <b-form-input type="number" size="sm" v-model="filter.number" min="0" placeholder="#"
+            <input type="number" class="form-control form-control-sm" v-model="filter.number" min="0" placeholder="#"
               @input="filterChange" />
           </th>
           <th scope="col" class="column-name">
-            <b-form-input type="text" size="sm" v-model="filter.name" :placeholder="$t('common.fullname')"
+            <input type="text" class="form-control form-control-sm" v-model="filter.name" :placeholder="$t('common.fullname')"
               @input="filterChange" />
           </th>
           <th scope="col" class="column-phone">
-            <b-form-input type="text" size="sm" v-model="filter.phone" :placeholder="$t('common.phone')"
+            <input type="text" class="form-control form-control-sm" v-model="filter.phone" :placeholder="$t('common.phone')"
               @input="filterChange" />
           </th>
-          <th scope="col" class="text-left">{{ $t('common.address') }}</th>
+          <th scope="col" class="text-start">{{ $t('common.address') }}</th>
           <th scope="col" class="column-city">{{ $t('common.city') }}</th>
           <th scope="col">{{ $t('common.description') }}</th>
           <th scope="col" class="column-images">{{ $t('common.images') }}</th>
@@ -45,36 +44,36 @@
       <tbody>
         <tr v-for="(taker, index) in takers" :key="index">
           <td scope="row">{{ taker.number }}</td>
-          <td class="text-left">{{ taker.name }}</td>
-          <td class="text-left">{{ taker.phone }}</td>
-          <td class="text-left">{{ taker.address }}</td>
+          <td class="text-start">{{ taker.name }}</td>
+          <td class="text-start">{{ taker.phone }}</td>
+          <td class="text-start">{{ taker.address }}</td>
           <td>{{ cityNameById(taker.city) }}</td>
           <td>
-            <b-icon icon="card-text" scale="1.5" v-if="taker.description && taker.description.length > 20"
-              v-b-popover.click.blur="taker.description" v-b-popover.hover.top="taker.description" title="" />
+            <i class="bi bi-card-text fs-5" v-if="taker.description && taker.description.length > 20"
+              v-tooltip="taker.description" />
             <span v-else>{{ taker.description }}</span>
           </td>
           <td>
             <div v-if="taker.images && taker.images.length > 0" @click="openImages(taker.images)">
-              <b-icon icon="eye" scale="1.5" :title="$t('common.viewimages')" />
+              <i class="bi bi-eye fs-5" :title="$t('common.viewimages')" />
             </div>
           </td>
           <td>
-            <div class="float-right">{{ Number(totalDonate(taker)).toLocaleString() }} vnđ
-              <b-link v-if="taker.donates && taker.donates.length > 0"
+            <div class="float-end">{{ Number(totalDonate(taker)).toLocaleString() }} vnđ
+              <router-link v-if="taker.donates && taker.donates.length > 0"
                 :to="{ name: 'donates', params: { takerId: taker.id } }">
-                <b-icon icon="layout-text-sidebar" scale="1.1" :title="$t('common.viewdescription')" />
-              </b-link>
+                <i class="bi bi-layout-text-sidebar fs-5" :title="$t('common.viewdescription')" />
+              </router-link>
             </div>
           </td>
           <td class="column-action">
-            <div class="row justify-content-md-center">
+            <div class="row justify-content-center">
               <div class="mx-2" v-if="!taker.stop_donate">
                 <div v-if="user">
                   <donate-info :taker-id="taker.id" :is-new-inline="true" />
                 </div>
                 <div v-else>
-                  <b-icon icon="gift" scale="1.2" :title="$t('common.wannadonate')" />
+                  <i class="bi bi-gift fs-5" :title="$t('common.wannadonate')" />
                 </div>
               </div>
               <div class="mx-1" v-if="taker.can_edit">
@@ -82,14 +81,14 @@
               </div>
               <div class="mx-2" v-if="taker.can_edit" @click="stopDonate(taker.id)">
                 <div v-if="taker.stop_donate">
-                  <b-icon icon="play-circle" scale="1.2" :title="$t('common.needtodonate')" />
+                  <i class="bi bi-play-circle fs-5" :title="$t('common.needtodonate')" />
                 </div>
                 <div v-else>
-                  <b-icon icon="stop-circle" scale="1.2" :title="$t('common.stopdonate')" />
+                  <i class="bi bi-stop-circle fs-5" :title="$t('common.stopdonate')" />
                 </div>
               </div>
-              <div class="mr-2" v-if="taker.can_delete">
-                <b-icon icon="x-circle" scale="1.2" variant="danger" :title="$t('common.delete')"
+              <div class="me-2" v-if="taker.can_delete">
+                <i class="bi bi-x-circle fs-5 text-danger" :title="$t('common.delete')"
                   @click="handleDelete(taker.id)" />
               </div>
             </div>
@@ -100,49 +99,67 @@
   </div>
   <div v-else>
     <div v-for="(taker, index) in takers" :key="index">
-      <b-card border-variant="info" img-left class="mb-1" :img-src="firstImage(taker)">
-        <b-container fluid>
-          <b-row align-v="start">
-            #{{ taker.number }}, {{ taker.name }}, {{ taker.address }}
-          </b-row>
-          <b-row>
-            <b-icon icon="telephone" scale="1.1" class="mr-3 mb-1" v-b-popover.click.blur="taker.phone"
-              v-b-popover.hover.top="taker.phone" title="" />
-            <b-icon icon="card-text" scale="1.5" class="mr-3" v-if="taker.description && taker.description.length > 20"
-              v-b-popover.click.blur="taker.description" v-b-popover.hover.top="taker.description" title="" />
-            <div v-if="taker.images && taker.images.length > 0" @click="openImages(taker.images)">
-              <b-icon icon="eye" scale="1.5" :title="$t('common.viewimages')" />
-            </div>
-          </b-row>
-          <b-row align-v="start" v-if="!taker.stop_donate">
-            <div v-if="user">
-              <donate-info :taker-id="taker.id" :is-new-inline="true" />
-            </div>
-            <div v-else>
-              <b-icon icon="gift" scale="1.2" :title="$t('common.needtodonate')" />
-            </div>
-            <div class="ml-2">{{ totalDonate(taker) }} vnđ</div>
-          </b-row>
-          <b-row>
-            <div class="mr-3" v-if="taker.can_edit">
-              <file-uploader :id="taker.id" :is-taker="true" />
-            </div>
-            <div class="mr-3" v-if="taker.can_edit" @click="stopDonate(taker.id)">
-              <div v-if="taker.stop_donate">
-                <b-icon icon="play-circle" scale="1.2" :title="$t('common.needtodonate')" />
+      <div class="card border-info mb-1">
+        <div class="row g-0">
+          <div class="col-4">
+            <img :src="firstImage(taker)" class="img-fluid rounded-start" :alt="taker.name">
+          </div>
+          <div class="col-8">
+            <div class="card-body">
+              <div class="container-fluid">
+                <div class="row align-items-start">
+                  #{{ taker.number }}, {{ taker.name }}, {{ taker.address }}
+                </div>
+                <div class="row">
+                  <i class="bi bi-telephone me-3 mb-1" v-tooltip="taker.phone" />
+                  <i class="bi bi-card-text me-3 fs-5" v-if="taker.description && taker.description.length > 20"
+                    v-tooltip="taker.description" />
+                  <div v-if="taker.images && taker.images.length > 0" @click="openImages(taker.images)">
+                    <i class="bi bi-eye fs-5" :title="$t('common.viewimages')" />
+                  </div>
+                </div>
+                <div class="row align-items-start" v-if="!taker.stop_donate">
+                  <div v-if="user">
+                    <donate-info :taker-id="taker.id" :is-new-inline="true" />
+                  </div>
+                  <div v-else>
+                    <i class="bi bi-gift fs-5" :title="$t('common.needtodonate')" />
+                  </div>
+                  <div class="ms-2">{{ totalDonate(taker) }} vnđ</div>
+                </div>
+                <div class="row">
+                  <div class="me-3" v-if="taker.can_edit">
+                    <file-uploader :id="taker.id" :is-taker="true" />
+                  </div>
+                  <div class="me-3" v-if="taker.can_edit" @click="stopDonate(taker.id)">
+                    <div v-if="taker.stop_donate">
+                      <i class="bi bi-play-circle fs-5" :title="$t('common.needtodonate')" />
+                    </div>
+                    <div v-else>
+                      <i class="bi bi-stop-circle fs-5" :title="$t('common.stopdonate')" />
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div v-else>
-                <b-icon icon="stop-circle" scale="1.2" :title="$t('common.stopdonate')" />
-              </div>
             </div>
-          </b-row>
-        </b-container>
-      </b-card>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <b-pagination v-if="total > paging.page_size" class="mt-2" align="center" @change="pagingChange" :total-rows="total"
-    :per-page="paging.page_size" v-model="paging.page" first-number last-number>
-  </b-pagination>
+  <nav v-if="total > paging.page_size" class="mt-2 d-flex justify-content-center">
+    <ul class="pagination">
+      <li class="page-item" :class="{ disabled: paging.page === 1 }">
+        <a class="page-link" href="#" @click.prevent="pagingChange(paging.page - 1)">Previous</a>
+      </li>
+      <li class="page-item" v-for="n in Math.ceil(total / paging.page_size)" :key="n" :class="{ active: paging.page === n }">
+        <a class="page-link" href="#" @click.prevent="pagingChange(n)">{{ n }}</a>
+      </li>
+      <li class="page-item" :class="{ disabled: paging.page === Math.ceil(total / paging.page_size) }">
+        <a class="page-link" href="#" @click.prevent="pagingChange(paging.page + 1)">Next</a>
+      </li>
+    </ul>
+  </nav>
 
   <modal-slider :show="showTakerImages" @close="showTakerImages = false" :images="takerImages" />
 </div>

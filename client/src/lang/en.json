@@ -1,7 +1,7 @@
 {
   "lang": {
     "select_lang": "Language",
-    "en": "English",
+    "en": "English", 
     "vn": "Vietnamese"
   },
   "intro": {
@@ -21,7 +21,7 @@
     "city": "City",
     "fullname": "Fullname",
     "phone": "Phone",
-    "address": "Address",
+    "address": "Address", 
     "description": "Description",
     "images": "Images",
     "donate": "Donate",
@@ -43,7 +43,7 @@
   },
   "user": {
     "login": "Login",
-    "logout": "Logout",
+    "logout": "Logout", 
     "register": "Register",
     "hello": "Hello",
     "userExist": "Account is existing!",

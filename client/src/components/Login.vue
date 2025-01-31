@@ -1,37 +1,35 @@
-<script>
-import { mapState, mapActions } from "vuex";
+<script setup>
+import { ref, computed, watch } from 'vue';
+import { userStoreObj } from '@/stores/users';
 
-export default {
-  name: "login",
-  data() {
-    return {
-      username: "",
-      password: "",
-      submitted: false,
-      showAlert: 0,
-    };
-  },
-  computed: {
-    ...mapState("users", ["fetchingData", "user", "error"]),
-  },
-  methods: {
-    ...mapActions("users", ["login"]),
-    handleSubmit() {
-      this.submitted = true;
-      const { username, password } = this;
-      if (username && password) {
-        this.login({ username, password });
-      }
-    },
-  },
-  watch: {
-    error() {
-      if (this.error) {
-        this.showAlert = 5;
-      }
-    },
-  },
+const userStore = userStoreObj();
+const username = ref("");
+const password = ref("");
+const submitted = ref(false);
+const showAlert = ref(0);
+
+// Computed properties
+const fetchingData = computed(() => userStore.loading);
+const user = computed(() => userStore.user);
+const error = computed(() => userStore.error);
+
+// Methods
+const handleSubmit = async () => {
+  submitted.value = true;
+  if (username.value && password.value) {
+    await userStore.login({
+      username: username.value,
+      password: password.value
+    });
+  }
 };
+
+// Watch for error changes
+watch(error, (newValue) => {
+  if (newValue) {
+    showAlert.value = 5;
+  }
+});
 </script>
 
 <template>

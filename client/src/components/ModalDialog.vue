@@ -3,9 +3,11 @@ export default {
   name: "modal-dialog",
   props: {
     show: {
+      type: Boolean,
       default: false,
     },
   },
+  emits: ['close'],
   methods: {
     close() {
       this.$emit("close");
@@ -15,31 +17,29 @@ export default {
 </script>
 
 <template>
-  <div v-if="show">
-    <transition name="modal">
-      <div class="modal-mask">
-        <div class="modal-wrapper">
-          <div class="modal-dialog" role="document" aria-labelledby="modalTitle" aria-describedby="modalDescription">
-            <div class="modal-content">
-              <header class="modal-header" id="modalTitle">
-                <slot name="header"> This is the default tile! </slot>
-                <button type="button" class="btn-close" @click="close" aria-label="Close modal">x</button>
-              </header>
+  <Transition name="modal">
+    <div v-if="show" class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-dialog" role="document" aria-labelledby="modalTitle" aria-describedby="modalDescription">
+          <div class="modal-content">
+            <header class="modal-header" id="modalTitle">
+              <slot name="header"> This is the default tile! </slot>
+              <button type="button" class="btn-close" @click="close" aria-label="Close modal">x</button>
+            </header>
 
-              <section class="modal-body" id="modalDescription">
-                <slot name="body"> This is the default body! </slot>
-              </section>
+            <section class="modal-body" id="modalDescription">
+              <slot name="body"> This is the default body! </slot>
+            </section>
 
-              <footer class="modal-footer">
-                <slot name="footer"> This is the default footer! </slot>
-                <b-button size="sm" variant="outline-secondary" @click="close">{{ $t('common.cancel') }}</b-button>
-              </footer>
-            </div>
+            <footer class="modal-footer">
+              <slot name="footer"> This is the default footer! </slot>
+              <b-button size="sm" variant="outline-secondary" @click="close">{{ $t('common.cancel') }}</b-button>
+            </footer>
           </div>
         </div>
       </div>
-    </transition>
-  </div>
+    </div>
+  </Transition>
 </template>
 
 <style>

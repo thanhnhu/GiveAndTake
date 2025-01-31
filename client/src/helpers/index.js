@@ -1,7 +1,9 @@
-import { vue } from "@/main"
+import { useToast } from "vue-toastification";
+const toast = useToast()
 
 export const toastMessage = (message) => {
-  vue.$bvToast.toast(message, {
+  //app.config.globalProperties.$bvToast.toast(message, {
+  toast.info(message, {
     autoHideDelay: 5000
   })
 }

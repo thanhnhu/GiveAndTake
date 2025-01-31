@@ -1,8 +1,15 @@
 import api from '@/services/api'
 
-export default {
-  fetchCities() {
-    return api.get(`cities/`)
-      .then(response => response.data)
+const fetchCities = async () => {
+  try {
+    const response = await api.get('cities/')
+    return response
+  } catch (error) {
+    console.error('Error fetching cities:', error)
+    throw error
   }
 }
+
+export const cityService = {
+  fetchCities
+};

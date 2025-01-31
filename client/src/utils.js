@@ -1,9 +1,10 @@
-import Vue from 'vue'
+import { app } from '@/main'
 import moment from 'moment'
 
-
-Vue.filter('formatDate', function (value) {
-  if (value) {
-    return moment(String(value)).format('YYYY/MM/DD HH:mm')
+app.config.globalProperties.$filters = {
+  formatDate(value) {
+    if (value) {
+      return moment(String(value)).format('YYYY/MM/DD HH:mm')
+    }
   }
-});
+}

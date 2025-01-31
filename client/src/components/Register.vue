@@ -1,34 +1,33 @@
-<script>
-import { mapState, mapActions } from "vuex";
+<script setup>
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { userStoreObj } from '@/stores/users';
 
-export default {
-  data() {
-    return {
-      user: {
-        username: "",
-        password: "",
-        email: "",
-        first_name: "",
-        last_name: "",
-      },
-      showAlert: 0,
-    };
-  },
-  computed: {
-    ...mapState("users", ["fetchingData", "error"]),
-  },
-  methods: {
-    ...mapActions("users", ["register"]),
-    onSubmit() {
-      this.register(this.user);
-    },
+const userStore = userStoreObj();
+const router = useRouter();
 
-    onOverlayHidden() {
-      if (this.error) {
-        this.showAlert = 5;
-      }
-    },
-  },
+const user = ref({
+  username: "",
+  password: "", 
+  email: "",
+  first_name: "",
+  last_name: "",
+});
+const showAlert = ref(0);
+
+// Computed properties
+const fetchingData = computed(() => userStore.loading);
+const error = computed(() => userStore.error);
+
+// Methods
+const onSubmit = async () => {
+  await userStore.register(user.value);
+};
+
+const onOverlayHidden = () => {
+  if (error.value) {
+    showAlert.value = 5;
+  }
 };
 </script>
 

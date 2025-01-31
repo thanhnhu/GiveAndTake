@@ -1,23 +1,47 @@
 import api from '@/services/api'
-import { headers } from './headers'
+import { headers } from '@/services/headers'
 
-export default {
-  fetchGivers(filter) {
-    let params = { params: filter }
-    let config = { ...headers(), ...params }
-    return api.get(`givers/`, config)
-      .then(response => response.data)
+const giverService = {
+  async fetchGivers(filter) {
+    try {
+      const params = { params: filter }
+      const config = { ...headers(), ...params }
+      return await api.get('givers/', config)
+    } catch (error) {
+      console.error('Error fetching givers:', error)
+      throw error
+    }
   },
-  postGiver(newGiver) {
-    return api.post(`givers/`, newGiver, headers())
-      .then(response => response.data)
+
+  async postGiver(newGiver) {
+    try {
+      const response = await api.post('givers/', newGiver, headers())
+      return response.data
+    } catch (error) {
+      console.error('Error creating giver:', error)
+      throw error
+    }
   },
-  setActive(giverId) {
-    return api.patch(`givers/${giverId}/set_active/`, null, headers())
-      .then(response => response.data)
+
+  async setActive(giverId) {
+    try {
+      const response = await api.patch(`givers/${giverId}/set_active/`, null, headers())
+      return response.data
+    } catch (error) {
+      console.error('Error setting giver active:', error)
+      throw error
+    }
   },
-  removeGiver(giverId) {
-    return api.delete(`givers/${giverId}`, headers())
-      .then(response => response.data)
-  },
+
+  async removeGiver(giverId) {
+    try {
+      const response = await api.delete(`givers/${giverId}`, headers())
+      return response.data
+    } catch (error) {
+      console.error('Error removing giver:', error)
+      throw error
+    }
+  }
 }
+
+export default giverService

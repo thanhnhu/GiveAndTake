@@ -1,12 +1,12 @@
 <div>
-  <b-row class="mb-2">
-    <b-col>
+  <div class="row mb-2">
+    <div class="col">
       <div v-if="fetchingData">{{ $t('common.loading') }}</div>
-    </b-col>
-    <b-col cols="5" sm="4" class="d-flex justify-content-end" v-if="user">
+    </div>
+    <div class="col-5 col-sm-4 d-flex justify-content-end" v-if="user">
       <donate-info :taker-id="takerId" :is-new="true" />
-    </b-col>
-  </b-row>
+    </div>
+  </div>
 
   <div v-if="isWeb">
     <table class="table table-sm table-bordered table-striped table-hover">
@@ -19,21 +19,21 @@
         </tr>
       </thead>
       <tbody>
-        <template v-for="(donate, index) in taker.donates">
-          <tr :key="index" v-if="start <= index && index < end">
-            <td scope="row" class="column-date">{{ donate.date_created | formatDate }}</td>
+        <template v-for="(donate, index) in taker.donates" :key="index">
+          <tr v-if="start <= index && index < end">
+            <td scope="row" class="column-date">{{ formatDate(donate.date_created) }}</td>
             <td class="column-donate">
               <div class="float-right">{{ Number(donate.donate).toLocaleString() }} vnđ</div>
             </td>
             <td class="column-desc">{{ donate.description }}</td>
             <td v-if="taker.can_edit" class="column-action">
-              <div class="row justify-content-md-center">
+              <div class="row justify-content-center">
                 <div class="mx-2">
                   <donate-info :taker-id="taker.id" :is-edit="true" :edit-object="donate" />
                 </div>
-                <div class="mr-2" v-if="taker.can_delete">
-                  <b-icon icon="x-circle" scale="1.2" variant="danger" :title="$t('common.delete')"
-                    @click="handleDelete(donate.id)" />
+                <div class="me-2" v-if="taker.can_delete">
+                  <i class="bi bi-x-circle fs-5 text-danger" :title="$t('common.delete')"
+                    @click="handleDelete(donate.id)"></i>
                 </div>
               </div>
             </td>
@@ -42,7 +42,17 @@
       </tbody>
     </table>
   </div>
-  <b-pagination v-if="rows > page_size" class="mt-2" align="center" :total-rows="rows" :per-page="page_size"
-    v-model="page" first-number last-number>
-  </b-pagination>
+  <nav v-if="rows > page_size" class="mt-2 d-flex justify-content-center">
+    <ul class="pagination">
+      <li class="page-item" :class="{ disabled: page === 1 }">
+        <a class="page-link" href="#" @click.prevent="page--">Previous</a>
+      </li>
+      <li class="page-item" v-for="n in Math.ceil(rows / page_size)" :key="n" :class="{ active: page === n }">
+        <a class="page-link" href="#" @click.prevent="page = n">{{ n }}</a>
+      </li>
+      <li class="page-item" :class="{ disabled: page === Math.ceil(rows / page_size) }">
+        <a class="page-link" href="#" @click.prevent="page++">Next</a>
+      </li>
+    </ul>
+  </nav>
 </div>

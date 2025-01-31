@@ -1,36 +1,78 @@
-import api from '@/services/api'
-import { headers } from './headers'
+import api from '@/services/api';
+import { headers } from '@/services/headers';
 
-export default {
-  fetchTakers(filter) {
-    let params = { params: filter }
-    let config = { ...headers(), ...params }
-    return api.get(`takers/`, config)
-      .then(response => response.data)
-  },
-  postTaker(newTaker) {
-    return api.post(`takers/`, newTaker, headers())
-      .then(response => response.data)
-  },
-  stopDonate(takerId) {
-    return api.patch(`takers/${takerId}/stop_donate/`, null, headers())
-      .then(response => response.data)
-  },
-  removeTaker(takerId) {
-    return api.delete(`takers/${takerId}`, headers())
-      .then(response => response.data)
+const takerService = {
+  async fetchTakers(filter) {
+    try {
+      const params = { params: filter };
+      const config = { ...headers(), ...params };
+      const response = await api.get('takers/', config);
+      return response;
+    } catch (error) {
+      console.error('Error fetching takers:', error);
+      throw error;
+    }
   },
 
-  addDonate(donate) {
-    return api.post(`donates/`, donate, headers())
-      .then(response => response.data)
+  async postTaker(newTaker) {
+    try {
+      const response = await api.post('takers/', newTaker, headers());
+      return response.data;
+    } catch (error) {
+      console.error('Error creating taker:', error);
+      throw error;
+    }
   },
-  updateDonate(donate) {
-    return api.patch(`donates/${donate.id}/`, donate, headers())
-      .then(response => response.data)
+
+  async removeTaker(takerId) {
+    try {
+      const response = await api.delete(`takers/${takerId}`, headers());
+      return response.data;
+    } catch (error) {
+      console.error('Error removing taker:', error);
+      throw error;
+    }
   },
-  removeDonate(donateId) {
-    return api.delete(`donates/${donateId}`, headers())
-      .then(response => response.data)
+
+  async addDonate(donate) {
+    try {
+      const response = await api.post('donates/', donate, headers());
+      return response.data;
+    } catch (error) {
+      console.error('Error adding donate:', error);
+      throw error;
+    }
   },
-}
+
+  async updateDonate(donate) {
+    try {
+      const response = await api.patch(`donates/${donate.id}/`, donate, headers());
+      return response.data;
+    } catch (error) {
+      console.error('Error updating donate:', error);
+      throw error;
+    }
+  },
+
+  async stopDonate(takerId) {
+    try {
+      const response = await api.patch(`takers/${takerId}/stop_donate/`, null, headers());
+      return response.data;
+    } catch (error) {
+      console.error('Error stopping donate:', error);
+      throw error;
+    }
+  },
+
+  async removeDonate(donateId) {
+    try {
+      const response = await api.delete(`donates/${donateId}`, headers());
+      return response.data;
+    } catch (error) {
+      console.error('Error removing donate:', error);
+      throw error;
+    }
+  }
+};
+
+export default takerService;

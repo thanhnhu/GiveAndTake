@@ -1,16 +1,16 @@
-import Vue from 'vue';
-import { vue } from '@/main';
-import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
-import { required, email } from "vee-validate/dist/rules";
+import { configure, defineRule } from 'vee-validate'
+import { required, email } from '@vee-validate/rules'
+import { app } from '@/main'
 
-Vue.component('ValidationProvider', ValidationProvider);
-Vue.component('ValidationObserver', ValidationObserver);
+// Define validation rules
+defineRule('required', required)
+defineRule('email', email)
 
-extend('required', {
-  ...required,
-  message: (name) => vue.$i18n.t('common.field_required', { field: name })
-});
-extend('email', {
-  ...email,
-  message: (name) => vue.$i18n.t('common.field_invalid', { field: name })
-});
+// Configure global validation settings
+configure({
+  generateMessage: (context) => {
+    const { field } = context
+    //return app.config.globalProperties.$i18n.t('common.field_required', { field })
+    return `The ${field} field is required`
+  }
+})

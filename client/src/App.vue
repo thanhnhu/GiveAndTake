@@ -6,23 +6,20 @@
   </div>
 </template>
 
-<script>
-import { mapState } from "vuex";
-import AppHeader from "@/components/AppHeader";
-import AppFooter from "@/components/AppFooter";
+<script setup>
+import { onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+import { userStoreObj } from '@/stores/users'
+import AppHeader from "@/components/AppHeader.vue"
+import AppFooter from "@/components/AppFooter.vue"
 
-export default {
-  name: "app",
-  components: { AppHeader, AppFooter },
+const { user, fetchingData, error } = storeToRefs(userStoreObj)
 
-  computed: {
-    ...mapState({
-      fetchingData: (state) => state.users.fetchingData,
-      user: (state) => state.users.user,
-      error: (state) => state.users.error,
-    }),
-  },
-};
+onMounted(() => {
+  console.log('App mounted')
+  console.log('Current user:', user?.value)
+  console.log('Current route:', window.location.pathname)
+})
 </script>
 
 <style lang="scss" scoped>

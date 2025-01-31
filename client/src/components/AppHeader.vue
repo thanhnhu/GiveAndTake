@@ -1,77 +1,79 @@
-<script>
-import { mapGetters, mapActions } from "vuex";
-
-export default {
-  name: "app-header",
-
-  props: {
-    user: Object,
-  },
-
-  data: () => ({
-    optionLangs: {
-      'en': 'English',
-      'vi': 'Tiếng Việt'
-    }
-  }),
-
-  computed: {
-    ...mapGetters("langs", ["getLang"]),
-    langsFiltered() {
-      return Object.keys(this.optionLangs)
-        .filter(key => key !== this.getLang)
-        .reduce((obj, key) => {
-          obj[key] = this.optionLangs[key];
-          return obj;
-        }, {});
-    }
-  },
-
-  methods: {
-    ...mapActions("langs", ["setLang"]),
-    ...mapActions("users", ["logout"]),
-    callSetLangActions(event) {
-      this.setLang(event.target.getAttribute('value'));
-    }
-  },
-};
-</script>
-
 <template>
   <div class="mb-2">
-    <b-navbar toggleable="sm" type="light" variant="info">
-      <b-navbar-brand href="#">
-        <img src="/static/fire.png" />
+    <BNavbar toggleable="sm" type="light" variant="info">
+      <BNavbarBrand href="#">
+        <img src="@/assets/fire.png" />
         <em>{{ $t('common.giveandforget') }}</em>
-      </b-navbar-brand>
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav fill>
-          <b-nav-item to="/">{{ $t('common.taker') }}</b-nav-item>
-          <b-nav-item to="/givers">{{ $t('common.giver') }}</b-nav-item>
-          <b-nav-item to="/intro">{{ $t('common.introduce') }}</b-nav-item>
-        </b-navbar-nav>
+      </BNavbarBrand>
+      <BNavbarToggle target="nav-collapse"></BNavbarToggle>
+      <BCollapse id="nav-collapse" isNav>
+        <BNavbarNav fill>
+          <BNavItem to="/">{{ $t('common.taker') }}</BNavItem>
+          <BNavItem to="/givers">{{ $t('common.giver') }}</BNavItem>
+          <BNavItem to="/intro">{{ $t('common.introduce') }}</BNavItem>
+        </BNavbarNav>
 
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-
-          <b-nav-item-dropdown :text="optionLangs[getLang]" right>
-            <b-dropdown-item v-for="(value, key) in langsFiltered" :key="key" :value="key"
-              @click.prevent="callSetLangActions">{{ value }}</b-dropdown-item>
-            <div v-if="user" class="mx-2">
+        <BNavbarNav class="ms-auto mb-2 mb-lg-0">
+          <BNavItemDropdown :text="optionLangs[getLang]" right>
+            <BDropdownItem v-for="(value, key) in langsFiltered" :key="key" @click.prevent="setLang(key)">
+              {{ value }}
+            </BDropdownItem>
+          </BNavItemDropdown>
+          <BNavItemDropdown right v-if="user">
+            <template #button-content>
               <em>{{ $t('user.hello') }}, {{ user.username }}</em>
-              <b-dropdown-item @click="logout">{{ $t('user.logout') }}</b-dropdown-item>
-            </div>
-            <div v-else class="mx-2">
-              <b-nav-item to="/login">{{ $t('user.login') }}</b-nav-item>
-              <b-nav-item to="/register">{{ $t('user.register') }}</b-nav-item>
-            </div>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
+            </template>
+            <BDropdownItem @click="logout">{{ $t('user.logout') }}</BDropdownItem>
+          </BNavItemDropdown>
+          <BNavItemDropdown right v-else>
+            <template #button-content>
+              <em>{{ $t('user.hello') }}</em>
+            </template>
+            <BNavItem to="/login">{{ $t('user.login') }}</BNavItem>
+            <BNavItem to="/register">{{ $t('user.register') }}</BNavItem>
+          </BNavItemDropdown>
+        </BNavbarNav>
+      </BCollapse>
+    </BNavbar>
   </div>
 </template>
+
+<script setup>
+import { ref, computed } from 'vue'
+import { storeToRefs } from 'pinia'
+import { userStoreObj } from '@/stores/users'
+import { langStoreObj } from '@/stores/langs'
+
+const optionLangs = ref({
+  'en': 'English',
+  'vi': 'Tiếng Việt'
+})
+
+const userStore = userStoreObj()
+const langStore = langStoreObj()
+
+// Use storeToRefs for reactive store properties
+const { user } = storeToRefs(userStore)
+const { getLang } = storeToRefs(langStore)
+
+const langsFiltered = computed(() => {
+  return Object.keys(optionLangs.value)
+    .filter(key => key !== getLang.value)
+    .reduce((obj, key) => {
+      obj[key] = optionLangs.value[key]
+      return obj
+    }, {})
+})
+
+// Methods
+const setLang = (lang) => {
+  langStore.setLang(lang)
+}
+
+const logout = () => {
+  userStore.logout()
+}
+</script>
 
 <style lang="scss" scoped>
 .navbar {

@@ -1,7 +1,7 @@
 {
   "lang": {
     "select_lang": "Ngôn ngữ",
-    "en": "Tiếng Anh",
+    "en": "Tiếng Anh", 
     "vn": "Tiếng Việt"
   },
   "intro": {
@@ -73,7 +73,7 @@
     "addnew": "Thêm nhà hảo tâm mới"
   },
   "donate": {
-    "addnew": "Add new",
+    "addnew": "Thêm mới",
     "haveDonate": "Bạn chỉ cần nhập số tiền đã giúp đỡ!!!",
     "money": "Số tiền"
   },

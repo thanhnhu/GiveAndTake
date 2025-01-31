@@ -1,12 +1,12 @@
 <div>
-  <b-button v-if="user" type="button" size="sm" variant="outline-primary" @click="showAddTaker = true">
+  <button v-if="user" type="button" class="btn btn-sm btn-outline-primary" @click="showAddTaker = true">
     {{ $t('common.addnew') }}
-  </b-button>
+  </button>
 
   <ValidationObserver ref="observerTaker" v-slot="{ handleSubmit }">
     <modal-dialog :show="showAddTaker" @close="showAddTaker = false">
-      <template v-slot:header>{{$t('taker.addnew') }}</template>
-      <template v-slot:body>
+      <template #header>{{$t('taker.addnew') }}</template>
+      <template #body>
         <ValidationProvider :name="$t('common.fullname')" rules="required" v-slot="{ errors }">
           <div class="mb-3">
             <div class="input-group">
@@ -40,9 +40,9 @@
         <ValidationProvider :name="$t('common.city')" rules="required" v-slot="{ errors }">
           <div class="mb-3">
             <div class="input-group">
-              <b-form-select :class="{ 'is-invalid': errors.length > 0 }" v-model="newTaker.city"
-                :options="optionCities" value-field="id" text-field="name">
-              </b-form-select>
+              <select class="form-select" :class="{ 'is-invalid': errors.length > 0 }" v-model="newTaker.city">
+                <option v-for="city in optionCities" :key="city.id" :value="city.id">{{ city.name }}</option>
+              </select>
             </div>
             <div class="error-messages">{{ errors[0] }}</div>
           </div>
@@ -55,12 +55,12 @@
           <textarea class="form-control" aria-label="description" v-model="newTaker.description"></textarea>
         </div>
       </template>
-      <template v-slot:footer>
-        <b-button size="sm" variant="outline-primary" :disabled="fetchingData"
-          @click="handleSubmit(handleSaveTaker);showAddTaker = false">{{ $t('common.saveandclose') }}</b-button>
-        <b-button size="sm" variant="outline-primary" :disabled="fetchingData" @click="handleSubmit(handleSaveTaker)">
+      <template #footer>
+        <button class="btn btn-sm btn-outline-primary me-2" :disabled="fetchingData"
+          @click="handleSubmit(handleSaveTaker);showAddTaker = false">{{ $t('common.saveandclose') }}</button>
+        <button class="btn btn-sm btn-outline-primary" :disabled="fetchingData" @click="handleSubmit(handleSaveTaker)">
           {{ $t('common.save') }}
-        </b-button>
+        </button>
       </template>
     </modal-dialog>
   </ValidationObserver>

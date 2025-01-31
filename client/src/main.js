@@ -1,33 +1,37 @@
-import Vue from 'vue'
+import { createApp, markRaw } from 'vue'
+import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import App from '@/App.vue'
-import '@/bootstrap'
-import '@/validation'
-import '@/utils'
-
 import router from '@/router'
-import store from '@/stores'
-import i18n from '@/lang/i18n'
+import { i18n } from "@/lang/i18n"
+import installBootstrap from '@/bootstrap';
+import '@/validation'
 
-Vue.config.productionTip = false
+const app = createApp(App)
+const pinia = createPinia()
 
-// eslint-disable-next-line
-Vue.config.errorHandler = (error, vm, info) => {
+pinia.use(piniaPluginPersistedstate)
+pinia.use(({ store }) => {
+  store.router = markRaw(router)
+})
+
+app.use(pinia)
+app.use(router)
+app.use(i18n)
+
+installBootstrap(app);
+
+app.mount('#app')
+
+app.config.errorHandler = (error, vm, info) => {
   console.log('Exception: ', error)
-  if (error && error.statusCode === 401) {
+  if (error?.statusCode === 401) {
     window.location = '/'
   }
 }
 
-// eslint-disable-next-line
 window.onerror = function (message, source, lineno, colno, error) {
   console.log('Exception: ', error)
 }
 
-export const vue = new Vue({
-  router,
-  store,
-  i18n,
-  render: h => h(App)
-})
-
-vue.$mount('#app')
+export { app }

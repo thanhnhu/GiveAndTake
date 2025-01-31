@@ -1,6 +1,5 @@
-
 //import Cookies from 'js-cookie'
-import store from '../stores'
+import { userStoreObj } from '@/stores/users'
 
 export const headers = () => {
   let data = {
@@ -8,9 +7,10 @@ export const headers = () => {
     //'X-CSRFToken': Cookies.get('csrftoken')
   };
 
-  // this store working along with vuex-persistedstate
-  if (store.state.users.token) {
-    data.Authorization = `Token ${store.state.users.token}`
+  // Using Pinia store for Vue 3
+  const userStore = userStoreObj()
+  if (userStore.token) {
+    data.Authorization = `Token ${userStore.token}`
   }
 
   return { headers: data };

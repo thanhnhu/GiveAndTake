@@ -5,9 +5,22 @@
     "vn": "Vietnamese"
   },
   "intro": {
-    "intro1": "1. List all information about difficult situations of people and localities so that benefactors and charities can come and help",
-    "intro2": "2. List all information about benefactors and charity units so that people in difficult situations can contact and receive help",
-    "intro3": "3. Connecting philanthropists and charitable organizations to create a large community to share information about difficult cases and volunteer programs"
+    "title": "Welcome to Give & Take",
+    "subtitle": "Connecting Hearts, Building Communities",
+    "intro1": {
+      "title": "Support Those in Need",
+      "description": "Discover and share information about people and communities facing difficult circumstances, enabling benefactors and charitable organizations to provide timely assistance."
+    },
+    "intro2": {
+      "title": "Connect with Helpers",
+      "description": "Find and connect with generous benefactors and charitable organizations, making it easier for those in need to reach out and receive the support they deserve."
+    },
+    "intro3": {
+      "title": "Build a Caring Community",
+      "description": "Join a growing network of philanthropists and charitable organizations working together to share information about urgent cases and volunteer opportunities."
+    },
+    "get_started": "Get Started",
+    "learn_more": "Learn More"
   },
   "common": {
     "loading": "Loading...",

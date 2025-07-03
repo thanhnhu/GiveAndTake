@@ -1,10 +1,35 @@
-version: "3.7"
+#version: "3.7"
 ### For docker running both backend/frontend and dev/prod env
 # docker-compose -f docker-compose.yml watch 
 # docker-compose -f docker-compose.yml up --build
 # docker-compose -f docker-compose.prod.yml up --build
 
+# Docker Compose will automatically load .env file from the same directory
+# Create .env file with your credentials (copy from .env.example)
+
+networks:
+  giveandtake:
+    driver: bridge
+
+volumes:
+  pgdata:
+
 services:
+
+  postgres:
+    image: postgres:15
+    restart: always
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${DB_NAME:-giveandtake}
+      POSTGRES_USER: ${DB_USER:-giveandtake}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-giveandtake}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - giveandtake
 
   backend:
     build:
@@ -15,11 +40,34 @@ services:
     volumes:
       # mount source folder on dist to hot reloading
       - ./server:/app
+      # mount credentials file (optional - prefer environment variables)
+      - ./server/credentials.json:/app/credentials.json:ro
     ports:
       - 8090:8090
     environment:
       # due to yarn serve, use backend host name
       - HOST_NAME=localhost:8090
+      # Database configuration
+      - DB_HOST=${DB_HOST:-postgres}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=${DB_NAME:-giveandtake}
+      - DB_USER=${DB_USER:-giveandtake}
+      - DB_PASSWORD=${DB_PASSWORD:-giveandtake}
+      # Django configuration
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-verybadsecret!!!}
+      - DJANGO_DEBUG=${DJANGO_DEBUG:-true}
+      - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS:-*}
+      # Cloudinary configuration
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+      # Storage configuration
+      - STORAGE_TYPE=${STORAGE_TYPE:-local}
+      # Google Drive configuration (optional)
+      - GOOGLE_SERVICE_ACCOUNT_FILE=${GOOGLE_SERVICE_ACCOUNT_FILE}
+      - GOOGLE_DRIVE_FOLDER_ID=${GOOGLE_DRIVE_FOLDER_ID}
+    networks:
+      - giveandtake
 
   frontend:
     build:
@@ -29,7 +77,7 @@ services:
     restart: always
     volumes:
       # mount source folder on dist to hot reloading
-      #- ./client:/app
+      - ./client:/app
       # mount below to reduce image size
       - ./client/node_modules:/app/node_modules
     # environment:
@@ -49,3 +97,5 @@ services:
         - action: sync+restart
           path: ./client/vue.config.js
           target: /app/vue.config.js
+    networks:
+      - giveandtake

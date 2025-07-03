@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 from dotenv import load_dotenv
 import os
+from backend.utils.credentials import credentials_manager
 
 load_dotenv()  # Load variables in .env file into environment
 
@@ -20,24 +21,51 @@ SETTINGS_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(SETTINGS_DIR)
 MEDIA_URL = 'images/'
 
-# Google Drive Authentication Setup to save images
-SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, 'credentials.json')
-SCOPES = ['https://www.googleapis.com/auth/drive']
-DRIVEFOLDERID = '1oFoOJg9fVsdtHkyfQS2Vph0asGDe1Sg2'
-
-#STORAGE = 'local'
-STORAGE = 'Google'
+# Load credentials from JSON file
+try:
+    # Cloudinary configuration
+    CLOUDINARY_CONFIG = credentials_manager.get_cloudinary_config()
+    CLOUDINARY_CLOUD_NAME = CLOUDINARY_CONFIG['cloud_name']
+    CLOUDINARY_API_KEY = CLOUDINARY_CONFIG['api_key']
+    CLOUDINARY_API_SECRET = CLOUDINARY_CONFIG['api_secret']
+    
+    # Google Drive configuration
+    GOOGLE_DRIVE_CONFIG = credentials_manager.get_google_drive_config()
+    SERVICE_ACCOUNT_FILE = GOOGLE_DRIVE_CONFIG.get('service_account_file', os.path.join(BASE_DIR, 'credentials.json'))
+    SCOPES = GOOGLE_DRIVE_CONFIG.get('scopes', ['https://www.googleapis.com/auth/drive'])
+    DRIVEFOLDERID = GOOGLE_DRIVE_CONFIG.get('folder_id', '1oFoOJg9fVsdtHkyfQS2Vph0asGDe1Sg2')
+    
+    # Storage configuration
+    STORAGE_CONFIG = credentials_manager.get_storage_config()
+    STORAGE = STORAGE_CONFIG.get('type', 'Cloudinary')
+    print(f"Storage: {STORAGE}")
+except FileNotFoundError:
+    print("Credentials file not found")
+    # Fallback to environment variables if credentials file doesn't exist
+    CLOUDINARY_CLOUD_NAME = os.getenv('CLOUDINARY_CLOUD_NAME', 'your_cloudinary_cloud_name')
+    CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY', 'your_cloudinary_api_key')
+    CLOUDINARY_API_SECRET = os.getenv('CLOUDINARY_API_SECRET', 'your_cloudinary_api_secret')
+    
+    SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, 'credentials.json')
+    SCOPES = ['https://www.googleapis.com/auth/drive']
+    DRIVEFOLDERID = '1oFoOJg9fVsdtHkyfQS2Vph0asGDe1Sg2'
+    STORAGE = 'Cloudinary'
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'verybadsecret!!!'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+# Django configuration
+try:
+    DJANGO_CONFIG = credentials_manager.get_django_config()
+    SECRET_KEY = DJANGO_CONFIG['secret_key']
+    DEBUG = DJANGO_CONFIG['debug']
+    ALLOWED_HOSTS = DJANGO_CONFIG['allowed_hosts']
+except FileNotFoundError:
+    # Fallback to environment variables if credentials file doesn't exist
+    SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'verybadsecret!!!')
+    DEBUG = os.getenv('DJANGO_DEBUG', 'true').lower() == 'true'
+    ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '*').split(',')
 
 
 # Application definition
@@ -107,23 +135,31 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '3306'),
-        'NAME': os.getenv('DB_NAME', 'giveandtake'),
-        'USER': os.getenv('DB_USER', 'giveandtake'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'giveandtake'),
-        'OPTIONS': {
-            'charset': 'utf8mb4',  # Use Unicode
+# Database configuration
+try:
+    DB_CONFIG = credentials_manager.get_database_config()
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': DB_CONFIG['host'],
+            'PORT': DB_CONFIG['port'],
+            'NAME': DB_CONFIG['name'],
+            'USER': DB_CONFIG['user'],
+            'PASSWORD': DB_CONFIG['password']
         }
     }
-}
+except FileNotFoundError:
+    # Fallback to environment variables if credentials file doesn't exist
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': os.getenv('DB_HOST', 'localhost'),
+            'PORT': os.getenv('DB_PORT', '5432'),
+            'NAME': os.getenv('DB_NAME', 'giveandtake'),
+            'USER': os.getenv('DB_USER', 'giveandtake'),
+            'PASSWORD': os.getenv('DB_PASSWORD', 'giveandtake')
+        }
+    }
 
 
 # Password validation

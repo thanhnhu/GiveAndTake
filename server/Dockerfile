@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # use alpine to reduce the image size
-FROM python:3.9-alpine as builder
+FROM python:3.9-alpine AS builder
 # use 3.9 instead of 3.7 to use Pillow and JSONField with sqlite3
 ENV PYTHONUNBUFFERED 1
 
@@ -34,12 +34,12 @@ COPY . .
 #RUN ls -la
 
 # development stage
-FROM builder as development
+FROM builder AS development
 #EXPOSE 8090
 CMD python manage.py runserver 0.0.0.0:8090
 
 # production stage
-FROM builder as production
+FROM builder AS production
 #EXPOSE 8090
 CMD gunicorn -b 0.0.0.0:8090 backend.wsgi:application --timeout 600 --reload --log-level=info
 

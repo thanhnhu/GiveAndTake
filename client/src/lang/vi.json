@@ -5,9 +5,22 @@
     "vn": "Tiếng Việt"
   },
   "intro": {
-    "intro1": "1. Tổng hợp thông tin về những hoàn cảnh về người, địa phương khó khăn để các nhà hảo tâm, từ thiện có thể đến và giúp đỡ",
-    "intro2": "2. Tổng hợp thông tin về những nhà hảo tâm, đơn vị từ thiện để những hoàn cảnh khó khăn có thể liên hệ và được giúp đỡ",
-    "intro3": "3. Kết nối các nhà hảo tâm, tổ chức từ thiện để tạo ra cộng đồng lớn nhằm chia sẻ thông tin về các trường hợp khó khăn, các chương trình thiện nguyện"
+    "title": "Chào mừng đến với Give & Take",
+    "subtitle": "Kết nối trái tim, xây dựng cộng đồng",
+    "intro1": {
+      "title": "Hỗ trợ người khó khăn",
+      "description": "Khám phá và chia sẻ thông tin về những người và cộng đồng đang gặp hoàn cảnh khó khăn, giúp các nhà hảo tâm và tổ chức từ thiện có thể hỗ trợ kịp thời."
+    },
+    "intro2": {
+      "title": "Kết nối với người giúp đỡ",
+      "description": "Tìm kiếm và kết nối với các nhà hảo tâm và tổ chức từ thiện hào phóng, giúp những người khó khăn dễ dàng liên hệ và nhận được sự hỗ trợ xứng đáng."
+    },
+    "intro3": {
+      "title": "Xây dựng cộng đồng quan tâm",
+      "description": "Tham gia mạng lưới ngày càng lớn của các nhà hảo tâm và tổ chức từ thiện cùng nhau chia sẻ thông tin về các trường hợp cấp bách và cơ hội tình nguyện."
+    },
+    "get_started": "Bắt đầu",
+    "learn_more": "Tìm hiểu thêm"
   },
   "common": {
     "loading": "Đang tải...",

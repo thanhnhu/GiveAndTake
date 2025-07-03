@@ -1,5 +1,5 @@
 from rest_framework.serializers import Serializer
-from ..image import ImageToGoogleDriveSerializer, ImageToAzureSerializer, ImageToLocalSerializer
+from ..image import ImageToCloudinarySerializer, ImageToGoogleDriveSerializer, ImageToAzureSerializer, ImageToLocalSerializer
 
 
 class ImageSerializerFactory(Serializer):
@@ -8,5 +8,7 @@ class ImageSerializerFactory(Serializer):
             return ImageToGoogleDriveSerializer()
         elif format == 'Azure':
             return ImageToAzureSerializer()
+        elif format == 'Cloudinary':
+            return ImageToCloudinarySerializer()
         else:
             return ImageToLocalSerializer()

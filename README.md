@@ -4,9 +4,9 @@ A project to make friend with python.
 
 To connect benefactors, charity units with difficult situations.
 
-Live at: https://giveandtake.onrender.com
+Live at: http://give.vfriends.info
 
-You may have to click [here](https://giveandtake-api.onrender.com/docs) first to activate the API (because of the free hosting)
+You may have to click [here](http://give.vfriends.info/docs) first to activate the API (because of the free hosting)
 
 # With Django Vue Template
 
@@ -93,6 +93,15 @@ $ cd client
 $ yarn install
 ```
 
+## Configuration
+
+For detailed information about setting up credentials and configuration for various services (Cloudinary, Google Drive, Database, etc.), see [README.CREDENTIALS.md](README.CREDENTIALS.md).
+
+**Quick Setup**: 
+- **Windows**: Run `.\setup-env.ps1` to automatically create environment files
+- **Manual**: Copy `server/credentials.example.json` to `server/credentials.json` and fill in your actual credentials.
+- **Docker**: Copy `.env.example` to `.env` and fill in your actual credentials.
+
 ## Running Development Servers
 
 ```
@@ -127,7 +136,12 @@ $ python manage.py runserver
 
 ## For docker running both backend/frontend and dev/prod env
 
-```
+### Setup for Docker:
+1. Copy environment file: `cp .env.example .env`
+2. Edit `.env` file with your actual credentials
+3. Run Docker Compose:
+
+```bash
 $ docker-compose build
 $ docker-compose up
 $ docker-compose up/down

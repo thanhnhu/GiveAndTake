@@ -12,6 +12,9 @@ import tempfile
 import shutil
 import socket
 import os
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 
 class ImageSerializer:
@@ -155,7 +158,7 @@ class ImageToGoogleDriveSerializer(ImageSerializer):
     def save(self, host, id, files, folder_id=None):
         res = []
         try:
-            temp_dir = os.path.join(os.path.dirname(tempfile.mktemp()), 'takeandgive')
+            temp_dir = os.path.join(os.path.dirname(tempfile.mktemp()), 'giveandtake')
             # Ensure the directory exists
             if not os.path.exists(temp_dir):
                 os.makedirs(temp_dir)
@@ -200,3 +203,85 @@ class ImageToAzureSerializer(ImageSerializer):
 
     def load(self, id, size):
         return {id: id, size: size}
+
+
+class ImageToCloudinarySerializer(ImageSerializer):
+    def __init__(self):
+        # Configure Cloudinary with credentials from settings
+        cloudinary.config(
+            cloud_name=settings.CLOUDINARY_CLOUD_NAME,
+            api_key=settings.CLOUDINARY_API_KEY,
+            api_secret=settings.CLOUDINARY_API_SECRET
+        )
+
+    def process_file(self, file, id):
+        image = Image.open(file)
+        
+        # Create temporary files for web and mobile versions
+        temp_dir = tempfile.mkdtemp()
+        
+        try:
+            # Web image
+            web_name = f"web_{file.name}"
+            web_path = os.path.join(temp_dir, web_name)
+            image.thumbnail((1300, 720))
+            image.save(web_path)
+            
+            # Mobile image
+            mob_name = f"mob_{file.name}"
+            mob_path = os.path.join(temp_dir, mob_name)
+            image.thumbnail((360, 720))
+            image.save(mob_path)
+            
+            # Upload to Cloudinary with folder structure
+            web_upload_result = cloudinary.uploader.upload(
+                web_path,
+                public_id=f"{id}/{web_name}",
+                folder="giveandtake",
+                resource_type="image"
+            )
+            
+            mob_upload_result = cloudinary.uploader.upload(
+                mob_path,
+                public_id=f"{id}/{mob_name}",
+                folder="giveandtake",
+                resource_type="image"
+            )
+            
+            return {
+                "key": id,
+                "name": file.name,
+                "web_url": web_upload_result['secure_url'],
+                "mob_url": mob_upload_result['secure_url']
+            }
+            
+        finally:
+            # Clean up temporary files
+            shutil.rmtree(temp_dir, ignore_errors=True)
+
+    def save(self, host, id, files, folder_id=None):
+        res = []
+        try:
+            for file in files:
+                result = self.process_file(file, id)
+                res.append(result)
+        except Exception as e:
+            print(f"Error uploading to Cloudinary: {e}")
+            raise e
+            
+        return res
+
+    def load(self, id, size):
+        # For Cloudinary, we can construct URLs based on the public_id
+        # This is a basic implementation - you might want to enhance it
+        return {id: id, size: size}
+
+    def remove(self, id):
+        try:
+            # Delete all resources in the folder for this id
+            result = cloudinary.api.delete_resources_by_prefix(f"giveandtake/{id}/")
+            print(f"Deleted Cloudinary resources for id {id}: {result}")
+            return True
+        except Exception as e:
+            print(f"Error deleting from Cloudinary: {e}")
+            return False

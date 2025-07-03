@@ -7,9 +7,9 @@
 
 # build stage
 # use alpine to reduce the image size
-#FROM node:16.20.2 as builder
+#FROM node:16.20.2 AS builder
 #RUN apt-get update || : && apt-get install python -y
-FROM node:16.20.2-alpine as builder
+FROM node:16.20.2-alpine AS builder
 #RUN apk --no-cache --virtual build-dependencies add python3 make g++
 #ENV NODE_ENV=development
 #ENV NODE_OPTIONS=--openssl-legacy-provider
@@ -39,16 +39,16 @@ RUN yarn build
 
 # development stage
 # multiple FROM reduce image size
-#FROM node:16.13.0-alpine as development
+#FROM node:16.13.0-alpine AS development
 #COPY --from=builder /app .
-FROM builder as development
+FROM builder AS development
 #COPY . .
 #CMD ["yarn",  "serve", "0.0.0.0:8091"]
 CMD yarn serve
 
 # production stage
 # ENV NODE_ENV=production
-FROM nginx:1.16.1-alpine as production
+FROM nginx:1.16.1-alpine AS production
 #COPY --from=builder /app/dist /etc/nginx/html
 COPY --from=builder /app/dist /usr/share/nginx/html
 RUN rm /etc/nginx/conf.d/default.conf

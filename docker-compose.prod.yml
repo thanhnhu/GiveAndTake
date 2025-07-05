@@ -39,6 +39,8 @@ services:
     restart: always
     volumes:
       - share_images:/app/images
+      # mount credentials file (optional - prefer environment variables)
+      - ./server/credentials.json:/app/credentials.json:ro
     ports:
       - 8090:8090
     environment:
@@ -65,7 +67,7 @@ services:
       - GOOGLE_SERVICE_ACCOUNT_FILE=${GOOGLE_SERVICE_ACCOUNT_FILE}
       - GOOGLE_DRIVE_FOLDER_ID=${GOOGLE_DRIVE_FOLDER_ID}
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8090" ]
+      test: ["CMD-SHELL", "curl -f http://localhost:8090 || exit 1"]
       interval: 1m30s
       timeout: 10s
       retries: 3
@@ -86,7 +88,7 @@ services:
       # - 80:8091 # hostport:containerport
       - 8091:8091
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8091" ]
+      test: ["CMD-SHELL", "curl -f http://localhost:8091 || exit 1"]
       interval: 1m30s
       timeout: 10s
       retries: 3

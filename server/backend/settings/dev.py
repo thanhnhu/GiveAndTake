@@ -31,7 +31,7 @@ try:
     
     # Google Drive configuration
     GOOGLE_DRIVE_CONFIG = credentials_manager.get_google_drive_config()
-    SERVICE_ACCOUNT_FILE = GOOGLE_DRIVE_CONFIG.get('service_account_file', os.path.join(BASE_DIR, 'credentials.json'))
+    SERVICE_ACCOUNT_FILE = credentials_manager.credentials_file
     SCOPES = GOOGLE_DRIVE_CONFIG.get('scopes', ['https://www.googleapis.com/auth/drive'])
     DRIVEFOLDERID = GOOGLE_DRIVE_CONFIG.get('folder_id', '1oFoOJg9fVsdtHkyfQS2Vph0asGDe1Sg2')
     

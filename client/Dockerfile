@@ -14,6 +14,9 @@ FROM node:16.20.2-alpine AS builder
 #ENV NODE_ENV=development
 #ENV NODE_OPTIONS=--openssl-legacy-provider
 
+# Install curl for health check
+RUN apk add --no-cache curl
+
 RUN mkdir /app
 COPY . /app
 #COPY package*.json /app

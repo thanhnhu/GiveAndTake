@@ -19,8 +19,10 @@ class CredentialsManager:
         """
         if credentials_file is None:
             # Get the server directory (parent of backend)
-            backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            credentials_file = os.path.join(backend_dir, 'credentials.json')
+            server_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+            credentials_file = os.path.join(server_dir, 'credentials.json')
+            print("server_dir", server_dir)
+            print("credentials_file", credentials_file)
         
         self.credentials_file = credentials_file
         self._credentials = None

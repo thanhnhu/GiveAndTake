@@ -6,8 +6,6 @@ To connect benefactors, charity units with difficult situations.
 
 Live at: http://give.vfriends.info
 
-You may have to click [here](http://give.vfriends.info/docs) first to activate the API (because of the free hosting)
-
 # With Django Vue Template
 
 This template is a minimal example for an application using Vue and Django.

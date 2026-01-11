@@ -30,8 +30,9 @@ WORKDIR /app
 #RUN npm rebuild node-sass
 #RUN npm uninstall node-sass
 #RUN npm install sass -S -D
-RUN yarn install && yarn cache clean
-RUN npx update-browserslist-db@latest
+RUN yarn install && yarn cache clean && \
+    npx update-browserslist-db@latest || true && \
+    rm -rf node_modules/.cache ~/.npm/_npx || true
 # Copy files from local machine to virtual directory in docker image
 COPY . .
 # build into /app/dist
@@ -47,11 +48,11 @@ RUN yarn build
 FROM builder AS development
 #COPY . .
 #CMD ["yarn",  "serve", "0.0.0.0:8091"]
-CMD yarn serve
+CMD ["yarn", "serve"]
 
 # production stage
 # ENV NODE_ENV=production
-FROM nginx:1.16.1-alpine AS production
+FROM nginx:stable-alpine AS production
 #COPY --from=builder /app/dist /etc/nginx/html
 COPY --from=builder /app/dist /usr/share/nginx/html
 RUN rm /etc/nginx/conf.d/default.conf

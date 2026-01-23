@@ -32,6 +32,12 @@ jobs:
     
     steps:
       - uses: actions/checkout@v4
+      
+      # Convert github.repository to lowercase
+      - name: Normalize repository name
+        run: |
+          REPO_LC=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          echo "REPO_LC=$REPO_LC" >> $GITHUB_ENV
 
       # Login vào GitHub Container Registry
       - name: Login to GHCR
@@ -48,7 +54,7 @@ jobs:
         with:
           context: ./server
           push: true
-          tags: ghcr.io/${{ github.repository }}/backend:latest
+          tags: ghcr.io/${{ env.REPO_LC }}/backend:latest
 
       # Build Frontend nếu thư mục client/ thay đổi
       - name: Build Frontend
@@ -57,4 +63,4 @@ jobs:
         with:
           context: ./client
           push: true
-          tags: ghcr.io/${{ github.repository }}/frontend:latest
+          tags: ghcr.io/${{ env.REPO_LC }}/frontend:latest

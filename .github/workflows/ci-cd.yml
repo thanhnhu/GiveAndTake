@@ -1,0 +1,60 @@
+name: Build and Push to Github
+
+on:
+  push:
+    branches: [ "deploy/k3s" ]
+    paths:
+      - 'server/**'
+      - 'client/**'
+
+jobs:
+  # Job trung gian để kiểm tra thư mục nào thực sự thay đổi
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      server: ${{ steps.filter.outputs.server }}
+      client: ${{ steps.filter.outputs.client }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            server: 'server/**'
+            client: 'client/**'
+
+  build-and-push:
+    needs: changes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # QUAN TRỌNG: Để push vào GHCR
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      # Login vào GitHub Container Registry
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Build Backend nếu thư mục server/ thay đổi
+      - name: Build Backend
+        if: needs.changes.outputs.server == 'true'
+        uses: docker/build-push-action@v5
+        with:
+          context: ./server
+          push: true
+          tags: ghcr.io/${{ github.repository }}/backend:latest
+
+      # Build Frontend nếu thư mục client/ thay đổi
+      - name: Build Frontend
+        if: needs.changes.outputs.client == 'true'
+        uses: docker/build-push-action@v5
+        with:
+          context: ./client
+          push: true
+          tags: ghcr.io/${{ github.repository }}/frontend:latest

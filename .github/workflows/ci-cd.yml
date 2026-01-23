@@ -54,7 +54,7 @@ jobs:
         with:
           context: ./server
           push: true
-          tags: ghcr.io/${{ env.REPO_LC }}/backend:latest
+          tags: ghcr.io/${{ env.REPO_LC }}-be:latest
 
       # Build Frontend nếu thư mục client/ thay đổi
       - name: Build Frontend
@@ -63,4 +63,4 @@ jobs:
         with:
           context: ./client
           push: true
-          tags: ghcr.io/${{ env.REPO_LC }}/frontend:latest
+          tags: ghcr.io/${{ env.REPO_LC }}-fe:latest

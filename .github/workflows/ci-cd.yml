@@ -55,9 +55,10 @@ jobs:
         with:
           context: ./server
           push: true
+          # Important to pull & deploy
           tags: |
             ghcr.io/${{ env.REPO_LC }}-be:latest
-            ghcr.io/${{ env.REPO_LC }}-be:${{ github.sha }} # Important to pull & deploy
+            ghcr.io/${{ env.REPO_LC }}-be:${{ github.sha }}
 
       # Build Frontend nếu thư mục client/ thay đổi
       - name: Build Frontend
@@ -66,6 +67,7 @@ jobs:
         with:
           context: ./client
           push: true
+          # Important to pull & deploy
           tags: |
             ghcr.io/${{ env.REPO_LC }}-fe:latest
-            ghcr.io/${{ env.REPO_LC }}-fe:${{ github.sha }} # Important to pull & deploy
+            ghcr.io/${{ env.REPO_LC }}-fe:${{ github.sha }}

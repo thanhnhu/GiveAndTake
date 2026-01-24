@@ -1,6 +1,7 @@
 name: Build and Push to Github
 
 on:
+  workflow_dispatch: # allow manual run
   push:
     branches: [ "deploy/k3s" ]
     paths:

@@ -48,6 +48,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GH_TOKEN }}
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       # Build Backend nếu thư mục server/ thay đổi
       - name: Build Backend
         if: needs.changes.outputs.server == 'true'
@@ -59,6 +62,8 @@ jobs:
           tags: |
             ghcr.io/${{ env.REPO_LC }}-be:latest
             ghcr.io/${{ env.REPO_LC }}-be:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       # Build Frontend nếu thư mục client/ thay đổi
       - name: Build Frontend
@@ -71,3 +76,5 @@ jobs:
           tags: |
             ghcr.io/${{ env.REPO_LC }}-fe:latest
             ghcr.io/${{ env.REPO_LC }}-fe:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

@@ -1,0 +1,67 @@
+<div>
+  <b-button v-if="user" type="button" size="sm" variant="outline-primary" @click="showAddGiver = true">
+    {{$t('common.addnew') }}
+  </b-button>
+
+  <ValidationObserver ref="observerGiver" v-slot="{ handleSubmit }">
+    <modal-dialog :show="showAddGiver" @close="showAddGiver = false">
+      <template v-slot:header>{{$t('giver.addnew') }}</template>
+      <template v-slot:body>
+        <ValidationProvider :name="$t('common.fullname')" rules="required" v-slot="{ errors }">
+          <div class="mb-3">
+            <div class="input-group">
+              <input type="text" class="form-control" :class="{ 'is-invalid': errors.length > 0 }" aria-label="fullname"
+                :placeholder="$t('common.fullname')" v-model="newGiver.name" />
+            </div>
+            <div class="error-messages">{{ errors[0] }}</div>
+          </div>
+        </ValidationProvider>
+
+        <ValidationProvider :name="$t('common.phone')" rules="required" v-slot="{ errors }">
+          <div class="mb-3">
+            <div class="input-group">
+              <input type="text" class="form-control" :class="{ 'is-invalid': errors.length > 0 }" aria-label="phone"
+                :placeholder="$t('common.phone')" v-model="newGiver.phone" />
+            </div>
+            <div class="error-messages">{{ errors[0] }}</div>
+          </div>
+        </ValidationProvider>
+
+        <ValidationProvider :name="$t('common.address')" rules="required" v-slot="{ errors }">
+          <div class="mb-3">
+            <div class="input-group">
+              <input type="text" class="form-control" :class="{ 'is-invalid': errors.length > 0 }" aria-label="Address"
+                maxlength="50" :placeholder="$t('common.address')" v-model="newGiver.address" />
+            </div>
+            <div class="error-messages">{{ errors[0] }}</div>
+          </div>
+        </ValidationProvider>
+
+        <ValidationProvider :name="$t('common.city')" rules="required" v-slot="{ errors }">
+          <div class="mb-3">
+            <div class="input-group">
+              <b-form-select :class="{ 'is-invalid': errors.length > 0 }" v-model="newGiver.city"
+                :options="optionCities" value-field="id" text-field="name">
+              </b-form-select>
+            </div>
+            <div class="error-messages">{{ errors[0] }}</div>
+          </div>
+        </ValidationProvider>
+
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">{{ $t('common.description') }}</span>
+          </div>
+          <textarea class="form-control" aria-label="description" v-model="newGiver.description"></textarea>
+        </div>
+      </template>
+      <template v-slot:footer>
+        <b-button size="sm" variant="outline-primary" :disabled="fetchingData"
+          @click="handleSubmit(handleSaveGiver); showAddGiver = false">{{ $t('common.saveandclose') }}</b-button>
+        <b-button size="sm" variant="outline-primary" @click="handleSubmit(handleSaveGiver)" :disabled="fetchingData">
+          {{ $t('common.save') }}
+        </b-button>
+      </template>
+    </modal-dialog>
+  </ValidationObserver>
+</div>

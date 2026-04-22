@@ -1,0 +1,100 @@
+{
+  "lang": {
+    "select_lang": "Language",
+    "en": "English",
+    "vn": "Vietnamese"
+  },
+  "intro": {
+    "title": "Welcome to Give & Take",
+    "subtitle": "Connecting Hearts, Building Communities",
+    "intro1": {
+      "title": "Support Those in Need",
+      "description": "Discover and share information about people and communities facing difficult circumstances, enabling benefactors and charitable organizations to provide timely assistance."
+    },
+    "intro2": {
+      "title": "Connect with Helpers",
+      "description": "Find and connect with generous benefactors and charitable organizations, making it easier for those in need to reach out and receive the support they deserve."
+    },
+    "intro3": {
+      "title": "Build a Caring Community",
+      "description": "Join a growing network of philanthropists and charitable organizations working together to share information about urgent cases and volunteer opportunities."
+    },
+    "get_started": "Get Started",
+    "learn_more": "Learn More"
+  },
+  "common": {
+    "loading": "Loading...",
+    "giveandforget": "Give and forget!!!",
+    "taker": "Pauper",
+    "giver": "Benefactor",
+    "introduce": "Introduce",
+    "select_city": "Select city",
+    "addnew": "Add New",
+    "mine": "Mine",
+    "city": "City",
+    "fullname": "Fullname",
+    "phone": "Phone",
+    "address": "Address",
+    "description": "Description",
+    "images": "Images",
+    "donate": "Donate",
+    "createddate": "Created Date",
+    "viewimages": "View images",
+    "viewdescription": "View description",
+    "action": "Action",
+    "saveandclose": "Save and Close",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "confirmDelete": "Are you sure to delete?",
+    "field_required": "{field} is required!",
+    "field_invalid": "{field} is invalid!",
+    "wannadonate": "Do you want to donate? Please login/register!",
+    "needtodonate": "Need donate",
+    "stopdonate": "Stop donate"
+  },
+  "user": {
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "hello": "Hello",
+    "userExist": "Account is existing!",
+    "buttons": {
+      "login": "Login"
+    },
+    "input_text": {
+      "email": "Email",
+      "username": "Username",
+      "password": "Password",
+      "firstname": "Firstname",
+      "lastname": "Lastname"
+    },
+    "messages": {
+      "none_account": "Sign up!",
+      "wrong_username_password": "Wrong username or password!",
+      "username_required": "Username is required!",
+      "login_success": "Login success!",
+      "register_success": "Register success!"
+    }
+  },
+  "taker": {
+    "addnew": "Add new pauper"
+  },
+  "giver": {
+    "addnew": "Add new benefactor"
+  },
+  "donate": {
+    "addnew": "Add new",
+    "haveDonate": "Input the money has donated!!!",
+    "money": "Money"
+  },
+  "upload": {
+    "addnew": "Upload images",
+    "popup_header": "Add images (size limit 10Mb)",
+    "popup_success": "Upload success!",
+    "popup_failed": "Upload failed!",
+    "popup_addmore": "Add more",
+    "popup_upload": "Upload"
+  }
+}

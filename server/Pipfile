@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+djangorestframework = "*"
+gunicorn = "*"
+whitenoise = "*"
+python-dotenv = "*"
+dj-database-url = "*"
+psycopg2-binary = "*"
+mysqlclient = "*"
+google-api-python-client = "*"
+google-auth = "*"
+google-auth-oauthlib = "*"
+google-auth-httplib2 = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11.4"

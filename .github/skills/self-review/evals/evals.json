@@ -1,0 +1,43 @@
+{
+  "skill_name": "self-review",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "review my changes",
+      "expected_output": "An issues.md report with verdict, files reviewed table, and any issues found. Should load the automation checklist since changes are test files.",
+      "context": "Branch fe-2755 checked out (4 files, ~200 lines changed — test automation code)",
+      "expectations": [
+        "Produces issues.md at repo root",
+        "Report includes verdict (Ready / Ready with Warnings / Not Ready)",
+        "All 4 changed files appear in Files Reviewed table",
+        "Chat summary shows file count, issue counts, and verdict",
+        "Completes in 4 or fewer tool-call rounds (the speed target)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "self-review",
+      "expected_output": "A fast review of a tiny 1-line change. Should skip loading any reference checklist since diff is <100 lines.",
+      "context": "Branch fe-2792 checked out (1 file, 1 line changed)",
+      "expectations": [
+        "Produces issues.md at repo root",
+        "Does NOT load any reference checklist file (diff is tiny)",
+        "Completes in 3 or fewer tool-call rounds",
+        "Report is proportionally brief for a 1-line change"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "check my diff before I open a PR",
+      "expected_output": "A review of 7 files with ~90 lines changed, covering page objects and test specs.",
+      "context": "Branch fe-2750 checked out (7 files, 90 insertions, 10 deletions — page objects + test specs)",
+      "expectations": [
+        "Produces issues.md at repo root",
+        "All 7 changed files appear in Files Reviewed table",
+        "Chat summary shows file count, issue counts, and verdict",
+        "Completes in 4 or fewer tool-call rounds",
+        "Risk categorization is reasonable (test files = low risk, page objects = medium/low risk)"
+      ]
+    }
+  ]
+}

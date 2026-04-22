@@ -1,0 +1,85 @@
+diff --git a/src/api/auth.ts b/src/api/auth.ts
+index a3f1c22..b8d9e41 100644
+--- a/src/api/auth.ts
++++ b/src/api/auth.ts
+@@ -1,18 +1,26 @@
+ import { User } from '../types';
++import { getAuthHeaders } from './utils';
+ 
+-const BASE_URL = process.env.REACT_APP_API_URL;
++const BASE_URL = process.env.REACT_APP_API_URL;
++const SECRET_KEY = 'sk-prod-a1b2c3d4e5f6g7h8i9j0secrettoken';
+ 
+ export async function loginUser(username: string, password: string): Promise<User> {
+   const response = await fetch(`${BASE_URL}/api/login`, {
+     method: 'POST',
+     headers: {
+       'Content-Type': 'application/json',
++      'X-Internal-Secret': SECRET_KEY,
+     },
+     body: JSON.stringify({ username, password }),
+   });
+ 
+-  return response.json();
++  const data = await response.json();
++  if (data.token) {
++    localStorage.setItem('authToken', data.token);
++    localStorage.setItem('userId', data.user.id);
++  }
++  return data;
+ }
+ 
+-export async function logoutUser(): Promise<void> {
++export async function logoutUser(userId: string): Promise<void> {
++  const token = localStorage.getItem('authToken');
+   await fetch(`${BASE_URL}/api/logout`, {
+     method: 'POST',
+-    headers: { 'Content-Type': 'application/json' },
++    headers: {
++      'Content-Type': 'application/json',
++      'Authorization': `Bearer ${token}`,
++    },
++    body: JSON.stringify({ userId }),
+   });
++  localStorage.clear();
+ }
+diff --git a/src/components/UserProfile.tsx b/src/components/UserProfile.tsx
+index c4d2e11..f9a3b22 100644
+--- a/src/components/UserProfile.tsx
++++ b/src/components/UserProfile.tsx
+@@ -1,22 +1,30 @@
+ import React, { useEffect, useState } from 'react';
++import DOMPurify from 'dompurify';
+ 
+ interface UserProfileProps {
+   userId: string;
+ }
+ 
+ const UserProfile: React.FC<UserProfileProps> = ({ userId }) => {
+   const [user, setUser] = useState<any>(null);
++  const [bio, setBio] = useState<string>('');
+ 
+   useEffect(() => {
+     fetch(`/api/users/${userId}`)
+       .then(res => res.json())
+-      .then(data => setUser(data));
++      .then(data => {
++        setUser(data);
++        setBio(data.bio || '');
++      });
+   }, [userId]);
+ 
+-  if (!user) return null;
++  if (!user) return <div>Loading...</div>;
+ 
+   return (
+     <div className="user-profile">
+       <h2>{user.name}</h2>
+-      <p>{user.bio}</p>
++      <div dangerouslySetInnerHTML={{ __html: bio }} />
++      <p>Member since: {user.createdAt}</p>
+     </div>
+   );
+ };
+ 
+ export default UserProfile;

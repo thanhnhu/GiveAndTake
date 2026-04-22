@@ -1,0 +1,13 @@
+{
+  "baseBranch": "main",
+  "platform": "gitea",
+  "platformConfig": {
+    "github": {
+      "apiUrl": "https://api.github.com",
+      "owner": "thanhnhu",
+      "repo": "GiveAndTake"
+    }
+  },
+  "enableCommentPosting": true,
+  "enableNotification": true
+}

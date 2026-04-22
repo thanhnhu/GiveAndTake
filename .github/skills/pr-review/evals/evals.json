@@ -1,0 +1,50 @@
+{
+  "skill_name": "pr-review",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Review the diff at evals/files/eval-1-security-detection/sample.diff and produce a review.json. The project uses GitHub, base branch is main. Don't try to fetch or checkout any PR — the diff file is already prepared. Skip Steps 1-3 of the skill (git operations) and start from Step 4 (detect tech stack). Analyze the diff thoroughly and produce a complete review.json at the current working directory.",
+      "expected_output": "A review.json that catches: (1) hardcoded secret key in auth.ts (critical security), (2) XSS vulnerability via dangerouslySetInnerHTML with unsanitized bio in UserProfile.tsx (critical security). Should have status REQUEST_CHANGES and at least 2 critical comments. Should NOT flag token storage in localStorage or the logoutUser refactor as critical issues.",
+      "files": ["evals/files/eval-1-security-detection/sample.diff"],
+      "expectations": [
+        "review.json is produced and is valid JSON",
+        "review.json has a 'comments' array with at least 2 entries",
+        "At least one comment has severity 'critical' and references the hardcoded SECRET_KEY in auth.ts",
+        "At least one comment has severity 'critical' or 'warning' referencing dangerouslySetInnerHTML in UserProfile.tsx",
+        "review.json status is 'REQUEST_CHANGES'",
+        "review.json includes a non-empty summary field",
+        "review.json statistics.criticalCount is >= 2",
+        "No comment flags localStorage.setItem usage as a critical security issue (this is acceptable for an auth token)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Review the diff at evals/files/eval-2-noise-filtering/sample.diff and produce a review.json. The project uses GitHub, base branch is main. Don't try to fetch or checkout any PR — the diff file is already prepared. Skip Steps 1-3 of the skill (git operations) and start from Step 4. The diff contains only formatting/indentation changes — consistent 2-space indent applied to Button.tsx, formatDate.ts, and components.css. Produce a complete review.json.",
+      "expected_output": "A review.json with zero or very few comments (ideally none). Status should be APPROVED or COMMENT. The skill should correctly identify this as pure formatting changes and not flag any issues. No false positives about style, indentation, or import semicolons.",
+      "files": ["evals/files/eval-2-noise-filtering/sample.diff"],
+      "expectations": [
+        "review.json is produced and is valid JSON",
+        "review.json has zero critical comments (statistics.criticalCount == 0)",
+        "review.json has zero or very few total comments (ideally 0, at most 1)",
+        "review.json status is 'APPROVED' or 'COMMENT' (not 'REQUEST_CHANGES')",
+        "review.json summary acknowledges the PR is formatting/style only"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Review the diff at evals/files/eval-3-risk-based-review/sample.diff and produce a review.json. The project uses GitHub, base branch is main. Don't try to fetch or checkout any PR — the diff file is already prepared. Skip Steps 1-3 (git operations) and start from Step 4. The diff has Python backend (HIGH/CRITICAL risk) and TypeScript frontend (MEDIUM risk) changes. Apply risk-based review depth accordingly. Produce a complete review.json.",
+      "expected_output": "A review.json that catches the serious backend issues: (1) SQL injection in search_users via raw f-string query, (2) SQL injection in get_user comments query, (3) missing auth on delete_all_users endpoint (catastrophic data loss risk), (4) mass assignment vulnerability in update_user (setattr on arbitrary keys). The frontend UserList changes (search triggering on every keystroke without debounce) may be flagged as a warning but shouldn't overshadow the critical backend issues. Test file changes should be lightly reviewed or skipped.",
+      "files": ["evals/files/eval-3-risk-based-review/sample.diff"],
+      "expectations": [
+        "review.json is produced and is valid JSON",
+        "review.json has status 'REQUEST_CHANGES'",
+        "At least one critical comment references SQL injection in users.py (search_users or the raw f-string query)",
+        "At least one critical or warning comment references the delete_all_users endpoint having no authentication",
+        "At least one critical or warning comment references the mass assignment vulnerability in update_user (setattr with arbitrary user-supplied keys)",
+        "review.json statistics.criticalCount >= 2",
+        "No critical comments on the test file (tests/test_users.py)",
+        "Comments on Python backend issues outnumber comments on the TypeScript frontend component"
+      ]
+    }
+  ]
+}

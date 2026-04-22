@@ -1,0 +1,52 @@
+<div class="donate-info">
+  <button
+    v-if="isNewInline"
+    type="button"
+    class="icon-action"
+    :title="$t('common.donate')"
+    @click="localShow = true"
+  >
+    <i class="bi bi-gift fs-5" />
+  </button>
+
+  <button
+    v-if="isNew"
+    type="button"
+    class="btn btn-sm btn-outline-primary"
+    @click="localShow = true"
+  >
+    {{ $t('donate.addnew') }}
+  </button>
+
+  <button
+    v-if="isEdit"
+    type="button"
+    class="icon-action"
+    :title="$t('common.edit')"
+    @click="localShow = true"
+  >
+    <i class="bi bi-pencil fs-5" />
+  </button>
+
+  <modal-dialog :show="localShow" @close="localShow = false; onHidden()">
+    <template #header>{{ $t('donate.haveDonate') }}</template>
+    <template #body>
+      <div class="mb-3">
+        <div class="input-group">
+          <span class="input-group-text">$</span>
+          <input type="number" step="1" class="form-control" :class="{ 'is-invalid': donateError }" v-model.number="donateValue" :placeholder="$t('donate.money')" aria-label="money" min="0" />
+        </div>
+        <div class="error-messages" v-if="donateError">{{ donateError }}</div>
+      </div>
+
+      <div class="input-group">
+        <span class="input-group-text">{{ $t('common.description') }}</span>
+        <textarea class="form-control" v-model="description" aria-label="description"></textarea>
+      </div>
+    </template>
+    <template #footer>
+      <button class="btn btn-sm btn-outline-primary me-2" :disabled="fetchingData" @click="handleSaveAndClose">{{ $t('common.saveandclose') }}</button>
+      <button class="btn btn-sm btn-outline-primary me-2" :disabled="fetchingData" @click="handleSave">{{ $t('common.save') }}</button>
+    </template>
+  </modal-dialog>
+</div>

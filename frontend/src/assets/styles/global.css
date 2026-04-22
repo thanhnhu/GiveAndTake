@@ -1,0 +1,65 @@
+.error-messages {
+  color       : red;
+  padding-top : 4px;
+  padding-left: 14px;
+  font-size   : 14px;
+  float       : left;
+}
+
+table td {
+  vertical-align: middle;
+}
+
+.icon-action {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  line-height: 1;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.action-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+}
+
+.action-icons > div,
+.donate-info,
+.file-uploader {
+  display: inline-flex;
+  align-items: center;
+}
+
+.tooltip .tooltip-inner {
+  background-color: #fff;
+  color: #212529;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  opacity: 1;
+}
+
+.tooltip {
+  opacity: 1 !important;
+}
+
+.btn-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+  font-size: 20px;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #4aae9b;
+  background: transparent;
+  z-index: 99999999;
+}

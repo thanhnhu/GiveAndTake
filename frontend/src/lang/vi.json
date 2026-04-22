@@ -1,0 +1,104 @@
+{
+  "lang": {
+    "select_lang": "Ngôn ngữ",
+    "en": "Tiếng Anh", 
+    "vn": "Tiếng Việt"
+  },
+  "intro": {
+    "title": "Chào mừng đến với Give & Take",
+    "subtitle": "Kết nối trái tim, xây dựng cộng đồng",
+    "intro1": {
+      "title": "Hỗ trợ người khó khăn",
+      "description": "Khám phá và chia sẻ thông tin về những người và cộng đồng đang gặp hoàn cảnh khó khăn, giúp các nhà hảo tâm và tổ chức từ thiện có thể hỗ trợ kịp thời."
+    },
+    "intro2": {
+      "title": "Kết nối với người giúp đỡ",
+      "description": "Tìm kiếm và kết nối với các nhà hảo tâm và tổ chức từ thiện hào phóng, giúp những người khó khăn dễ dàng liên hệ và nhận được sự hỗ trợ xứng đáng."
+    },
+    "intro3": {
+      "title": "Xây dựng cộng đồng quan tâm",
+      "description": "Tham gia mạng lưới ngày càng lớn của các nhà hảo tâm và tổ chức từ thiện cùng nhau chia sẻ thông tin về các trường hợp cấp bách và cơ hội tình nguyện."
+    },
+    "get_started": "Bắt đầu",
+    "learn_more": "Tìm hiểu thêm"
+  },
+  "common": {
+    "loading": "Đang tải...",
+    "giveandforget": "Cho và quên đi!!!",
+    "taker": "Người khó khăn",
+    "giver": "Nhà hảo tâm",
+    "introduce": "Giới thiệu",
+    "select_city": "Chọn thành phố",
+    "addnew": "Thêm mới",
+    "mine": "Của tôi",
+    "city": "Thành phố",
+    "fullname": "Họ Tên",
+    "phone": "Điện thoại",
+    "address": "Địa chỉ",
+    "description": "Chi tiết",
+    "images": "Hình ảnh",
+    "donate": "Hỗ trợ",
+    "createddate": "Ngày tạo",
+    "viewimages": "Xem hình ảnh",
+    "viewdescription": "Xem chi tiết",
+    "action": "Hành động",
+    "saveandclose": "Lưu và tắt",
+    "save": "Lưu lại",
+    "edit": "Chỉnh sửa",
+    "delete": "Xóa",
+    "cancel": "Bỏ qua",
+    "confirmDelete": "Bạn có chắc chắn xóa?",
+    "field_required": "{field} không để trống!",
+    "field_invalid": "{field} không hợp lệ!",
+    "wannadonate": "Bạn muốn giúp đỡ? Vui lòng đăng ký hoặc đăng nhập!",
+    "needtodonate": "Cần giúp đỡ",
+    "stopdonate": "Ngừng giúp đỡ",
+    "pagination_previous": "Trước",
+    "pagination_next": "Sau"
+  },
+  "user": {
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "register": "Đăng ký",
+    "hello": "Xin chào",
+    "userExist": "Tài khoản đã tồn tại!",
+    "buttons": {
+      "login": "Đăng nhập"
+    },
+    "input_text": {
+      "email": "Email",
+      "username": "Tên đăng nhập",
+      "password": "Mật khẩu",
+      "firstname": "Họ",
+      "lastname": "Tên"
+    },
+    "messages": {
+      "none_account": "Tạo tài khoản mới",
+      "wrong_username_password": "Tên đăng nhập hoặc mật khẩu không đúng!",
+      "username_required": "Tên đăng nhập không để trống!",
+      "password_required": "Mật khẩu không để trống!",
+      "login_success": "Đăng nhập thành công!",
+      "register_success": "Đăng ký thành công!"
+    }
+  },
+  "taker": {
+    "addnew": "Thêm người khó khăn mới"
+  },
+  "giver": {
+    "addnew": "Thêm nhà hảo tâm mới"
+  },
+  "donate": {
+    "addnew": "Thêm mới",
+    "haveDonate": "Bạn chỉ cần nhập số tiền đã giúp đỡ!!!",
+    "money": "Số tiền"
+  },
+  "upload": {
+    "addnew": "Thêm hình ảnh",
+    "popup_header": "Thêm hình ảnh (hình không quá 10MB)",
+    "popup_success": "Tải hình lên thành công!",
+    "popup_failed": "Có lỗi khi tải hình!",
+    "popup_addmore": "Thêm hình",
+    "popup_upload": "Tải lên",
+    "fileTooLarge": "File quá lớn!"
+  }
+}

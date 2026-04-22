@@ -1,0 +1,148 @@
+#version: "3.7"
+### For docker running both backend/frontend and dev/prod env
+# docker-compose -f docker-compose.yml watch 
+# docker-compose -f docker-compose.yml up --build
+# docker-compose -f docker-compose.prod.yml up --build
+
+
+networks:
+  giveandtake:
+    driver: bridge
+
+volumes:
+  pgdata:
+  # share folder images between BE & FE (django not serve static files)
+  share_images:
+
+services:
+
+  postgres:
+    image: postgres:17
+    restart: always
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${DB_NAME:-giveandtake}
+      POSTGRES_USER: ${DB_USER:-giveandtake}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-giveandtake}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - giveandtake
+
+  backend:
+    build:
+      context: ./backend
+      target: production
+    container_name: backend
+    restart: always
+    volumes:
+      - share_images:/app/images
+      # mount credentials file (optional - prefer environment variables)
+      - ./backend/credentials.json:/app/credentials.json:ro
+    ports:
+      - 8090:8090
+    environment:
+      # Database configuration
+      - DB_HOST=${DB_HOST:-postgres}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=${DB_NAME:-giveandtake}
+      - DB_USER=${DB_USER:-giveandtake}
+      - DB_PASSWORD=${DB_PASSWORD:-giveandtake}
+      # Run DB migrations on startup (safe: bootstrap_db.py is idempotent)
+      - RUN_MIGRATIONS=${RUN_MIGRATIONS:-true}
+      # Connection pool — reduce per-pod if scaling to multiple replicas
+      - DB_POOL_MIN_SIZE=${DB_POOL_MIN_SIZE:-2}
+      - DB_POOL_MAX_SIZE=${DB_POOL_MAX_SIZE:-10}
+      # Cloudinary configuration
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+      # Storage configuration
+      - STORAGE_TYPE=${STORAGE_TYPE:-local}
+      # Google Drive configuration (optional)
+      - GOOGLE_SERVICE_ACCOUNT_FILE=${GOOGLE_SERVICE_ACCOUNT_FILE}
+      - GOOGLE_DRIVE_FOLDER_ID=${GOOGLE_DRIVE_FOLDER_ID}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8090 || exit 1"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      - postgres
+    networks:
+      - giveandtake
+
+  frontend:
+    build:
+      context: ./frontend
+      target: production
+    container_name: frontend
+    restart: always
+    environment:
+      # backend service name inside docker-compose network
+      - NGINX_BACKEND_HOST=backend:8090
+    volumes:
+      - share_images:/usr/share/nginx/html/images
+    ports:
+      # - 80:8091 # hostport:containerport
+      - 8091:8091
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8091 || exit 1"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - giveandtake
+
+### Below makes for Azure App Service docker-compose configuration
+# WEBSITES_CONTAINER_START_TIME_LIMIT = 1800
+# SCM_DO_BUILD_DURING_DEPLOYMENT = 1
+# WEBSITES_ENABLE_APP_SERVICE_STORAGE = true
+# WEBSITES_PORT = 8091
+###
+# docker login <registry-name>.azurecr.io --username <registry-username>
+# docker tag appsvc-tutorial-custom-image <registry-name>.azurecr.io/appsvc-tutorial-custom-image:latest
+# docker push <registry-name>.azurecr.io/appsvc-tutorial-custom-image:latest
+###
+# docker login giveandtake.azurecr.io --username giveandtake
+# docker tag giveandtake-backend giveandtake.azurecr.io/backend:latest
+# docker tag giveandtake-frontend giveandtake.azurecr.io/frontend:latest
+# docker push giveandtake.azurecr.io/backend:latest
+# docker push giveandtake.azurecr.io/frontend:latest
+###
+### Azure App Service (webapp) need to order frontend first (if not set WEBSITES_PORT)
+
+# version: "3.7"
+
+# volumes:
+#   share_images:
+
+# services:
+
+#   frontend:
+#     image: giveandtake.azurecr.io/frontend:latest
+#     volumes:
+#       - share_images:/app/images
+#     ports:
+#       - 80:8091 # hostport:containerport
+#     healthcheck:
+#       test: [ "CMD", "curl", "-f", "http://localhost:8091" ]
+#       interval: 1m30s
+#       timeout: 10s
+#       retries: 3
+
+#   backend:
+#     image: giveandtake.azurecr.io/backend:latest
+#     volumes:
+#       - share_images:/usr/share/nginx/html/images
+#     ports:
+#       - 8090:8090
+#     environment:
+#       - HOST_NAME=giveandtake.azurewebsites.net # frontend host name
+#     healthcheck:
+#       test: [ "CMD", "curl", "-f", "http://localhost:8090" ]
+#       interval: 1m30s
+#       timeout: 10s
+#       retries: 3

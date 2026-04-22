@@ -1,0 +1,82 @@
+diff --git a/src/components/Button.tsx b/src/components/Button.tsx
+index e1f2a33..c9d8b11 100644
+--- a/src/components/Button.tsx
++++ b/src/components/Button.tsx
+@@ -1,22 +1,22 @@
+-import React from 'react'
++import React from 'react';
+ 
+ interface ButtonProps {
+-    label: string
+-    onClick: () => void
+-    disabled?: boolean
++  label: string;
++  onClick: () => void;
++  disabled?: boolean;
+ }
+ 
+-const Button = ({ label, onClick, disabled = false }: ButtonProps) => {
+-    return (
+-        <button
+-            onClick={onClick}
+-            disabled={disabled}
+-            className="btn btn-primary"
+-        >
+-            {label}
+-        </button>
+-    )
+-}
++const Button = ({ label, onClick, disabled = false }: ButtonProps) => {
++  return (
++    <button
++      onClick={onClick}
++      disabled={disabled}
++      className="btn btn-primary"
++    >
++      {label}
++    </button>
++  );
++};
+ 
+ export default Button;
+diff --git a/src/utils/formatDate.ts b/src/utils/formatDate.ts
+index 5a3c122..7e8d933 100644
+--- a/src/utils/formatDate.ts
++++ b/src/utils/formatDate.ts
+@@ -1,10 +1,10 @@
+-// Format a date to display string
++// Formats a date value to a human-readable display string
+ export function formatDate(date: Date): string {
+-    const options: Intl.DateTimeFormatOptions = {
+-        year: 'numeric',
+-        month: 'long',
+-        day: 'numeric'
+-    }
+-    return new Intl.DateTimeFormat('en-US', options).format(date)
++  const options: Intl.DateTimeFormatOptions = {
++    year: 'numeric',
++    month: 'long',
++    day: 'numeric',
++  };
++  return new Intl.DateTimeFormat('en-US', options).format(date);
+ }
+diff --git a/src/styles/components.css b/src/styles/components.css
+index 8b1c233..3a7d944 100644
+--- a/src/styles/components.css
++++ b/src/styles/components.css
+@@ -1,9 +1,9 @@
+-.btn-primary {
+-    background-color: #007bff;
+-    color: #ffffff;
+-    border: none;
+-    padding: 8px 16px;
+-    border-radius: 4px;
+-    cursor: pointer;
++.btn-primary {
++  background-color: #007bff;
++  color: #ffffff;
++  border: none;
++  padding: 8px 16px;
++  border-radius: 4px;
++  cursor: pointer;
+ }

@@ -1,0 +1,27 @@
+{
+    "name": "Cho va nhan",
+    "description": "",
+    "repository": "https://github.com/gtalarico/django-vue-template",
+    "keywords": ["django", "vue", "vuejs", "template", "django rest framework"],
+    "env": {
+      "DJANGO_SETTINGS_MODULE": {
+        "description": "Set Django Settings to Production",
+        "value": "backend.settings.prod"
+      }
+     },
+     "engines": {
+        "yarn": "1.22.5",
+        "npm": "7.20.3"
+     },
+    "addons": [
+
+     ],
+     "buildpacks": [
+       {
+         "url": "heroku/nodejs"
+        },
+        {
+          "url": "heroku/python"
+        }
+    ]
+  }

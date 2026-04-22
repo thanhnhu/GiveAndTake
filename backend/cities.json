@@ -1,0 +1,443 @@
+[
+    {
+      "model": "takers.city",
+      "pk": 1,
+      "fields": {
+        "name": "An Giang"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 2,
+      "fields": {
+        "name": "Bà Rịa - Vũng Tàu"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 3,
+      "fields": {
+        "name": "Bắc Giang"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 4,
+      "fields": {
+        "name": "Bắc Kạn"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 5,
+      "fields": {
+        "name": "Bạc Liêu"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 6,
+      "fields": {
+        "name": "Bắc Ninh"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 7,
+      "fields": {
+        "name": "Bến Tre"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 8,
+      "fields": {
+        "name": "Bình Định"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 9,
+      "fields": {
+        "name": "Bình Dương"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 10,
+      "fields": {
+        "name": "Bình Phước"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 11,
+      "fields": {
+        "name": "Bình Thuận"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 12,
+      "fields": {
+        "name": "Cà Mau"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 13,
+      "fields": {
+        "name": "Cần Thơ"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 14,
+      "fields": {
+        "name": "Cao Bằng"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 15,
+      "fields": {
+        "name": "Đà Nẵng"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 16,
+      "fields": {
+        "name": "Đắk Lắk"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 17,
+      "fields": {
+        "name": "Đắk Nông"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 18,
+      "fields": {
+        "name": "Điện Biên"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 19,
+      "fields": {
+        "name": "Đồng Nai"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 20,
+      "fields": {
+        "name": "Đồng Tháp"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 21,
+      "fields": {
+        "name": "Gia Lai"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 22,
+      "fields": {
+        "name": "Hà Giang"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 23,
+      "fields": {
+        "name": "Hà Nam"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 24,
+      "fields": {
+        "name": "Hà Nội"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 25,
+      "fields": {
+        "name": "Hà Tĩnh"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 26,
+      "fields": {
+        "name": "Hải Dương"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 27,
+      "fields": {
+        "name": "Hải Phòng"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 28,
+      "fields": {
+        "name": "Hậu Giang"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 29,
+      "fields": {
+        "name": "Hòa Bình"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 30,
+      "fields": {
+        "name": "Hưng Yên"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 31,
+      "fields": {
+        "name": "Khánh Hòa"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 32,
+      "fields": {
+        "name": "Kiên Giang"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 33,
+      "fields": {
+        "name": "Kon Tum"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 34,
+      "fields": {
+        "name": "Lai Châu"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 35,
+      "fields": {
+        "name": "Lâm Đồng"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 36,
+      "fields": {
+        "name": "Lạng Sơn"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 37,
+      "fields": {
+        "name": "Lào Cai"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 38,
+      "fields": {
+        "name": "Long An"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 39,
+      "fields": {
+        "name": "Nam Định"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 40,
+      "fields": {
+        "name": "Nghệ An"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 41,
+      "fields": {
+        "name": "Ninh Bình"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 42,
+      "fields": {
+        "name": "Ninh Thuận"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 43,
+      "fields": {
+        "name": "Phú Thọ"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 44,
+      "fields": {
+        "name": "Phú Yên"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 45,
+      "fields": {
+        "name": "Quảng Bình"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 46,
+      "fields": {
+        "name": "Quảng Nam"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 47,
+      "fields": {
+        "name": "Quảng Ngãi"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 48,
+      "fields": {
+        "name": "Quảng Ninh"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 49,
+      "fields": {
+        "name": "Quảng Trị"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 50,
+      "fields": {
+        "name": "Sóc Trăng"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 51,
+      "fields": {
+        "name": "Sơn La"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 52,
+      "fields": {
+        "name": "Tây Ninh"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 53,
+      "fields": {
+        "name": "Thái Bình"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 54,
+      "fields": {
+        "name": "Thái Nguyên"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 55,
+      "fields": {
+        "name": "Thanh Hóa"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 56,
+      "fields": {
+        "name": "Thừa Thiên Huế"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 57,
+      "fields": {
+        "name": "Tiền Giang"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 58,
+      "fields": {
+        "name": "Thành phố Hồ Chí Minh"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 59,
+      "fields": {
+        "name": "Trà Vinh"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 60,
+      "fields": {
+        "name": "Tuyên Quang"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 61,
+      "fields": {
+        "name": "Vĩnh Long"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 62,
+      "fields": {
+        "name": "Vĩnh Phúc"
+      }
+    },
+    {
+      "model": "takers.city",
+      "pk": 63,
+      "fields": {
+        "name": "Yên Bái"
+      }
+    }
+  ]

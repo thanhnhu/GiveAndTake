@@ -1,0 +1,57 @@
+<div>
+  <button v-if="user" type="button" class="btn btn-sm btn-outline-primary" @click="showAddTaker = true">
+    {{ $t('common.addnew') }}
+  </button>
+
+  <form @submit.prevent="handleSave">
+    <modal-dialog :show="showAddTaker" @close="showAddTaker = false">
+      <template #header>{{ $t('taker.addnew') }}</template>
+      <template #body>
+        <div class="mb-3">
+          <div class="input-group">
+            <input type="text" class="form-control" :class="{ 'is-invalid': nameError }" aria-label="fullname"
+              :placeholder="$t('common.fullname')" v-model="name" />
+          </div>
+          <div class="error-messages" v-if="nameError">{{ nameError }}</div>
+        </div>
+
+        <div class="mb-3">
+          <div class="input-group">
+            <input type="text" class="form-control" :class="{ 'is-invalid': phoneError }" aria-label="phone"
+              :placeholder="$t('common.phone')" v-model="phone" />
+          </div>
+          <div class="error-messages" v-if="phoneError">{{ phoneError }}</div>
+        </div>
+
+        <div class="mb-3">
+          <div class="input-group">
+            <input type="text" class="form-control" :class="{ 'is-invalid': addressError }" aria-label="address"
+              maxlength="50" :placeholder="$t('common.address')" v-model="address" />
+          </div>
+          <div class="error-messages" v-if="addressError">{{ addressError }}</div>
+        </div>
+
+        <div class="mb-3">
+          <div class="input-group">
+            <select class="form-select" :class="{ 'is-invalid': cityError }" v-model="city">
+              <option :value="null" disabled>{{ $t('common.select_city') }}</option>
+              <option v-for="c in cities" :key="c.id" :value="c.id">{{ c.name }}</option>
+            </select>
+          </div>
+          <div class="error-messages" v-if="cityError">{{ cityError }}</div>
+        </div>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text">{{ $t('common.description') }}</span>
+          <textarea class="form-control" rows="2" aria-label="description" v-model="description"></textarea>
+        </div>
+      </template>
+      <template #footer>
+        <button type="button" class="btn btn-sm btn-outline-primary me-2" :disabled="fetchingData"
+          @click="handleSaveAndClose">{{ $t('common.saveandclose') }}</button>
+        <button type="button" class="btn btn-sm btn-outline-primary me-2" :disabled="fetchingData"
+          @click="handleSave">{{ $t('common.save') }}</button>
+      </template>
+    </modal-dialog>
+  </form>
+</div>

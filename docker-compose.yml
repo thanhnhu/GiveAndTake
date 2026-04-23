@@ -51,6 +51,7 @@ services:
       - DB_NAME=${DB_NAME:-giveandtake}
       - DB_USER=${DB_USER:-giveandtake}
       - DB_PASSWORD=${DB_PASSWORD:-giveandtake}
+      - RUN_MIGRATIONS=${RUN_MIGRATIONS:-true}
       - STORAGE_TYPE=${STORAGE_TYPE:-cloudinary}
       - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
       - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}

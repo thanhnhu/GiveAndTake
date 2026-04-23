@@ -91,7 +91,8 @@ const buildFilterParams = (city, isMine, filterParam, page) => {
   return { ...filter.value, ...paging.value };
 };
 
-const cityChange = (cityName) => {
+const cityChange = (event) => {
+  const cityName = event?.target?.value ?? event;
   let index = cities.value.findIndex((r) => r.name === cityName);
   if (index >= 0) {
     let city = cities.value[index].id;

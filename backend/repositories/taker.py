@@ -79,7 +79,7 @@ class TakerRepository:
                    COALESCE(d.total, 0) AS total_donates
             FROM takers_taker t
             LEFT JOIN (
-                SELECT taker_id, COUNT(*) AS total FROM takers_donate GROUP BY taker_id
+                SELECT taker_id, COALESCE(SUM(donate), 0) AS total FROM takers_donate GROUP BY taker_id
             ) d ON d.taker_id = t.id
             """
         ]

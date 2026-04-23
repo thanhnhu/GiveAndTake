@@ -107,44 +107,42 @@
       <div class="card border-info mb-1">
         <div class="row g-0">
           <div class="col-4">
-            <img :src="firstImage(taker)" class="img-fluid rounded-start" :alt="taker.name">
+            <img :src="firstImage(taker)" class="img-fluid rounded-start h-100 object-fit-cover" :alt="taker.name">
           </div>
           <div class="col-8">
-            <div class="card-body">
-              <div class="container-fluid">
-                <div class="row align-items-start">
-                  #{{ taker.number }}, {{ taker.name }}, {{ taker.address }}
-                </div>
-                <div class="row">
-                  <i class="bi bi-telephone me-3 mb-1" v-tooltip="taker.phone" />
-                  <i class="bi bi-card-text me-3 fs-5" v-if="taker.description && taker.description.length > 20"
-                    v-tooltip="taker.description" />
-                  <div v-if="taker.images && taker.images.length > 0" @click="openImages(taker.images)">
-                    <i class="bi bi-eye fs-4" :title="$t('common.viewimages')" />
-                  </div>
-                </div>
-                <div class="row align-items-start" v-if="!taker.stop_donate">
-                  <div v-if="user">
-                    <donate-info :taker-id="taker.id" :is-new-inline="true" />
-                  </div>
-                  <div v-else>
-                    <i class="bi bi-gift fs-5" :title="$t('common.needtodonate')" />
-                  </div>
-                  <div class="ms-2">{{ totalDonate(taker) }} vnđ</div>
-                </div>
-                <div class="row">
-                  <div class="me-3" v-if="taker.can_edit">
-                    <file-uploader :id="taker.id" :is-taker="true" />
-                  </div>
-                  <div class="me-3" v-if="taker.can_edit" @click.stop="stopDonate(taker.id)">
-                    <div v-if="taker.stop_donate">
-                      <i class="bi bi-play-circle fs-5" :title="$t('common.needtodonate')" />
-                    </div>
-                    <div v-else>
-                      <i class="bi bi-stop-circle fs-5" :title="$t('common.stopdonate')" />
-                    </div>
-                  </div>
-                </div>
+            <div class="card-body p-2">
+              <div class="fw-semibold">#{{ taker.number }} {{ taker.name }}</div>
+              <div class="small text-muted text-truncate">{{ taker.address }}</div>
+              <div class="d-flex align-items-center gap-2 flex-wrap mt-1">
+                <i class="bi bi-telephone fs-6" v-tooltip="taker.phone" style="cursor:pointer" />
+                <i class="bi bi-card-text fs-6" v-if="taker.description && taker.description.length > 20"
+                  v-tooltip="taker.description" style="cursor:pointer" />
+                <button v-if="taker.images && taker.images.length > 0" type="button" class="icon-action"
+                  :title="$t('common.viewimages')" @click.stop="openImages(taker.images)">
+                  <i class="bi bi-eye fs-6" />
+                </button>
+                <router-link v-if="taker.donates && taker.donates.length > 0"
+                  :to="{ name: 'donates', params: { takerId: taker.id } }">
+                  <i class="bi bi-layout-text-sidebar fs-6" :title="$t('common.viewdescription')" />
+                </router-link>
+              </div>
+              <div class="d-flex align-items-center gap-2 mt-1">
+                <template v-if="!taker.stop_donate">
+                  <donate-info v-if="user" :taker-id="taker.id" :is-new-inline="true" />
+                  <i v-else class="bi bi-gift fs-6" :title="$t('common.wannadonate')" />
+                </template>
+                <small>{{ Number(totalDonate(taker)).toLocaleString() }} vnđ</small>
+              </div>
+              <div class="d-flex align-items-center gap-2 mt-1" v-if="taker.can_edit || taker.can_delete">
+                <file-uploader v-if="taker.can_edit" :id="taker.id" :is-taker="true" />
+                <button v-if="taker.can_edit" type="button" class="icon-action" @click.stop="stopDonate(taker.id)">
+                  <i v-if="taker.stop_donate" class="bi bi-play-circle fs-6" :title="$t('common.needtodonate')" />
+                  <i v-else class="bi bi-stop-circle fs-6" :title="$t('common.stopdonate')" />
+                </button>
+                <button v-if="taker.can_delete" type="button" class="icon-action text-danger"
+                  :title="$t('common.delete')" @click.stop="handleDelete(taker.id)">
+                  <i class="bi bi-x-circle fs-6" />
+                </button>
               </div>
             </div>
           </div>

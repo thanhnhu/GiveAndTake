@@ -1,14 +1,10 @@
 <template>
-  <footer :style="{ position: isWeb ? 'fixed' : 'relative' }">
+  <footer>
     <span>💻 with ❤️</span>
   </footer>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { isMobile } from "@/helpers"
-
-const isWeb = computed(() => !isMobile())
 </script>
 
 <style lang="scss" scoped>
@@ -18,7 +14,7 @@ footer {
   bottom: 0;
   left: 0;
   padding: 0.8rem;
-  position: absolute;
+  position: fixed;
   width: 100%;
 }
 </style>

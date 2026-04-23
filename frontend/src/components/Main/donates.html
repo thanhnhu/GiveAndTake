@@ -42,6 +42,26 @@
       </tbody>
     </table>
   </div>
+  <div v-else>
+    <template v-for="(donate, index) in taker.donates" :key="index">
+      <div v-if="start <= index && index < end" class="card border-info mb-1">
+        <div class="card-body p-2">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <div class="fw-semibold">{{ Number(donate.donate).toLocaleString() }} vnđ</div>
+              <div class="small text-muted">{{ formatDate(donate.date_created) }}</div>
+              <div v-if="donate.description" class="small mt-1">{{ donate.description }}</div>
+            </div>
+            <div v-if="taker.can_edit" class="d-flex gap-2 ms-2">
+              <donate-info :taker-id="taker.id" :is-edit="true" :edit-object="donate" />
+              <i v-if="taker.can_delete" class="bi bi-x-circle fs-5 text-danger" :title="$t('common.delete')"
+                @click="handleDelete(donate.id)"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
   <nav v-if="rows > page_size" class="mt-2 d-flex justify-content-center">
     <ul class="pagination">
       <li class="page-item" :class="{ disabled: page === 1 }">

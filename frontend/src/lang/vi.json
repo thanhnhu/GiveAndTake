@@ -82,6 +82,12 @@
       "register_error": "Có lỗi trong quá trình đăng ký!"
     }
   },
+  "errors": {
+    "invalid_credentials": "Tên đăng nhập hoặc mật khẩu không đúng!",
+    "username_exists": "Tài khoản đã tồn tại!",
+    "not_found": "Không tìm thấy!",
+    "permission_denied": "Bạn không có quyền thực hiện thao tác này!"
+  },
   "taker": {
     "addnew": "Thêm người khó khăn mới"
   },

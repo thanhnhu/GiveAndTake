@@ -1,8 +1,11 @@
 <script setup>
 import { ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { userStoreObj } from '@/stores/users';
+import { translateError } from '@/helpers';
 
+const { t, te } = useI18n();
 const userStore = userStoreObj();
 const username = ref("");
 const password = ref("");
@@ -34,7 +37,7 @@ watch(error, (newValue) => {
   <div>
     <h2>{{ $t('user.login') }}</h2>
     <b-alert :show="showAlert" @dismissed="showAlert = 0" variant="warning" dismissible fade>
-      {{ $t('user.messages.wrong_username_password') }}
+      {{ translateError(error, t, te) || $t('user.messages.wrong_username_password') }}
     </b-alert>
     <form @submit.prevent="handleSubmit">
       <b-form-row class="mb-2">

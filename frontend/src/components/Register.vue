@@ -1,9 +1,12 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { Form, Field } from 'vee-validate';
 import { userStoreObj } from '@/stores/users';
+import { translateError } from '@/helpers';
 
+const { t, te } = useI18n();
 const userStore = userStoreObj();
 
 const user = ref({
@@ -20,17 +23,20 @@ const { fetchingData, error } = storeToRefs(userStore);
 // Methods
 const onSubmit = async () => {
   await userStore.register(user.value);
-  if (error.value) {
+};
+
+watch(error, (newValue) => {
+  if (newValue) {
     showAlert.value = 5;
   }
-};
+});
 </script>
 
 <template>
   <div>
     <h2>{{ $t("user.register") }}</h2>
     <b-alert variant="warning" dismissible fade :show="showAlert" @dismissed="showAlert = 0">
-      {{ error?.message || $t("user.messages.register_error") }}
+      {{ translateError(error, t, te) || $t("user.messages.register_error") }}
     </b-alert>
     <Form @submit="onSubmit">
       <b-overlay :show="fetchingData" variant="transparent">

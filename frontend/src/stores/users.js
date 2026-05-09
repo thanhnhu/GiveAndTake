@@ -29,7 +29,7 @@ export const userStoreObj = defineStore('users', {
         toastMessage(i18n.global.t('user.messages.login_success'))
       } catch (error) {
         this.fetchingData = false
-        this.error = error
+        this.error = error.message || 'Login failed'
         this.user = null
       }
     },
@@ -54,7 +54,7 @@ export const userStoreObj = defineStore('users', {
         toastMessage(i18n.global.t('user.messages.register_success'))
       } catch (error) {
         this.fetchingData = false
-        this.error = error
+        this.error = error.message || 'Registration failed'
       }
     }
   },

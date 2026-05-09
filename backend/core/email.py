@@ -35,6 +35,11 @@ async def _send_email(to: str, subject: str, html_body: str) -> None:
 
 
 def send_welcome_email(to: str, username: str) -> None:
+    """Deprecated sync wrapper — use send_welcome_email_async instead."""
+    pass
+
+
+async def send_welcome_email_async(to: str, username: str) -> None:
     """Fire-and-forget welcome email after user registration."""
     if not to or not settings.email_enabled:
         return
@@ -75,4 +80,5 @@ def send_welcome_email(to: str, username: str) -> None:
     </html>
     """
 
-    asyncio.create_task(_send_email(to, subject, html_body))
+    await _send_email(to, subject, html_body)
+    logger.info("Welcome email sent to %s", to)

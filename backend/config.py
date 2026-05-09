@@ -31,7 +31,7 @@ class Settings:
     email_port: int = int(os.getenv("EMAIL_PORT") or "587")
     email_username: str = os.getenv("EMAIL_USERNAME", "")
     email_password: str = os.getenv("EMAIL_PASSWORD", "")
-    email_from: str = os.getenv("EMAIL_FROM", "")
+    email_from: str = os.getenv("EMAIL_FROM", os.getenv("EMAIL_USERNAME", ""))
     email_enabled: bool = os.getenv("EMAIL_ENABLED", "false").strip().lower() == "true"
 
     @property

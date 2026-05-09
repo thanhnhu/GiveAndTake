@@ -59,7 +59,5 @@ export const userStoreObj = defineStore('users', {
     }
   },
 
-  persist: {
-    paths: ['token', 'user']
-  }
+  persist: true
 }) 

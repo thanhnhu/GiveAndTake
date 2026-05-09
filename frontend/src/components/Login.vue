@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { userStoreObj } from '@/stores/users';
@@ -12,6 +12,14 @@ const password = ref("");
 const submitted = ref(false);
 
 const { fetchingData, user, error } = storeToRefs(userStore);
+
+onMounted(() => { userStore.error = null })
+
+const alertModel = ref(false);
+watch(error, (val) => {
+  if (val) alertModel.value = 5000;
+  else alertModel.value = false;
+});
 
 // Methods
 const handleSubmit = async () => {
@@ -28,7 +36,7 @@ const handleSubmit = async () => {
 <template>
   <div>
     <h2>{{ $t('user.login') }}</h2>
-    <b-alert :show="!!error" variant="warning" dismissible @dismissed="userStore.error = null">
+    <b-alert v-model="alertModel" :interval="1000" variant="warning" dismissible fade>
       {{ translateError(error, t, te) || $t('user.messages.wrong_username_password') }}
     </b-alert>
     <form @submit.prevent="handleSubmit">

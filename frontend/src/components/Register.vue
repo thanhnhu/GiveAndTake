@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { Form, Field } from 'vee-validate';
@@ -19,6 +19,14 @@ const user = ref({
 
 const { fetchingData, error } = storeToRefs(userStore);
 
+onMounted(() => { userStore.error = null })
+
+const alertModel = ref(false);
+watch(error, (val) => {
+  if (val) alertModel.value = 5000;
+  else alertModel.value = false;
+});
+
 // Methods
 const onSubmit = async () => {
   await userStore.register(user.value);
@@ -28,7 +36,7 @@ const onSubmit = async () => {
 <template>
   <div>
     <h2>{{ $t("user.register") }}</h2>
-    <b-alert variant="warning" dismissible :show="!!error" @dismissed="userStore.error = null">
+    <b-alert v-model="alertModel" :interval="1000" variant="warning" dismissible fade>
       {{ translateError(error, t, te) || $t("user.messages.register_error") }}
     </b-alert>
     <Form @submit="onSubmit">

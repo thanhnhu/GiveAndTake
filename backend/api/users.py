@@ -1,7 +1,8 @@
+import asyncio
 import psycopg
 from fastapi import APIRouter, HTTPException, Request, Response
 
-from core.email import send_welcome_email
+from core.email import send_welcome_email_async
 from dependencies import CurrentUser, DBConn
 from repositories.user import UserRepository
 from schemas.user import UserCreate, UserOut, UserUpdate
@@ -16,7 +17,7 @@ async def create_user(payload: UserCreate, conn: DBConn) -> UserOut:
     except psycopg.errors.UniqueViolation:
         raise HTTPException(status_code=400, detail="A user with that username already exists.")
     if user["email"]:
-        send_welcome_email(user["email"], user["username"])
+        asyncio.create_task(send_welcome_email_async(user["email"], user["username"]))
     return user
 
 

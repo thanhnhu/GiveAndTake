@@ -92,6 +92,12 @@ Endpoints are grouped by category in docs:
 - CLOUDINARY_CLOUD_NAME
 - CLOUDINARY_API_KEY
 - CLOUDINARY_API_SECRET
+- EMAIL_ENABLED
+- EMAIL_HOST
+- EMAIL_PORT
+- EMAIL_USERNAME
+- EMAIL_PASSWORD
+- EMAIL_FROM
 
 If needed, use setup-env.ps1 to generate starter files.
 

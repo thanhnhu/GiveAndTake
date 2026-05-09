@@ -27,7 +27,7 @@ class Settings:
     db_pool_max_size: int = int(os.getenv("DB_POOL_MAX_SIZE") or "10")
 
     # Email (SMTP) settings
-    email_host: str = os.getenv("EMAIL_HOST", "smtp.gmail.com")
+    email_host: str = os.getenv("EMAIL_HOST") or "smtp.gmail.com"
     email_port: int = int(os.getenv("EMAIL_PORT") or "587")
     email_username: str = os.getenv("EMAIL_USERNAME", "")
     email_password: str = os.getenv("EMAIL_PASSWORD", "")

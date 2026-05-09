@@ -9,6 +9,9 @@ from schemas.user import UserCreate, UserOut, UserUpdate
 
 router = APIRouter(tags=["Users"])
 
+# Keep strong references to background tasks to prevent GC before completion
+_background_tasks: set = set()
+
 
 @router.post("/api/users/", response_model=UserOut, status_code=201)
 async def create_user(payload: UserCreate, conn: DBConn) -> UserOut:
@@ -17,7 +20,9 @@ async def create_user(payload: UserCreate, conn: DBConn) -> UserOut:
     except psycopg.errors.UniqueViolation:
         raise HTTPException(status_code=400, detail="A user with that username already exists.")
     if user["email"]:
-        asyncio.create_task(send_welcome_email_async(user["email"], user["username"]))
+        task = asyncio.create_task(send_welcome_email_async(user["email"], user["username"]))
+        _background_tasks.add(task)
+        task.add_done_callback(_background_tasks.discard)
     return user
 
 

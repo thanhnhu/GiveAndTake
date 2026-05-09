@@ -7,7 +7,7 @@ load_dotenv()
 
 class Settings:
     db_host: str = os.getenv("DB_HOST", "postgres")
-    db_port: int = int(os.getenv("DB_PORT", "5432"))
+    db_port: int = int(os.getenv("DB_PORT") or "5432")
     db_name: str = os.getenv("DB_NAME", "giveandtake")
     db_user: str = os.getenv("DB_USER", "giveandtake")
     db_password: str = os.getenv("DB_PASSWORD", "giveandtake")
@@ -23,12 +23,12 @@ class Settings:
     google_drive_folder_id: str = os.getenv("GOOGLE_DRIVE_FOLDER_ID", "")
 
     # Connection pool — keep small per-pod when scaling horizontally (total = replicas × max_size)
-    db_pool_min_size: int = int(os.getenv("DB_POOL_MIN_SIZE", "2"))
-    db_pool_max_size: int = int(os.getenv("DB_POOL_MAX_SIZE", "10"))
+    db_pool_min_size: int = int(os.getenv("DB_POOL_MIN_SIZE") or "2")
+    db_pool_max_size: int = int(os.getenv("DB_POOL_MAX_SIZE") or "10")
 
     # Email (SMTP) settings
     email_host: str = os.getenv("EMAIL_HOST", "smtp.gmail.com")
-    email_port: int = int(os.getenv("EMAIL_PORT", "587"))
+    email_port: int = int(os.getenv("EMAIL_PORT") or "587")
     email_username: str = os.getenv("EMAIL_USERNAME", "")
     email_password: str = os.getenv("EMAIL_PASSWORD", "")
     email_from: str = os.getenv("EMAIL_FROM", "")

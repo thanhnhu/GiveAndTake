@@ -15,8 +15,8 @@ async def create_user(payload: UserCreate, conn: DBConn) -> UserOut:
         user = await UserRepository(conn).create(payload)
     except psycopg.errors.UniqueViolation:
         raise HTTPException(status_code=400, detail="A user with that username already exists.")
-    if user.email:
-        send_welcome_email(user.email, user.username)
+    if user["email"]:
+        send_welcome_email(user["email"], user["username"])
     return user
 
 

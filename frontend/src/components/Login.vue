@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { userStoreObj } from '@/stores/users';
@@ -10,7 +10,6 @@ const userStore = userStoreObj();
 const username = ref("");
 const password = ref("");
 const submitted = ref(false);
-const showAlert = ref(0);
 
 const { fetchingData, user, error } = storeToRefs(userStore);
 
@@ -24,19 +23,12 @@ const handleSubmit = async () => {
     });
   }
 };
-
-// Watch for error changes
-watch(error, (newValue) => {
-  if (newValue) {
-    showAlert.value = 5;
-  }
-});
 </script>
 
 <template>
   <div>
     <h2>{{ $t('user.login') }}</h2>
-    <b-alert :show="showAlert" @dismissed="showAlert = 0" variant="warning" dismissible fade>
+    <b-alert :show="!!error" variant="warning" dismissible @dismissed="userStore.error = null">
       {{ translateError(error, t, te) || $t('user.messages.wrong_username_password') }}
     </b-alert>
     <form @submit.prevent="handleSubmit">

@@ -5,7 +5,7 @@
 # docker-compose -f docker-compose.prod.yml up --build
 
 # Docker Compose will automatically load .env file from the same directory
-# Create .env file with your credentials (copy from .env.example)
+# Create .env file with your configuration (copy from .env.example)
 
 networks:
   giveandtake:
@@ -41,8 +41,6 @@ services:
     volumes:
       # mount source folder on dist to hot reloading
       - ./backend:/app
-      # mount credentials file (optional - prefer environment variables)
-      - ./backend/credentials.json:/app/credentials.json:ro
       # persist uploaded media files
       - ./backend/media:/app/media
     environment:

@@ -37,10 +37,6 @@ services:
       target: production
     container_name: backend
     restart: always
-    volumes:
-      - share_images:/app/images
-      # mount credentials file (optional - prefer environment variables)
-      - ./backend/credentials.json:/app/credentials.json:ro
     ports:
       - 8090:8090
     environment:

@@ -78,7 +78,8 @@
       "username_required": "Tên đăng nhập không để trống!",
       "password_required": "Mật khẩu không để trống!",
       "login_success": "Đăng nhập thành công!",
-      "register_success": "Đăng ký thành công!"
+      "register_success": "Đăng ký thành công!",
+      "register_error": "Có lỗi trong quá trình đăng ký!"
     }
   },
   "taker": {

@@ -78,7 +78,8 @@
       "username_required": "Username is required!",
       "password_required": "Password is required!",
       "login_success": "Login success!",
-      "register_success": "Register success!"
+      "register_success": "Register success!",
+      "register_error": "An error occurred during registration!"
     }
   },
   "taker": {

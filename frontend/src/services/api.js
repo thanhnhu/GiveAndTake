@@ -23,7 +23,7 @@ instance.interceptors.response.use(
     return response.data // Directly return the data for easier consumption
   },
   error => {
-    const errorMessage = error.response?.data?.message || error.message
+    const errorMessage = error.response?.data?.detail || error.response?.data?.message || error.message
     console.error('API Error:', errorMessage)
     
     // You can handle specific error codes here

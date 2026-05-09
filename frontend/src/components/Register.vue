@@ -30,7 +30,7 @@ const onSubmit = async () => {
   <div>
     <h2>{{ $t("user.register") }}</h2>
     <b-alert variant="warning" dismissible fade :show="showAlert" @dismissed="showAlert = 0">
-      {{ $t("user.userExist") }}
+      {{ error?.message || $t("user.messages.register_error") }}
     </b-alert>
     <Form @submit="onSubmit">
       <b-overlay :show="fetchingData" variant="transparent">
